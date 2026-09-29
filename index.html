@@ -1,0 +1,2696 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Феррум">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="theme-color" content="#171d2b">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAGa0lEQVR4nO2dQY4bNxBFy0H2WQZZZD9A1oM5Ti5g+DCGL5DjGL6Ab5B1bpAFgQZnWr9FkSzWL+q/nT2Cush++qS6qean3//8y4S4xS/RBQheJIeASA4BkRwCIjkERHIIiOQQEMkhIJJDQCSHgEgOAZEcAiI5BERyCIjkEBDJISCSQ0Akh4BIDgGRHAIiOQREcgiI5BAQySEgkkNAJIeASA4BkRwCIjkE5NfoAsL4+ve/7S/+8s8ffpXQ8ulJHsHwkAotPIMuO8sxXQjErqJsKMcyJ85sZslWcgRqUbONIjvIQeLEmeyW5JZjRIu315f2F3//8bP7QHkVySpHhxYP2XBNhysZFUkpR7sZE4VAtIuSzo9kcjRqscCJM42WJFIkkxwtZoRoUdOiSBY/csiRQouaPRRJIMddM6i0qLmrCLkf7HJcm0GrRc21Isx+8MqxgRY1GRUhXc+xmRl2r2bOi7yMyXHRUxm1+MBFhLDlB11y7G2GXbaCLT+4kmOxGY2XrRYfmic/iORAZsTeEzmzoB4SP1jkcDVjihNnXGtj8INCDj8znLSo8Ssy3A/e1eeDnd6iReMhrt+q/HWk2rfXlwUSdxCfHDdjY6Svrzva1bnpZceGR7Acc824OHPTv3F4HIvNj0g55k41bvZs1GKfiU2wOD/o5hwd3bpMi7fP/93673dnrhjfNxFhm3yEXSGdNaBEBUYLHWf6ZuVRV05j5PAz4+31hcSMQmo/6O6ttHPTjJBKrmugGikeIkCOKbHxocepAuNczKN+kITHajmczBiqyYcN/Mg3rKQwozDoRzhL5RiPjURmFEb8CA+PTMmRzoxC3vxYJ8dgbCQ1o9DtR2x4ZEqOg1xmFDLWHClHd2xswGB4rGGRHCNJmHpAqZk4+VgzsoQlR985zmtGIVerV8gxMTY2gzw8YpIj1wdoLonaTv1tpf5g7WFGoW4LczS6y8H2K66d8O7bgJVgHWu+p8cGWNP1voBvv8096LsCqkVf33/8bGng+nVi1MOKiIVUDuaR2APO9vrKMWVQ3GkqWjOlXa7TjtXJseuZXsPi3mMcVjgz1hvCVjPKUbN30pC3jl0OEYjkEBBHOc4TafIUTcG5D/2+sNAlx673UxDM91no5BA8SA4BkRwCIjkERHIICN2TfR4lfGXGxig5BERyCIjkEBDJISCSQ0Akh4DQycF8I8oD5huNjnKcH8r8DCfbm3Mf+j38mi45BA+SQ0DY5dh7JCJvHaMcbPOyNRC2erUc5J8Vcrb6IfWUifSuPk1pl+s+PYzDilFmrCuc7SWVQzAQIEfHJuH7jSwdF0bXd4K7HOE7526Md99SDyu7hgfz/ZSaGDn6zvQefiRq+wo5RtKP+YM1zkjrFozXYcNKog/QRHK1et2O1CM/ut/j2fjdrVh5m74mckKaYlsJJ1JsJ0L9bQWRcXDJWPM6OW4mYXd45OrriQOKLbx0lCk5kvqRd8K0VI7B8LCEfoyYERsblis5Con8yJsZhdVyjIeHJfFj0Izw2LCV1zlqPHa073gHJ8YLYzDDMg4rB+ceZ4gQWmU7iEkOmxQeBoQIOR+zKiGJDQtMjimTDwO9vz5C9jPDCB/71LinVU15/YduLf9cECETo4thWKwJG1YKswaXwkXnTrfE41hUsWHhcthsP+ze52/QEr83ZzPDGOQwBz+sLaInruz1qDZ8+S3dnOOgY/JRc3Micj5E9/t/ONAIbFONA4rkMLwvxJS5glPvu9YWHhvGI4c5+1EgiYoDZjOMSg673FfG40tpx8+rFhyaxAxjk8OW+xFCCjOM8N7KRe/QTtweIosZRpgchet9y5JGyLXcbGYYYXIUrnsqY4SkM8Nok+NggwjJqEWBXQ5r2BqTVpG7CcdshqWQw9q2TqVSpGXgIzfDsshRSKHIHloUMslhzbsv86wEO5PFDEsnR6F9g+6oxT43SaRFIaUc1rWBe+w9mnRmWF45Ch2KHIz/+KyRjFoUcstRGFHElbxaFHaQ44DEkuxOHGwlRyFQkW20KGwox8EySzZz4mBnOWqmi7KrEDXPIseZh3R5BhXOPK8c4i6k6zkEA5JDQCSHgEgOAZEcAiI5BERyCIjkEBDJISCSQ0Akh4BIDgGRHAIiOQREcgiI5BAQySEgkkNAJIeASA4BkRwCIjkERHIIiOQQEMkhIJJDQCSHgEgOAfkflzPq5L6/4xIAAAAASUVORK5CYII=">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAGa0lEQVR4nO2dQY4bNxBFy0H2WQZZZD9A1oM5Ti5g+DCGL5DjGL6Ab5B1bpAFgQZnWr9FkSzWL+q/nT2Cush++qS6qean3//8y4S4xS/RBQheJIeASA4BkRwCIjkERHIIiOQQEMkhIJJDQCSHgEgOAZEcAiI5BERyCIjkEBDJISCSQ0Akh4BIDgGRHAIiOQREcgiI5BAQySEgkkNAJIeASA4BkRwCIjkE5NfoAsL4+ve/7S/+8s8ffpXQ8ulJHsHwkAotPIMuO8sxXQjErqJsKMcyJ85sZslWcgRqUbONIjvIQeLEmeyW5JZjRIu315f2F3//8bP7QHkVySpHhxYP2XBNhysZFUkpR7sZE4VAtIuSzo9kcjRqscCJM42WJFIkkxwtZoRoUdOiSBY/csiRQouaPRRJIMddM6i0qLmrCLkf7HJcm0GrRc21Isx+8MqxgRY1GRUhXc+xmRl2r2bOi7yMyXHRUxm1+MBFhLDlB11y7G2GXbaCLT+4kmOxGY2XrRYfmic/iORAZsTeEzmzoB4SP1jkcDVjihNnXGtj8INCDj8znLSo8Ssy3A/e1eeDnd6iReMhrt+q/HWk2rfXlwUSdxCfHDdjY6Svrzva1bnpZceGR7Acc824OHPTv3F4HIvNj0g55k41bvZs1GKfiU2wOD/o5hwd3bpMi7fP/93673dnrhjfNxFhm3yEXSGdNaBEBUYLHWf6ZuVRV05j5PAz4+31hcSMQmo/6O6ttHPTjJBKrmugGikeIkCOKbHxocepAuNczKN+kITHajmczBiqyYcN/Mg3rKQwozDoRzhL5RiPjURmFEb8CA+PTMmRzoxC3vxYJ8dgbCQ1o9DtR2x4ZEqOg1xmFDLWHClHd2xswGB4rGGRHCNJmHpAqZk4+VgzsoQlR985zmtGIVerV8gxMTY2gzw8YpIj1wdoLonaTv1tpf5g7WFGoW4LczS6y8H2K66d8O7bgJVgHWu+p8cGWNP1voBvv8096LsCqkVf33/8bGng+nVi1MOKiIVUDuaR2APO9vrKMWVQ3GkqWjOlXa7TjtXJseuZXsPi3mMcVjgz1hvCVjPKUbN30pC3jl0OEYjkEBBHOc4TafIUTcG5D/2+sNAlx673UxDM91no5BA8SA4BkRwCIjkERHIICN2TfR4lfGXGxig5BERyCIjkEBDJISCSQ0Akh4DQycF8I8oD5huNjnKcH8r8DCfbm3Mf+j38mi45BA+SQ0DY5dh7JCJvHaMcbPOyNRC2erUc5J8Vcrb6IfWUifSuPk1pl+s+PYzDilFmrCuc7SWVQzAQIEfHJuH7jSwdF0bXd4K7HOE7526Md99SDyu7hgfz/ZSaGDn6zvQefiRq+wo5RtKP+YM1zkjrFozXYcNKog/QRHK1et2O1CM/ut/j2fjdrVh5m74mckKaYlsJJ1JsJ0L9bQWRcXDJWPM6OW4mYXd45OrriQOKLbx0lCk5kvqRd8K0VI7B8LCEfoyYERsblis5Con8yJsZhdVyjIeHJfFj0Izw2LCV1zlqPHa073gHJ8YLYzDDMg4rB+ceZ4gQWmU7iEkOmxQeBoQIOR+zKiGJDQtMjimTDwO9vz5C9jPDCB/71LinVU15/YduLf9cECETo4thWKwJG1YKswaXwkXnTrfE41hUsWHhcthsP+ze52/QEr83ZzPDGOQwBz+sLaInruz1qDZ8+S3dnOOgY/JRc3Micj5E9/t/ONAIbFONA4rkMLwvxJS5glPvu9YWHhvGI4c5+1EgiYoDZjOMSg673FfG40tpx8+rFhyaxAxjk8OW+xFCCjOM8N7KRe/QTtweIosZRpgchet9y5JGyLXcbGYYYXIUrnsqY4SkM8Nok+NggwjJqEWBXQ5r2BqTVpG7CcdshqWQw9q2TqVSpGXgIzfDsshRSKHIHloUMslhzbsv86wEO5PFDEsnR6F9g+6oxT43SaRFIaUc1rWBe+w9mnRmWF45Ch2KHIz/+KyRjFoUcstRGFHElbxaFHaQ44DEkuxOHGwlRyFQkW20KGwox8EySzZz4mBnOWqmi7KrEDXPIseZh3R5BhXOPK8c4i6k6zkEA5JDQCSHgEgOAZEcAiI5BERyCIjkEBDJISCSQ0Akh4BIDgGRHAIiOQREcgiI5BAQySEgkkNAJIeASA4BkRwCIjkERHIIiOQQEMkhIJJDQCSHgEgOAfkflzPq5L6/4xIAAAAASUVORK5CYII=">
+<title>Феррум Холдинг</title>
+<style>
+:root{
+  --bg:#171d2b; --panel:#1f2738; --panel2:#2a3348; --line:#3a4560;
+  --text:#dde3ee; --dim:#9ba6be; --accent:#22d3ee; --accent2:#38bdf8;
+  --bad:#ef4444; --good:#22c55e; --mono:ui-monospace,'SFMono-Regular','Consolas',monospace;
+  --sans:-apple-system,'Segoe UI',system-ui,sans-serif;
+  box-sizing:border-box;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;overflow-x:hidden;overscroll-behavior:none;touch-action:pan-y}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}
+button,input,select,.tab-btn,.card,.row,.stat-card,.avatar-item{touch-action:manipulation}
+.wrap{max-width:1100px;margin:0 auto;padding:16px 16px calc(96px + env(safe-area-inset-bottom,0px))}
+header{padding-top:env(safe-area-inset-top,0px);margin-bottom:16px}
+header .brand{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+header .brand h1{font-size:14px;margin:0;color:var(--dim);font-weight:500;letter-spacing:.02em}
+header .brand .day{font-size:12px;color:var(--dim);font-family:var(--mono)}
+.hero-cash{font-size:38px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.hero-delta{display:inline-flex;align-items:center;gap:4px;font-size:14px;font-weight:600;margin-top:4px}
+.stage-card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:16px;margin-top:14px;display:flex;align-items:center;gap:14px;box-shadow:0 4px 20px rgba(0,0,0,.25)}
+.stage-icon{width:44px;height:44px;border-radius:14px;background:var(--panel2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.stage-card .stage-name{font-weight:700;font-size:15px}
+.stage-card .stage-sub{color:var(--dim);font-size:12px;margin-top:2px}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.stat-card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 4px 20px rgba(0,0,0,.2)}
+.stat-card .stat-label{color:var(--dim);font-size:11px;margin-bottom:6px}
+.stat-card .stat-val{font-size:18px;font-weight:800}
+@media (max-width:640px){.stat-row{grid-template-columns:1fr 1fr}.stat-card:last-child{grid-column:1/-1}}
+.good{color:var(--good)} .bad{color:var(--bad)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:760px){.grid{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:0 4px 20px rgba(0,0,0,.2)}
+.card h2{margin:0 0 12px;font-size:14px;color:var(--text);text-transform:none;font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.bar{height:7px;background:var(--panel2);border-radius:10px;overflow:hidden;margin:6px 0 10px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));border-radius:10px}
+.bar.warn i{background:linear-gradient(90deg,var(--good),#4ade80)}
+.row{display:flex;justify-content:space-between;font-size:12.5px;color:var(--dim);margin-bottom:4px;align-items:center;flex-wrap:wrap;gap:4px}
+.row b{color:var(--text);font-family:var(--mono);font-weight:600}
+.controls{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+input[type=number]{width:84px;background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:12px;padding:8px 10px;font-family:var(--mono)}
+select{background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:12px;padding:8px 10px;font-family:var(--sans);font-size:12px}
+button{background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:14px;padding:9px 14px;font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;transition:filter .15s}
+button:hover{border-color:var(--accent)}
+button.primary{background:var(--accent);color:#052026;border-color:var(--accent);font-weight:700}
+button.primary:hover{filter:brightness(1.08)}
+button:disabled{opacity:.35;cursor:not-allowed}
+svg{width:100%;height:56px;display:block}
+.log{max-height:170px;overflow-y:auto;font-family:var(--sans);font-size:12px;color:var(--dim);line-height:1.5}
+.log .now{color:var(--text)}
+.help{color:var(--dim);font-size:11.5px;margin-top:8px;line-height:1.5}
+.price-up{color:var(--good)} .price-down{color:var(--bad)}
+.event-chip{background:var(--panel2);border:1px solid var(--line);color:var(--accent);border-radius:20px;padding:7px 14px;font-size:11.5px;font-weight:600;white-space:nowrap}
+.pill{display:inline-flex;align-items:center;gap:5px;border-radius:20px;padding:4px 11px;font-size:11px;font-weight:700}
+.pill-good{background:rgba(34,197,94,.15);color:var(--good)}
+.pill-bad{background:rgba(239,68,68,.15);color:var(--bad)}
+.pill-neutral{background:rgba(56,189,248,.15);color:var(--accent2)}
+.avatars{display:flex;gap:14px;overflow-x:auto;padding-bottom:2px}
+.avatar-item{text-align:center;min-width:64px}
+.avatar-circle{width:48px;height:48px;border-radius:16px;background:linear-gradient(135deg,var(--accent2),#0f2a3a);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;margin:0 auto 6px}
+.avatar-item .aname{font-size:11px;font-weight:600}
+.avatar-item .arole{font-size:10px;color:var(--dim)}
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;background:rgba(23,29,43,.95);backdrop-filter:blur(14px);border-top:1px solid var(--line);display:flex;overflow-x:auto;padding:10px 8px calc(10px + env(safe-area-inset-bottom,0px));z-index:20;gap:2px}
+.tab-btn{background:transparent;border:none;color:var(--dim);border-radius:14px;padding:6px 10px;font-size:10.5px;white-space:nowrap;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:64px;flex-shrink:0}
+.tab-btn .ic{font-size:19px}
+.tab-btn.active{color:var(--accent)}
+.tab-btn svg{width:20px;height:20px}
+.icon-box{width:32px;height:32px;border-radius:10px;background:var(--panel2);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--accent)}
+.icon-box svg{width:17px;height:17px}
+.card h2{margin:0 0 12px;font-size:14px;color:var(--text);text-transform:none;font-weight:700;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.card h2 .h2-end{margin-left:auto;font-weight:400;font-size:11px;color:var(--dim)}
+[style*="justify-content:space-between"]{flex-wrap:wrap;row-gap:4px}
+[style*="justify-content:space-between"] > *{min-width:0;overflow-wrap:break-word}
+.row{overflow-wrap:break-word}
+.tx-title,.stage-sub,.help{overflow-wrap:break-word}
+.stage-icon svg{width:20px;height:20px;color:var(--accent)}
+.mini-spark{width:100%;height:26px;display:block;margin-top:6px}
+.stock-spark{width:100%;height:44px;display:block;margin:8px 0}
+.group-title{grid-column:1/-1;font-size:11.5px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.07em;margin-top:8px}
+.qbtn{padding:6px 10px;font-size:11px;border-radius:10px}
+.tx-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.tx-row:last-child{border-bottom:none}
+.tx-icon{width:34px;height:34px;border-radius:11px;background:var(--panel2);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--dim)}
+.tx-icon svg{width:16px;height:16px}
+.tx-body{flex:1;min-width:0}
+.tx-title{font-size:12.5px;font-weight:600;overflow-wrap:break-word;white-space:normal}
+.tx-sub{font-size:10.5px;color:var(--dim)}
+.tx-amt{font-family:var(--mono);font-weight:700;font-size:12.5px;white-space:nowrap}
+.ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:8px}
+.ach-badge{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:10px 6px;text-align:center;opacity:.35}
+.ach-badge.unlocked{opacity:1;border-color:var(--accent);background:rgba(34,211,238,.08)}
+.ach-badge .ach-ic{width:26px;height:26px;margin:0 auto 5px;color:var(--accent)}
+.ach-badge .ach-ic svg{width:100%;height:100%}
+.ach-badge .ach-name{font-size:9.5px;font-weight:700;line-height:1.25;overflow-wrap:break-word}
+.bottom-nav .tab-btn{flex:1;min-width:0}
+.subnav{gap:8px;margin:0 0 14px;overflow-x:auto}
+.subnav button{background:var(--panel2);border:1px solid var(--line);color:var(--dim);border-radius:20px;padding:8px 14px;font-size:12.5px;font-weight:600;white-space:nowrap;flex-shrink:0;cursor:pointer}
+.subnav button.active{color:var(--accent);border-color:var(--accent);background:rgba(56,189,248,.12)}
+.tab-panel{display:none}
+.tab-panel.active{display:grid}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);display:flex;align-items:center;justify-content:center;z-index:50;padding:16px}
+.modal-box{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:22px;max-width:440px;max-height:80vh;overflow-y:auto}
+.modal-box h3{margin:0 0 12px;color:var(--accent);font-size:16px}
+.modal-box ol{margin:0 0 16px;padding-left:20px;color:var(--dim);font-size:13px;line-height:1.8}
+.modal-box ol b{color:var(--text)}
+.day{display:flex;align-items:center;gap:0}
+#day{margin-left:4px}
+.gear-btn{background:transparent;border:none;padding:6px;margin-left:8px;color:var(--dim);border-radius:10px;line-height:0}
+.gear-btn svg{width:20px;height:20px;height:20px}
+.set-title{font-size:11px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;margin:16px 0 6px}
+.set-row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:8px 0;font-size:13px}
+button.danger{border-color:var(--bad);color:var(--bad)}
+.macro-chip{display:inline-flex;align-items:center;border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;margin-right:10px;background:rgba(56,189,248,.15);color:var(--accent2);font-family:var(--sans)}
+.macro-chip.up{background:rgba(34,197,94,.15);color:var(--good)}
+.macro-chip.hot{background:rgba(245,158,11,.18);color:#f59e0b}
+.macro-chip.down{background:rgba(239,68,68,.15);color:var(--bad)}
+.eff-row{display:flex;align-items:center;gap:10px;margin:8px 0;font-size:12.5px}
+.eff-row .eff-name{flex:1;min-width:0;color:var(--dim)}
+.eff-row .eff-bar{flex:1.3;height:8px;background:var(--panel2);border-radius:8px;position:relative;overflow:hidden}
+.eff-row .eff-bar i{position:absolute;top:0;bottom:0;border-radius:8px}
+.eff-row .eff-bar::after{content:'';position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--dim);opacity:.5}
+.eff-row b{width:54px;text-align:right;font-family:var(--mono);font-weight:600}
+.eff-title{font-size:11px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;margin:14px 0 2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="brand">
+    <h1>Феррум Холдинг</h1>
+    <div class="day"><span id="macroChip" class="macro-chip"></span>День <span id="day">1</span><button id="gearBtn" class="gear-btn" aria-label="Настройки"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></div>
+  </div>
+  <div class="hero-cash" id="cash">₽0</div>
+  <div class="hero-delta" id="profitToday">+₽0</div>
+  <div class="stage-card">
+    <div class="stage-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg></div>
+    <div style="flex:1">
+      <div class="stage-name" id="stageName">—</div>
+      <div class="stage-sub" id="stageSub">—</div>
+      <div class="bar" style="margin:8px 0 0"><i id="stageBar" style="width:0%"></i></div>
+    </div>
+  </div>
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-label">Прибыль за день</div><div class="stat-val" id="profitTodayVal">₽0</div><svg class="mini-spark" id="profitSpark"></svg></div>
+    <div class="stat-card"><div class="stat-label">Стоимость компании</div><div class="stat-val" id="netWorth">₽0</div><svg class="mini-spark" id="assetsSpark"></svg></div>
+    <div class="stat-card"><div class="stat-label">Собственный капитал</div><div class="stat-val" id="equityVal">₽0</div><svg class="mini-spark" id="equitySpark"></svg></div>
+  </div>
+</header>
+
+<div id="offlineBanner" class="card" style="display:none;margin-bottom:14px;border-color:var(--accent2)"></div>
+
+<div id="eventsBanner" style="margin-bottom:14px;gap:8px;flex-wrap:wrap;display:flex;overflow-x:auto"></div>
+
+<div class="bottom-nav">
+  <button class="tab-btn active" data-group="overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Обзор</button>
+  <button class="tab-btn" data-group="production"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 3h22l-3 5H4z"/><path d="M21 8v13H3V8"/><line x1="9" y1="13" x2="9" y2="17"/><line x1="15" y1="13" x2="15" y2="17"/></svg>Производство</button>
+  <button class="tab-btn" data-group="trade"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>Торговля</button>
+  <button class="tab-btn" data-group="empire"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>Империя</button>
+  <button class="tab-btn" data-group="finance"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>Финансы</button>
+</div>
+
+<div id="subnav" class="subnav" style="display:none"></div>
+
+<div class="tab-panel active" data-panel="overview">
+  <div class="card" style="margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+  <div>
+    <div style="font-size:13px;font-weight:600" id="autoStatus">Автоматический режим включён — день сменяется каждые 60 секунд</div>
+    <div class="help" id="autoCountdown"></div>
+  </div>
+  <div class="controls" style="margin:0">
+    <button id="forceNextBtn">Ускорить день</button>
+    <button id="pauseBtn">Пауза</button>
+  </div>
+</div>
+  <div class="card" style="margin-bottom:14px">
+    <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg></span>Достижения <span class="h2-end" id="achCount"></span></h2>
+    <div id="achievementsBody"></div>
+  </div>
+  <div class="card" style="margin-bottom:14px">
+    <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Эффективные менеджеры</h2>
+    <div id="managersBody"></div>
+  </div>
+  <div class="card">
+    <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>Журнал</h2>
+    <div class="log" id="log"></div>
+  </div>
+</div>
+
+<div class="tab-panel grid" data-panel="production">
+  <div class="card">
+    <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l9-5 9 5v13H3z"/><line x1="12" y1="8" x2="12" y2="21"/><path d="M3 8l9 5 9-5"/></svg></span>Склад</h2>
+    <div class="row"><span>Руда</span><b id="oreStockTxt">0 / 0 т</b></div>
+    <div class="bar"><i id="oreBar"></i></div>
+    <div class="row"><span>Сталь</span><b id="steelStockTxt">0 / 0 т</b></div>
+    <div class="bar warn"><i id="steelBar"></i></div>
+    <div class="help">Хранение стоит <span id="storageCost">0</span>₽/день за тонну сверх свободной ёмкости завода.</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 21V10l6 4v-4l6 4V8l7 4v9z"/></svg></span>Завод <span id="factoryCap" class="h2-end"></span></h2>
+    <div class="row"><span>Загрузка производства</span><b id="prodTxt">0 т/день</b></div>
+    <div class="bar"><i id="prodBar"></i></div>
+    <div class="help">Расход руды: 2т на 1т стали. Зарплата и обслуживание списываются каждый день независимо от загрузки.</div>
+    <div class="controls">
+      <button id="expandBtn">Расширить завод (₽<span id="expandCost"></span>)</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9"/></svg></span>Цех обработки <span id="partsFactoryCap" class="h2-end"></span></h2>
+    <div class="row"><span>Загрузка</span><b id="partsProdTxt">0 шт/день</b></div>
+    <div class="bar"><i id="partsProdBar"></i></div>
+    <div class="row"><span>Детали на складе</span><b id="partsStockTxt">0 / 0 шт</b></div>
+    <div class="bar warn"><i id="partsBar"></i></div>
+    <div class="help">Расход стали: 3т на 1 партию деталей. Деталь стоит дороже стали, но требует отдельного капитала на цех.</div>
+    <div class="controls">
+      <button id="expandPartsBtn">Расширить цех (₽<span id="expandPartsCost"></span>)</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 20 9 8 13 14 17 6 21 20"/></svg></span>Экспансия: рудник в Казахстане</h2>
+    <div id="mineBody"></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 4 12 8 12 3 20 21 20 16 12 20 12"/><line x1="12" y1="20" x2="12" y2="22"/></svg></span>Лесопилка</h2>
+    <div id="lumberBody"></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8"/><rect x="13" y="3" width="8" height="8"/><rect x="3" y="13" width="8" height="8"/><rect x="13" y="13" width="8" height="8"/></svg></span>Бетонный завод</h2>
+    <div id="concreteBody"></div>
+  </div>
+  <div class="card" style="grid-column:1/-1"><h2>Новые мощности</h2><div id="plantsBody"></div></div>
+</div>
+
+<div class="tab-panel grid" data-panel="markets">
+  <div class="card">
+    <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="14" r="5"/><circle cx="16" cy="15" r="4"/><circle cx="12" cy="9" r="3"/></svg></span>Рынок руды <span id="orePriceTag" class="h2-end"></span></h2>
+    <svg id="oreChart"></svg>
+    <div class="controls">
+      <input type="number" id="oreQty" value="10" min="1">
+      <button id="buyOreBtn" class="primary">Купить руду</button>
+    </div>
+    <div class="help">Крупные закупки временно поднимают цену — рынок ограничен.</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="15" width="18" height="5" rx="1"/><rect x="5" y="9" width="14" height="5" rx="1"/></svg></span>Рынок стали <span id="steelPriceTag" class="h2-end"></span></h2>
+    <svg id="steelChart"></svg>
+    <div class="help" id="steelExportTag"></div>
+    <div class="controls">
+      <input type="number" id="steelQty" value="10" min="1">
+      <select id="steelMarket">
+        <option value="domestic">Внутренний рынок</option>
+        <option value="export">Экспорт (Германия)</option>
+        <option value="tr">Экспорт: Турция</option>
+        <option value="cn">Экспорт: Китай</option>
+        <option value="ae">Экспорт: ОАЭ</option>
+      </select>
+      <select id="steelTransport">
+        <option value="truck">Грузовик — быстро, дорого (8%)</option>
+        <option value="rail">Ж/Д состав — дёшево, 2 дня в пути (3%)</option>
+        <option value="sea">Морской контейнер (только экспорт), 5 дней (2-3%)</option>
+      </select>
+      <button id="sellSteelBtn" class="primary">Продать сталь</button>
+    </div>
+    <div class="help">Крупная продажа за раз обрушивает цену — распределяйте продажи по дням.</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9"/></svg></span>Рынок деталей <span id="partsPriceTag" class="h2-end"></span></h2>
+    <svg id="partsChart"></svg>
+    <div class="help" id="partsExportTag"></div>
+    <div class="controls">
+      <input type="number" id="partsQty" value="5" min="1">
+      <select id="partsMarket">
+        <option value="domestic">Внутренний рынок</option>
+        <option value="export">Экспорт (Германия)</option>
+        <option value="tr">Экспорт: Турция</option>
+        <option value="cn">Экспорт: Китай</option>
+        <option value="ae">Экспорт: ОАЭ</option>
+      </select>
+      <select id="partsTransport">
+        <option value="truck">Грузовик — быстро, дорого (10%)</option>
+        <option value="rail">Ж/Д состав — дёшево, 2 дня в пути (4%)</option>
+        <option value="sea">Морской контейнер (только экспорт), 5 дней (2-3%)</option>
+      </select>
+      <button id="sellPartsBtn" class="primary">Продать детали</button>
+    </div>
+    <div class="help">Более узкий и дорогой рынок: спрос ограничен, но маржа выше, чем на сырой стали.</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>Конкурент</h2>
+    <div id="competitorBody"></div>
+  </div>
+  <div class="card" style="grid-column:1/-1"><h2>Госзаказы и тендеры</h2><div id="tenderBody"></div></div>
+  <div class="card" style="grid-column:1/-1"><h2>Конкуренты и доля рынка</h2><div id="rivalBody"></div></div>
+  <div class="card" style="grid-column:1/-1"><h2>Торговые хабы за рубежом</h2><div id="hubBody"></div></div>
+  <div class="card" style="grid-column:1/-1"><h2>Зарубежные поставщики</h2><div id="supplyBody"></div></div>
+</div>
+
+<div class="tab-panel grid" data-panel="finance">
+  <div class="card">
+    <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span>Финансы</h2>
+    <div class="row"><span>Задолженность по кредиту</span><b id="loanTxt">₽0</b></div>
+    <div class="row"><span>Проценты в день</span><b id="loanInterestTxt">₽0</b></div>
+    <div class="row"><span>Кредитный лимит</span><b id="loanLimitTxt">₽0</b></div>
+    <div class="controls">
+      <input type="number" id="loanQty" value="20000" min="1000" step="1000">
+      <select id="loanMode"><option value="float">Плавающая ставка</option><option value="fixed">Фиксированная (+15%)</option></select>
+      <button id="borrowBtn">Взять кредит</button>
+      <button id="repayBtn">Погасить</button>
+    </div>
+    <div class="help" id="loanHelp"></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>Облигации</h2>
+    <div class="row"><span>Вложено</span><b id="bondsVal">₽0</b></div>
+    <div class="help" id="bondHelp"></div>
+    <div class="controls">
+      <input type="number" id="bondQty" value="20000" min="1000" step="1000">
+      <button id="investBtn">Вложить</button>
+      <button id="withdrawBtn">Вывести всё</button>
+    </div>
+  </div>
+</div>
+
+<div class="tab-panel grid" data-panel="research">
+  <div class="card">
+    <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>Исследования</h2>
+    <div id="researchActive"></div>
+    <div id="researchList"></div>
+  </div>
+</div>
+
+<div class="tab-panel grid" data-panel="holding">
+  <div class="card">
+    <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>Дочерние компании</h2>
+    <div id="holdingBody"></div>
+  </div>
+  <div class="card" style="grid-column:1/-1"><h2>Мегапроекты</h2><div id="megaBody"></div></div>
+</div>
+
+<div class="tab-panel grid" data-panel="business">
+  <div class="card" style="grid-column:1/-1">
+    <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>Портфель бизнесов</h2>
+    <div class="help" style="margin-top:0">Отдельные направления вне металлургии — открываются по мере роста компании, каждое даёт ежедневный доход независимо от завода.</div>
+  </div>
+  <div id="businessList" style="display:contents"></div>
+  <div class="card" style="grid-column:1/-1"><h2>Развитие бизнесов</h2><div id="bizDevBody"></div></div>
+</div>
+
+<div class="tab-panel grid" data-panel="stocks">
+  <div class="card" style="grid-column:1/-1">
+    <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="4" height="10"/><rect x="10" y="4" width="4" height="16"/><rect x="16" y="8" width="4" height="12"/></svg></span>Мой портфель</h2>
+    <div class="row"><span>Стоимость акций</span><b id="portfolioVal">₽0</b></div>
+    <div class="help">Цены симулируются, это не онлайн-котировки. Дивиденды — каждые 20 дней по числу акций. Крипта — без дивидендов, зато с крупными трендами: ловите просадки и продавайте на росте (комиссия сделки 0,4%). Полный выкуп компании стоит на 25% дороже рынка — у гигантов это почти недостижимая цель.</div>
+  </div>
+  <div id="stocksList" style="display:contents"></div>
+</div>
+
+<div class="tab-panel grid" data-panel="macro">
+  <div class="card" style="grid-column:1/-1">
+    <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 12 7 12 10 4 14 20 17 12 21 12"/></svg></span>Экономический цикл</h2>
+    <div id="macroPhaseBody"></div>
+  </div>
+  <div class="card">
+    <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 12 7 12 10 4 14 20 17 12 21 12"/></svg></span>Инфляция и уровень цен</h2>
+    <div id="macroInflBody"></div>
+  </div>
+  <div class="card">
+    <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 12 7 12 10 4 14 20 17 12 21 12"/></svg></span>Ключевая ставка</h2>
+    <div id="macroRateBody"></div>
+  </div>
+  <div class="card" style="grid-column:1/-1">
+    <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 12 7 12 10 4 14 20 17 12 21 12"/></svg></span>Как цикл бьёт по отраслям</h2>
+    <div id="macroSectorsBody"></div>
+  </div>
+</div>
+
+<div class="tab-panel grid" data-panel="realty"><div id="reBody" style="display:contents"></div></div>
+
+<div id="settingsOverlay" class="modal-overlay" style="display:none">
+  <div class="modal-box" style="width:100%;max-width:440px">
+    <h3>Настройки</h3>
+    <div class="set-title" style="margin-top:0">Игра</div>
+    <div class="set-row"><span>Длина игрового дня</span>
+      <select id="setSpeed"><option value="15">15 сек</option><option value="30">30 сек</option><option value="60">60 сек</option><option value="120">2 мин</option><option value="300">5 мин</option></select></div>
+    <div class="set-row"><span>Прогресс, пока вас нет</span>
+      <select id="setOffline"><option value="1">Идёт</option><option value="0">Стоит на паузе</option></select></div>
+    <div class="set-row"><span>Крупные числа сокращать (₽1,5 млн)</span>
+      <select id="setCompact"><option value="0">Нет</option><option value="1">Да</option></select></div>
+    <div class="set-row"><span>Влияние экономического цикла</span><select id="setMacro"><option value="1">Полное</option><option value="0.4">Смягчённое</option><option value="0">Выключено</option></select></div>
+    <div class="controls"><button id="tutorialBtn">Показать обучение снова</button></div>
+
+    <div class="set-title">Сохранение</div>
+    <div class="help" style="margin-top:0">Прогресс хранится в браузере. Перед сменой устройства или очисткой данных сделайте экспорт и сохраните код в заметки.</div>
+    <div class="controls">
+      <button id="exportBtn" class="primary">Экспорт (скопировать код)</button>
+      <button id="downloadBtn">Скачать файлом</button>
+    </div>
+    <textarea id="saveBox" rows="4" placeholder="Здесь появится код сейва. Для загрузки вставьте сюда код и нажмите «Импорт»." style="width:100%;margin-top:10px;background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:10px;font-family:var(--mono);font-size:11px"></textarea>
+    <div class="controls"><button id="importBtn">Импорт из кода</button></div>
+    <div class="help" id="saveMsg"></div>
+
+    <div class="set-title">Опасная зона</div>
+    <div class="controls" style="margin-top:0"><button id="resetBtn" class="danger">Сбросить игру</button></div>
+    <div class="help">Удаляет весь прогресс и начинает с нуля. Сначала сделайте экспорт, если хотите сохранить копию.</div>
+
+    <div class="controls" style="margin-top:18px"><button id="settingsCloseBtn" class="primary">Закрыть</button></div>
+  </div>
+</div>
+
+<div class="tab-panel grid" data-panel="staff"><div id="staffBody" style="display:contents"></div><div id="riskBody" style="display:contents"></div></div>
+
+<div class="tab-panel grid" data-panel="oil"><div id="oilBody" style="display:contents"></div></div>
+
+<div class="tab-panel grid" data-panel="collect"><div id="colBody" style="display:contents"></div></div>
+
+<div id="onboardingOverlay" class="modal-overlay" style="display:none">
+  <div class="modal-box">
+    <h3>Феррум Холдинг: с чего начать</h3>
+    <ol>
+      <li>Вкладка <b>«Рынки»</b> → купите руду.</li>
+      <li>Вкладка <b>«Производство»</b> → завод сам превращает руду в сталь на дневном тике.</li>
+      <li>Вкладка <b>«Рынки»</b> → продайте сталь, когда её накопится на складе.</li>
+      <li>День идёт автоматически раз в 60 сек (кнопка вверху — ускорить вручную).</li>
+      <li>Прибыль → расширяйте завод, берите кредит, исследуйте технологии — решать вам.</li>
+    </ol>
+    <button id="onboardingCloseBtn" class="primary">Понятно, начинаем</button>
+  </div>
+</div>
+</div>
+
+<script>
+const GROUPS=[
+  {id:'overview', panels:[['overview','Обзор']]},
+  {id:'production', panels:[['production','Заводы'],['staff','Персонал'],['research','Наука']]},
+  {id:'trade', panels:[['markets','Рынки']]},
+  {id:'empire', panels:[['business','Бизнесы'],['oil','Нефтегаз'],['holding','Холдинг'],['realty','Недвижимость'],['collect','Коллекции']]},
+  {id:'finance', panels:[['finance','Кредиты'],['stocks','Биржа'],['macro','Экономика']]}
+];
+const lastSub={};
+function showPanel(id){
+  const g=GROUPS.find(x=>x.panels.some(p=>p[0]===id)); if(!g) return;
+  lastSub[g.id]=id;
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.group===g.id));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active', p.dataset.panel===id));
+  const sn=document.getElementById('subnav');
+  sn.style.display = g.panels.length>1 ? 'flex' : 'none';
+  sn.innerHTML = g.panels.map(p=>`<button data-sub="${p[0]}" class="${p[0]===id?'active':''}">${p[1]}</button>`).join('');
+  sn.querySelectorAll('button').forEach(b=>b.onclick=()=>showPanel(b.dataset.sub));
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.onclick = () => { const g=GROUPS.find(x=>x.id===btn.dataset.group); showPanel(lastSub[g.id]||g.panels[0][0]); };
+});
+showPanel('overview');
+
+const BIZ_ICON_PATHS = {
+  taxi:'<path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11"/><rect x="3" y="11" width="18" height="6" rx="2"/><circle cx="7.5" cy="19" r="1.5"/><circle cx="16.5" cy="19" r="1.5"/>',
+  restaurant:'<path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>',
+  logistics_biz:'<rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>',
+  hotel:'<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/>',
+  construction:'<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
+  it:'<rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/>',
+  metall:'<path d="M1 21V10l6 4v-4l6 4V8l7 4v9z"/>',
+  logistika:'<rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>',
+  treid:'<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>',
+  kapital:'<rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>',
+};
+function iconBox(id){
+  return `<span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${BIZ_ICON_PATHS[id]||''}</svg></span>`;
+}
+document.addEventListener('gesturestart', e => e.preventDefault());
+let lastTouchEnd = 0;
+document.addEventListener('touchend', e => {
+  const now = Date.now();
+  if(now - lastTouchEnd <= 300) e.preventDefault();
+  lastTouchEnd = now;
+}, {passive:false});
+
+const fmt = n => (s.settings && s.settings.compact && Math.abs(n)>=1e6) ? fmtBig(n) : Math.round(n).toLocaleString('ru-RU');
+const clamp = (v,a,b)=>Math.min(b,Math.max(a,v));
+
+const KEY = 'ferrum_holding_v1';
+let s = load() || {
+  day:1, cash:50000,
+  ore:0, steel:0,
+  oreCap:400, steelCap:200,
+  factoryCapacity:20, // тонн стали в день
+  wagePerDay:600, upkeepPerDay:300,
+  orePrice:120, steelPrice:520,
+  oreHistory:[120,120,120,120,120,120,120,120,120,120],
+  steelHistory:[520,520,520,520,520,520,520,520,520,520],
+  soldToday:0, boughtToday:0,
+  expandLevel:0,
+  parts:0, partsCap:60, partsPrice:1800,
+  partsFactoryCapacity:6, expandLevel2:0,
+  partsHistory:[1800,1800,1800,1800,1800,1800,1800,1800,1800,1800],
+  running:true,
+  competitor:{ name:'Северсталь Групп', cash:70000, capacity:18, status:'стабильно' },
+  competitorActive:true, competitorRespawnDay:null,
+  shipments:[],
+  exportUnlocked:false,
+  exportSteelPrice:640, exportPartsPrice:2300,
+  exportSteelHistory:[640,640,640,640,640,640,640,640,640,640],
+  exportPartsHistory:[2300,2300,2300,2300,2300,2300,2300,2300,2300,2300],
+  loanPrincipal:0, loanRate:0.0025, distressDays:0,
+  oreRatio:2, transportFeeMultiplier:1, tariffMultiplier:1,
+  lumber:0, lumberCap:150, lumberFactoryCapacity:15, lumberCostPerUnit:90, lumberExpandLevel:0,
+  concrete:0, concreteCap:200, concreteFactoryCapacity:20, concreteCostPerUnit:70, concreteExpandLevel:0,
+  research:null, completedTechs:[],
+  activeEvents:[],
+  mineOwned:false, mineDailyOre:15, mineUpkeep:250,
+  subsidiaries:[], creditLimitFactor:0.5, marketReach:1,
+  businesses:{},
+  managers:{procurement:false, sales:false, fleet:false},
+  fleetTargets:{taxi:0, logistics_biz:0},
+  profitHistory:[0,0,0,0,0,0,0,0,0,0],
+  assetsHistory:[50000,50000,50000,50000,50000,50000,50000,50000,50000,50000],
+  equityHistory:[50000,50000,50000,50000,50000,50000,50000,50000,50000,50000],
+  achievements:[], everProducedSteel:false, hadLoan:false, everAcquiredCompetitor:false,
+  bonds:0, bondRate:0.0015,
+  portfolio:{}, dividendCounter:0,
+  log:['Компания «Феррум Холдинг» зарегистрирована. Стартовый капитал: ₽50 000.']
+};
+if(!s.settings) s.settings = {tickSec:60, offline:true, compact:false};
+let TICK_MS = s.settings.tickSec*1000;
+let timer = null;
+let nextTickAt = Date.now() + TICK_MS;
+if(!s.competitor) s.competitor = { name:'Северсталь Групп', cash:70000, capacity:18, status:'стабильно' };
+if(s.competitorActive===undefined){ s.competitorActive=true; s.competitorRespawnDay=null; }
+const RIVAL_NAMES = ['Северсталь Групп','Прометей Индастриз','Уралмет Холдинг','Балтик Стил','Кузбасс Металл','Орион Металлургия'];
+if(s.parts===undefined){ s.parts=0; s.partsCap=60; s.partsPrice=1800; s.partsFactoryCapacity=6; s.expandLevel2=0; s.partsHistory=[1800,1800,1800,1800,1800,1800,1800,1800,1800,1800]; }
+if(s.running===undefined) s.running = true;
+if(!s.shipments) s.shipments = [];
+if(s.exportUnlocked===undefined){
+  s.exportUnlocked=false; s.exportSteelPrice=640; s.exportPartsPrice=2300;
+  s.exportSteelHistory=[640,640,640,640,640,640,640,640,640,640];
+  s.exportPartsHistory=[2300,2300,2300,2300,2300,2300,2300,2300,2300,2300];
+}
+if(s.loanPrincipal===undefined){ s.loanPrincipal=0; s.loanRate=0.0025; s.distressDays=0; }
+if(s.oreRatio===undefined){ s.oreRatio=2; s.transportFeeMultiplier=1; s.tariffMultiplier=1; s.research=null; s.completedTechs=[]; }
+if(s.lumber===undefined){
+  s.lumber=0; s.lumberCap=150; s.lumberFactoryCapacity=15; s.lumberCostPerUnit=90; s.lumberExpandLevel=0;
+  s.concrete=0; s.concreteCap=200; s.concreteFactoryCapacity=20; s.concreteCostPerUnit=70; s.concreteExpandLevel=0;
+}
+if(!s.activeEvents) s.activeEvents = [];
+if(s.mineOwned===undefined){ s.mineOwned=false; s.mineDailyOre=15; s.mineUpkeep=250; }
+if(!s.subsidiaries){ s.subsidiaries=[]; s.creditLimitFactor=0.5; s.marketReach=1; }
+if(!s.businesses) s.businesses = {};
+['taxi','logistics_biz'].forEach(id=>{
+  const b = s.businesses[id];
+  if(b && b.opened && !b.fleet){ b.fleet = []; delete b.level; }
+});
+if(s.businesses.construction && s.businesses.construction.opened && s.businesses.construction.activeProject===undefined){
+  s.businesses.construction = {opened:true, activeProject:null, completedCount:0};
+}
+if(s.businesses.it && s.businesses.it.opened && s.businesses.it.activeProject===undefined){
+  s.businesses.it = {opened:true, activeProject:null, completedCount:0};
+}
+if(!s.managers) s.managers = {procurement:false, sales:false, fleet:false};
+if(!s.fleetTargets) s.fleetTargets = {taxi:0, logistics_biz:0};
+if(!s.profitHistory){ s.profitHistory=[0,0,0,0,0,0,0,0,0,0]; s.assetsHistory=Array(10).fill(s.cash); s.equityHistory=Array(10).fill(s.cash); }
+if(!s.achievements){ s.achievements=[]; s.everProducedSteel=false; s.hadLoan=false; s.everAcquiredCompetitor=false; }
+if(s.bonds===undefined){ s.bonds=0; s.bondRate=0.0015; }
+if(!s.macro){
+  s.macro = {phase:'growth', phaseDay:0, phaseLen:32, demand:1.0, infl:1.2, keyRate:8, costIndex:1, pmi:1.0,
+    cycles:0, recessionWins:0, recStartEq:null,
+    dHist:Array(20).fill(1), iHist:Array(20).fill(1.2), rHist:Array(20).fill(8)};
+}
+if(!s.loanMode){ s.loanMode='float'; s.loanFixedMult=1; }
+const STOCKS = [
+  {id:'aapl', group:'giants', name:'Apple', ticker:'AAPL', sector:'Технологии', basePrice:20700, shares:15000000000, volPct:0.022, trendVol:0.05, pull:0.02, dividendRate:0.001},
+  {id:'nvda', group:'giants', name:'NVIDIA', ticker:'NVDA', sector:'Полупроводники', basePrice:16200, shares:24400000000, volPct:0.04, trendVol:0.08, pull:0.02, dividendRate:0.0003},
+  {id:'amd', group:'giants', name:'AMD', ticker:'AMD', sector:'Полупроводники', basePrice:14400, shares:1620000000, volPct:0.045, trendVol:0.09, pull:0.02, dividendRate:0},
+  {id:'msft', group:'giants', name:'Microsoft', ticker:'MSFT', sector:'Технологии', basePrice:45000, shares:7430000000, volPct:0.02, trendVol:0.04, pull:0.02, dividendRate:0.002},
+  {id:'googl', group:'giants', name:'Alphabet', ticker:'GOOGL', sector:'Интернет', basePrice:18000, shares:12100000000, volPct:0.025, trendVol:0.05, pull:0.02, dividendRate:0.001},
+  {id:'tsla', group:'giants', name:'Tesla', ticker:'TSLA', sector:'Автопром', basePrice:36000, shares:3200000000, volPct:0.055, trendVol:0.1, pull:0.02, dividendRate:0},
+  {id:'technoil', group:'local', name:'ТехноНефть', ticker:'TNFT', sector:'Энергетика', basePrice:340, shares:1000000, volatility:14, dividendRate:0.015},
+  {id:'agrofood', group:'local', name:'АгроПрод', ticker:'AGRO', sector:'Пищевая промышленность', basePrice:85, shares:2000000, volatility:5, dividendRate:0.02},
+  {id:'bankvostok', group:'local', name:'Банк Восток', ticker:'BVOS', sector:'Финансы', basePrice:620, shares:500000, volatility:18, dividendRate:0.025},
+  {id:'digitalwave', group:'local', name:'ЦифроВолна', ticker:'DGWV', sector:'Технологии', basePrice:1250, shares:300000, volatility:45, dividendRate:0},
+  {id:'ristretto', group:'local', name:'Ристретто Групп', ticker:'RIST', sector:'Розничная торговля', basePrice:210, shares:800000, volatility:9, dividendRate:0.018},
+  {id:'btc', group:'crypto', kind:'crypto', name:'Bitcoin', ticker:'BTC', sector:'Криптовалюта', basePrice:9000000, shares:19900000, volPct:0.045, trendVol:0.14, pull:0.05, dividendRate:0},
+  {id:'eth', group:'crypto', kind:'crypto', name:'Ethereum', ticker:'ETH', sector:'Криптовалюта', basePrice:360000, shares:121000000, volPct:0.06, trendVol:0.16, pull:0.05, dividendRate:0},
+  {id:'sol', group:'crypto', kind:'crypto', name:'Solana', ticker:'SOL', sector:'Криптовалюта', basePrice:18000, shares:540000000, volPct:0.08, trendVol:0.2, pull:0.05, dividendRate:0},
+];
+if(!s.portfolio){ s.portfolio={}; s.dividendCounter=0; }
+if(!s.stockPrices){ s.stockPrices={}; s.stockHistory={}; }
+if(!s.stockTrend) s.stockTrend={};
+if(!s.costBasis) s.costBasis={};
+STOCKS.forEach(st=>{
+  if(s.stockPrices[st.id]===undefined){ s.stockPrices[st.id]=st.basePrice; s.stockHistory[st.id]=Array(10).fill(st.basePrice); }
+  if(s.stockTrend[st.id]===undefined) s.stockTrend[st.id]=0;
+});
+if(s.everBoughtOutCompany===undefined) s.everBoughtOutCompany = false;
+function fmtBig(n){
+  if(n>=1e12) return (n/1e12).toFixed(2).replace('.',',')+' трлн';
+  if(n>=1e9) return (n/1e9).toFixed(2).replace('.',',')+' млрд';
+  if(n>=1e6) return (n/1e6).toFixed(1).replace('.',',')+' млн';
+  return fmt(n);
+}
+function fmtQty(n,d){ const k=Math.pow(10,d); return (Math.round(n*k)/k).toLocaleString('ru-RU',{maximumFractionDigits:d}); }
+function portfolioValue(){
+  return STOCKS.reduce((sum,st)=>sum + (s.portfolio[st.id]||0)*s.stockPrices[st.id], 0);
+}
+const ACHIEVEMENTS = [
+  {id:'first_steel', name:'Первая сталь', desc:'Наладить производство стали', reward:5000, check:(s,eq)=>s.everProducedSteel},
+  {id:'own_mine', name:'Своя добыча', desc:'Купить рудник в Казахстане', reward:10000, check:(s,eq)=>s.mineOwned},
+  {id:'first_million', name:'Первый миллион', desc:'Собственный капитал ₽1 000 000', reward:20000, check:(s,eq)=>eq>=1000000},
+  {id:'holding_stage', name:'Холдинг', desc:'Дорасти до этапа «Холдинг»', reward:100000, check:(s,eq)=>eq>=12000000},
+  {id:'global_stage', name:'Глобальный игрок', desc:'Дорасти до высшего этапа', reward:500000, check:(s,eq)=>eq>=50000000},
+  {id:'billionaire', name:'Миллиардер', desc:'Собственный капитал ₽1 000 000 000', reward:2000000, check:(s,eq)=>eq>=1000000000},
+  {id:'diversified', name:'Диверсификация', desc:'Открыть все направления бизнеса', reward:80000, check:(s,eq)=>BUSINESSES.every(b=>s.businesses[b.id]&&s.businesses[b.id].opened)},
+  {id:'all_subsidiaries', name:'Полный холдинг', desc:'Учредить все 4 дочерние компании', reward:150000, check:(s,eq)=>s.subsidiaries.length>=SUBSIDIARIES.length},
+  {id:'all_tech', name:'Технологический лидер', desc:'Завершить все исследования', reward:100000, check:(s,eq)=>s.completedTechs.length>=TECHS.length},
+  {id:'all_managers', name:'Автопилот', desc:'Нанять всех трёх менеджеров', reward:30000, check:(s,eq)=>MANAGERS.every(m=>s.managers[m.id])},
+  {id:'raider', name:'Рейдер', desc:'Поглотить конкурента', reward:60000, check:(s,eq)=>s.everAcquiredCompetitor},
+  {id:'contractor', name:'Подрядчик', desc:'Сдать 5 строительных заказов', reward:70000, check:(s,eq)=>s.businesses.construction&&s.businesses.construction.completedCount>=5},
+  {id:'serial_dev', name:'Серийный разработчик', desc:'Завершить 3 IT-проекта', reward:70000, check:(s,eq)=>s.businesses.it&&s.businesses.it.completedCount>=3},
+  {id:'big_fleet', name:'Большой автопарк', desc:'15 машин суммарно в такси и логистике', reward:50000, check:(s,eq)=>{
+    const t = s.businesses.taxi&&s.businesses.taxi.fleet ? s.businesses.taxi.fleet.length : 0;
+    const l = s.businesses.logistics_biz&&s.businesses.logistics_biz.fleet ? s.businesses.logistics_biz.fleet.length : 0;
+    return t+l>=15;
+  }},
+  {id:'debt_free', name:'Без долгов', desc:'Взять кредит и полностью его погасить', reward:25000, check:(s,eq)=>s.hadLoan && s.loanPrincipal===0},
+  {id:'takeover', name:'Поглощение', desc:'Полностью выкупить компанию на бирже', reward:120000, check:(s,eq)=>s.everBoughtOutCompany},
+  {id:'full_cycle', name:'Полный цикл', desc:'Пережить полный экономический цикл: рост, перегрев, спад, восстановление', reward:60000, check:(s,eq)=>s.macro&&s.macro.cycles>=1},
+  {id:'builder', name:'Строитель империи', desc:'Завершить 3 мегапроекта', reward:200000000, check:(s,eq)=>s.mega&&s.mega.done.length>=3},
+  {id:'all_companies', name:'Хозяин рынка', desc:'Полностью выкупить все компании на бирже', reward:100000000000, check:(s,eq)=>STOCKS.every(st=>(s.portfolio[st.id]||0)>=st.shares)},
+  {id:'oil_baron', name:'Нефтяной магнат', desc:'Заработать на нефтегазе ₽100 млн чистыми', reward:30000000, check:(s,eq)=>s.oil&&s.oil.total>=1e8},
+  {id:'collector', name:'Коллекционер', desc:'Собрать полную коллекцию', reward:20000000, check:(s,eq)=>s.col&&COLLS.some(c=>s.col.own[c.id].length>=c.items.length)},
+  {id:'landlord', name:'Домовладелец', desc:'Владеть 10 объектами недвижимости', reward:80000, check:(s,eq)=>s.re&&Object.values(s.re).reduce((a,x)=>a+x.n,0)>=10},
+  {id:'happy_team', name:'Дружный коллектив', desc:'Довести мораль персонала до 85', reward:40000, check:(s,eq)=>s.staff&&s.staff.morale>=85},
+  {id:'crisis_manager', name:'Антикризисный менеджер', desc:'Закончить рецессию с капиталом выше, чем в её начале', reward:90000, check:(s,eq)=>s.macro&&s.macro.recessionWins>=1},
+];
+const BUSINESSES = [
+  {id:'taxi', name:'Такси-парк «Скорость»', unlock:0, cost:15000, fleet:true,
+   vehicleCost:12000, vehicleName:'машина', revenuePerVehicle:220, upkeepPerVehicle:40,
+   volatility:0.3, kmMin:150, kmMax:250,
+   desc:'Доход зависит от размера автопарка. Гараж ограничивает число машин, класс выше приносит больше с одного места.'},
+  {id:'restaurant', name:'Сеть кафе «Уголёк»', unlock:50000, cost:60000, baseRevenue:2400, upkeep:1500, volatility:0.25,
+   desc:'Стабильнее такси, но высокая постоянная аренда и зарплаты идут в любую погоду.'},
+  {id:'logistics_biz', name:'Логистическая компания «Магистраль»', unlock:120000, cost:150000, fleet:true,
+   vehicleCost:45000, vehicleName:'грузовик', revenuePerVehicle:650, upkeepPerVehicle:150,
+   volatility:0.2, kmMin:300, kmMax:500,
+   desc:'Возит чужие грузы за комиссию. При открытии удешевляет и вашу собственную доставку на 10%. Грузовик списывается при 300 000 км.',
+   onOpen:s=>{ s.transportFeeMultiplier*=0.9; }},
+  {id:'hotel', name:'Сеть отелей «Горизонт»', unlock:400000, cost:500000, baseRevenue:8500, upkeep:7000, volatility:0.2, seasonal:true,
+   desc:'Сезонный бизнес: доход заметно растёт в высокий сезон и проседает в межсезонье.'},
+  {id:'construction', name:'Стройкомпания «Опора»', unlock:900000, cost:1200000, projects:true, needsMaterials:true, projectList:null, idleUpkeep:500,
+   desc:'Берёт подрядные заказы. Расходует вашу же сталь со склада и деньги на материалы, платит одной суммой по завершении.'},
+  {id:'it', name:'IT-компания «Кодекс»', unlock:2000000, cost:2500000, projects:true, needsMaterials:false, projectList:null, idleUpkeep:800,
+   desc:'Берёт проекты на разработку. Рискованнее стройки: есть шанс провала — тогда только частичный возврат вложений.'},
+];
+const CONSTRUCTION_PROJECTS = [
+  {id:'house', name:'Дом', days:5, steelNeeded:30, concreteNeeded:40, lumberNeeded:20, cashCost:80000, payout:180000, successChance:1},
+  {id:'office', name:'Офисное здание', days:16, steelNeeded:120, concreteNeeded:160, lumberNeeded:60, cashCost:320000, payout:820000, successChance:1},
+  {id:'highrise', name:'Высотка', days:40, steelNeeded:400, concreteNeeded:550, lumberNeeded:150, cashCost:1100000, payout:3400000, successChance:1},
+];
+const IT_PROJECTS = [
+  {id:'app', name:'Мобильное приложение', days:6, cashCost:60000, payout:150000, successChance:0.85},
+  {id:'saas', name:'SaaS-платформа', days:18, cashCost:280000, payout:750000, successChance:0.75},
+  {id:'ai', name:'ИИ-продукт', days:35, cashCost:900000, payout:2800000, successChance:0.65},
+];
+BUSINESSES.push({id:'port', name:'Портовый терминал «Причал»', unlock:3500000, cost:4000000, baseRevenue:22000, upkeep:15000, volatility:0.2,
+  desc:'Перевалка чужих грузов. При открытии все ваши транспортные комиссии дешевле на 15%.', onOpen:s=>{ s.transportFeeMultiplier*=0.85; }});
+BIZ_ICON_PATHS.port = BIZ_ICON_PATHS.logistics_biz || BIZ_ICON_PATHS.taxi;
+BUSINESSES.find(b=>b.id==='construction').projectList = CONSTRUCTION_PROJECTS;
+BUSINESSES.find(b=>b.id==='it').projectList = IT_PROJECTS;
+const MANAGERS = [
+  {id:'procurement', name:'Менеджер по закупкам', hireCost:80000, salary:400,
+   desc:'Докупает руду каждый день, если склад заполнен меньше чем на 40%, до 80% ёмкости.'},
+  {id:'sales', name:'Менеджер по продажам', hireCost:90000, salary:450,
+   desc:'Продаёт сталь и детали на внутреннем рынке грузовиком, если склад заполнен больше чем на 70%.'},
+  {id:'fleet', name:'Менеджер автопарка', hireCost:70000, salary:350,
+   desc:'Поддерживает заданный размер автопарка в такси и логистике — докупает машины вместо списанных и до цели.'},
+];
+const SUBSIDIARIES = [
+  {id:'metall', name:'Феррум Металл', cost:2000000,
+   desc:'+8 мощности завода стали и +5 мощности цеха обработки.',
+   effect:s=>{ s.factoryCapacity+=8; s.partsFactoryCapacity+=5; }},
+  {id:'logistika', name:'Феррум Логистика', cost:1800000,
+   desc:'Комиссии доставки ниже ещё на 25%, склад расширяется (+200 руда / +100 сталь / +50 детали).',
+   effect:s=>{ s.transportFeeMultiplier*=0.75; s.oreCap+=200; s.steelCap+=100; s.partsCap+=50; }},
+  {id:'treid', name:'Феррум Трейд', cost:2200000,
+   desc:'Экспортные пошлины ниже ещё на 20%, рынки сбыта шире — цена меньше падает при крупных продажах.',
+   effect:s=>{ s.tariffMultiplier*=0.8; s.marketReach*=1.4; }},
+  {id:'kapital', name:'Феррум Капитал', cost:1500000,
+   desc:'Кредитный лимит выше (70% капитала вместо 50%), ставка ниже ещё на 20%.',
+   effect:s=>{ s.loanRate*=0.8; s.creditLimitFactor=0.7; }},
+];
+if(s.onboardingSeen===undefined) s.onboardingSeen = false;
+if(!s.onboardingSeen){
+  document.getElementById('onboardingOverlay').style.display = 'flex';
+}
+document.getElementById('onboardingCloseBtn').onclick = () => {
+  s.onboardingSeen = true;
+  document.getElementById('onboardingOverlay').style.display = 'none';
+  save();
+};
+const EVENTS = [
+  {id:'oreSpike', name:'Скачок цен на руду', days:5, mods:{ore:1.6, buyImpact:1.3}},
+  {id:'oreShortage', name:'Дефицит железной руды', days:4, mods:{ore:1.4, buyImpact:1.6}},
+  {id:'steelDemandUp', name:'Рост спроса на сталь', days:5, mods:{steel:1.35}},
+  {id:'steelDemandDown', name:'Падение спроса на сталь', days:5, mods:{steel:0.7, parts:0.85}},
+  {id:'newDeposit', name:'Открыто новое месторождение руды', days:6, mods:{ore:0.65}},
+  {id:'logisticsCrisis', name:'Транспортный коллапс', days:4, mods:{transportFee:1.6}},
+  {id:'tariffHike', name:'Ужесточение экспортных тарифов', days:6, mods:{tariff:1.5}},
+  {id:'exportBoom', name:'Экспортный бум', days:5, mods:{steel:1.2, parts:1.25, tariff:0.85}},
+  {id:'bankCrisis', name:'Банковский кризис', days:7, mods:{keyRate:1.35, demand:0.94}},
+  {id:'inflShock', name:'Инфляционный шок', days:7, mods:{infl:2.2}},
+  {id:'commodityBoom', name:'Сырьевой бум', days:5, mods:{ore:1.25, steel:1.1, demand:1.04}},
+];
+function combinedEventMods(){
+  const m={ore:1,steel:1,parts:1,transportFee:1,tariff:1,buyImpact:1,demand:1,keyRate:1,infl:1};
+  s.activeEvents.forEach(e=>{ for(const k in e.mods) m[k]*=e.mods[k]; });
+  return m;
+}
+
+// ===== МАКРОЭКОНОМИКА: цикл, инфляция, ключевая ставка =====
+const PHASES = {
+  growth:{name:'Рост', demand:1.10, infl:1.3, len:[28,48], next:'peak',
+    hint:'Спрос растёт, экономика разгоняется. Время расширяться — но к перегреву ставка вырастет: кредит выгоднее зафиксировать заранее.'},
+  peak:{name:'Перегрев', demand:1.20, infl:2.8, len:[8,16], next:'recession',
+    hint:'Пик спроса и инфляции. Центробанк поднимает ставку, кредиты дорожают, рынки перегреты — разворот близко.'},
+  recession:{name:'Спад', demand:0.80, infl:0.5, len:[16,32], next:'recovery',
+    hint:'Спрос падает, постоянные расходы давят на маржу. Ставка низкая: дешёвый кредит и подешевевшие активы — для тех, кто выстоит.'},
+  recovery:{name:'Восстановление', demand:0.96, infl:0.9, len:[10,20], next:'growth',
+    hint:'Спрос возвращается. Активы после спада ещё недооценены, но новый рост не за горами — и с ним дорогие кредиты.'}
+};
+const BIZ_CYC = {taxi:0.5, restaurant:1.4, logistics_biz:1.0, hotel:1.9, construction:1.6, it:1.0, port:0.8};
+const BIZ_SHORT = {taxi:'Такси', restaurant:'Кафе', logistics_biz:'Логистика', hotel:'Отели', construction:'Стройка', it:'IT-компания', port:'Порт'};
+const SECTOR_MACRO = {
+  'Технологии':{c:1.0,r:1.4}, 'Полупроводники':{c:1.5,r:1.4}, 'Интернет':{c:1.0,r:1.1}, 'Автопром':{c:1.5,r:0.9},
+  'Энергетика':{c:0.9,r:0.3}, 'Пищевая промышленность':{c:0.3,r:0.3}, 'Финансы':{c:1.1,r:-0.6},
+  'Розничная торговля':{c:1.2,r:0.6}, 'Криптовалюта':{c:0.7,r:3.0}
+};
+function rateFactor(){ return clamp(s.macro.keyRate/8, 0.4, 2.5); }
+function effLoanRate(){ return s.loanRate*(s.loanMode==='fixed' ? s.loanFixedMult : rateFactor())*(1-0.03*prestigeRank()); }
+function effBondRate(){ return s.bondRate*rateFactor(); }
+function bizFactor(id){ const M=s.macro; return (1+(M.demand-1)*(BIZ_CYC[id]||1))*(1+(M.costIndex-1)*0.6)*bizRev(id); }
+function projCash(p){ return Math.round(p.cashCost*s.macro.costIndex); }
+function projPay(b,p){ const M=s.macro; return Math.round(p.payout*(1+(M.demand-1)*(BIZ_CYC[b.id]||1))*(1+(M.costIndex-1)*0.9)*bizRev(b.id)); }
+function vehCost(b,n){ return Math.round(b.vehicleCost*(1+0.03*n)*s.macro.costIndex); }
+function sectorEffect(sm){ const M=s.macro; return (1+sm.c*(M.demand-1))*(1-sm.r*(M.keyRate-8)/100)-1; }
+function stockMacroFactor(st){
+  const M=s.macro, sm=SECTOR_MACRO[st.sector]||{c:1,r:0.5};
+  return clamp((1+(M.costIndex-1)*0.8)*(1+sectorEffect(sm)), 0.35, 2.2);
+}
+function priceLevels(){
+  const M=s.macro, ci=M.costIndex;
+  return { ore: ci*(1+(M.demand-1)*0.8), steel:(1+(ci-1)*0.7)*(1+(M.demand-1)*1.4), parts:(1+(ci-1)*0.7)*(1+(M.demand-1)*1.0) };
+}
+function equityNow(){
+  return s.cash + s.ore*s.orePrice + s.steel*s.steelPrice + s.parts*s.partsPrice
+    + s.shipments.reduce((a,sh)=>a+sh.amount,0) + s.bonds + portfolioValue() + reValue() + inboundValue() + colValue() - s.loanPrincipal;
+}
+function cycleLine(id){
+  const dem = (s.macro.demand-1)*(BIZ_CYC[id]||1)*100;
+  return `<div class="row"><span>Влияние цикла на выручку</span><b class="${dem>=0?'good':'bad'}">${dem>=0?'+':'−'}${Math.abs(dem).toFixed(0)}%</b></div>`;
+}
+function macroStep(){
+  const M = s.macro, mods = combinedEventMods();
+  M.phaseDay += 1;
+  if(M.phaseDay >= M.phaseLen){
+    const prev = M.phase;
+    if(prev==='recession'){
+      if(M.recStartEq!==null && equityNow() >= M.recStartEq){
+        M.recessionWins += 1;
+        pushLog('Спад закончился, а ваш капитал выше, чем в его начале — вы вышли из кризиса сильнее.');
+      }
+      M.recStartEq = null;
+    }
+    if(prev==='recovery') M.cycles += 1;
+    M.phase = PHASES[prev].next;
+    const nx = PHASES[M.phase];
+    M.phaseLen = nx.len[0] + Math.floor(Math.random()*(nx.len[1]-nx.len[0]+1));
+    M.phaseDay = 0;
+    if(M.phase==='recession') M.recStartEq = equityNow();
+    pushLog(`Экономика входит в фазу «${nx.name}».`);
+  }
+  const ph = PHASES[M.phase];
+  const K = s.settings.macroK===undefined ? 1 : s.settings.macroK;
+  const dT = clamp(1+(ph.demand*mods.demand-1)*K, 0.6, 1.4);
+  M.demand = clamp(M.demand + (dT-M.demand)*0.12 + (Math.random()-0.5)*0.008, 0.6, 1.4);
+  const iT = ph.infl*mods.infl*K;
+  M.infl = clamp(M.infl + (iT-M.infl)*0.10 + (Math.random()-0.5)*0.1, 0, 8);
+  const rT = 8 + (clamp(4 + M.infl*2.2 + (M.demand-1)*10, 2, 22)*mods.keyRate - 8)*K;
+  M.keyRate = clamp(M.keyRate + (rT-M.keyRate)*0.06, 2, 24);
+  M.costIndex *= Math.pow(1+M.infl/100*INFL_K, 1/30);
+  const nxt = PHASES[ph.next];
+  const lead = clamp(1 - (M.phaseLen-M.phaseDay)/10, 0, 1);
+  M.pmi = M.demand + (nxt.demand-M.demand)*lead*0.7 + (Math.random()-0.5)*0.03;
+  M.dHist.push(M.demand); if(M.dHist.length>40) M.dHist.shift();
+  M.iHist.push(M.infl); if(M.iHist.length>40) M.iHist.shift();
+  M.rHist.push(M.keyRate); if(M.rHist.length>40) M.rHist.shift();
+}
+function renderMacro(){
+  const M=s.macro, ph=PHASES[M.phase];
+  const chip=document.getElementById('macroChip');
+  chip.textContent = ph.name;
+  chip.className = 'macro-chip ' + ({growth:'up',peak:'hot',recession:'down',recovery:''}[M.phase]||'');
+  const dirTxt = M.pmi-M.demand>0.02 ? '<span class="good">↑ улучшаются</span>' : (M.pmi-M.demand<-0.02 ? '<span class="bad">↓ ухудшаются</span>' : 'без изменений');
+  const phaseCls = {growth:'pill-good',peak:'pill-bad',recession:'pill-bad',recovery:'pill-neutral'}[M.phase];
+  document.getElementById('macroPhaseBody').innerHTML = `
+    <div class="row"><span>Фаза цикла</span><span class="pill ${phaseCls}">${ph.name}</span></div>
+    <div class="row"><span>Длится</span><b>${M.phaseDay} дн.</b></div>
+    <div class="row"><span>Спрос в экономике</span><b>${(M.demand*100).toFixed(0)}</b></div>
+    <svg class="mini-spark" id="macroSparkD"></svg>
+    <div class="row"><span>Опережающий индекс (PMI)</span><b>${(M.pmi*100).toFixed(0)}</b></div>
+    <div class="row"><span>Ожидания рынка</span><b>${dirTxt}</b></div>
+    <div class="help">${ph.hint}</div>
+    <div class="help">PMI обычно начинает двигаться к следующей фазе примерно за 10 дней до её наступления, но с шумом — ошибиться легко. Полных циклов пройдено: ${M.cycles}. Спадов, пережитых с приростом капитала: ${M.recessionWins}.</div>`;
+  sparkline(document.getElementById('macroSparkD'), M.dHist, '#22c55e', '#ef4444');
+
+  const cum = (M.costIndex-1)*100;
+  document.getElementById('macroInflBody').innerHTML = `
+    <div class="row"><span>Уровень цен с начала игры</span><b class="${cum>0.5?'bad':''}">+${cum.toFixed(1)}%</b></div>
+    <div class="row"><span>Инфляция сейчас</span><b>${(M.infl*INFL_K).toFixed(2)}%/мес</b></div>
+    <svg class="mini-spark" id="macroSparkI"></svg>
+    <div class="help">Дорожают зарплаты, обслуживание, машины, расширения, сырьё и стройматериалы. Цены на вашу продукцию догоняют инфляцию лишь частично (сталь и детали ~70%, выручка бизнесов ~60%) — маржа сжимается, а лежащая в кассе сумма обесценивается.</div>`;
+  sparkline(document.getElementById('macroSparkI'), M.iHist, '#ef4444', '#22c55e');
+
+  const loanDay = effLoanRate()*100, bondDay = effBondRate()*100;
+  const bondMonth = (Math.pow(1+effBondRate(),30)-1)*100;
+  const loanMonth = (Math.pow(1+effLoanRate(),30)-1)*100;
+  const real = bondMonth - M.infl*INFL_K;
+  const loanKind = s.loanPrincipal>0 ? (s.loanMode==='fixed' ? 'фиксированная' : 'плавающая') : 'нет кредита';
+  document.getElementById('macroRateBody').innerHTML = `
+    <div class="row"><span>Ключевая ставка</span><b>${M.keyRate.toFixed(1)}%</b></div>
+    <svg class="mini-spark" id="macroSparkR"></svg>
+    <div class="row"><span>Кредит сейчас (${loanKind})</span><b>${loanDay.toFixed(2)}%/день</b></div>
+    <div class="row"><span>Облигации</span><b>${bondDay.toFixed(3)}%/день</b></div>
+    <div class="row"><span>Реальная доходность облигаций</span><b class="${real>=0?'good':'bad'}">${real>=0?'+':'−'}${Math.abs(real).toFixed(1)}%/мес</b></div>
+    <div class="help">Центробанк держит ставку выше при высокой инфляции и горячем спросе, ниже — в спад. Плавающий кредит и облигации следуют за ней сразу; фиксированную ставку выбирайте при взятии кредита во вкладке «Финансы».</div>`;
+  sparkline(document.getElementById('macroSparkR'), M.rHist, '#f59e0b', '#38bdf8');
+
+  const effRow = (name, v) => {
+    const x = clamp(Math.abs(v), 0, 50);
+    const st = v>=0 ? `left:50%;width:${x}%;background:var(--good)` : `left:${50-x}%;width:${x}%;background:var(--bad)`;
+    return `<div class="eff-row"><span class="eff-name">${name}</span><span class="eff-bar"><i style="${st}"></i></span><b class="${v>=0?'good':'bad'}">${v>=0?'+':'−'}${Math.abs(v).toFixed(0)}%</b></div>`;
+  };
+  const PL = priceLevels();
+  const bizRows = Object.keys(BIZ_CYC).map(id=>effRow(BIZ_SHORT[id], (M.demand-1)*BIZ_CYC[id]*100)).join('');
+  const goodsRows = effRow('Руда (цена)', (PL.ore-1)*100) + effRow('Сталь (цена)', (PL.steel-1)*100) + effRow('Детали (цена)', (PL.parts-1)*100);
+  const secRows = Object.keys(SECTOR_MACRO).map(n=>effRow(n, sectorEffect(SECTOR_MACRO[n])*100)).join('');
+  document.getElementById('macroSectorsBody').innerHTML = `
+    <div class="eff-title">Выручка бизнесов от спроса</div>${bizRows}
+    <div class="eff-title">Цены на металлургию против базовых</div>${goodsRows}
+    <div class="eff-title">Целевая цена акций по секторам (спрос + ставка)</div>${secRows}
+    <div class="help">Такси — защитный бизнес, отели и кафе — самые циклические. Банки выигрывают от высокой ставки, технологии и крипто страдают. Цена акции подтягивается к цели постепенно, поэтому ранний разворот PMI — окно для перекладки портфеля.</div>`;
+
+  const sel = document.getElementById('loanMode');
+  if(s.loanPrincipal>0){ sel.value = s.loanMode; sel.disabled = true; } else { sel.disabled = false; }
+  document.getElementById('loanHelp').innerHTML = `Ставка сейчас ${loanDay.toFixed(2)}%/день (~${loanMonth.toFixed(1)}%/мес), ключевая ${M.keyRate.toFixed(1)}%. Плавающая следует за ключевой, фиксированная стоит на 15% дороже текущей, но не растёт при перегреве. Смешивать режимы нельзя — только после полного погашения. Если касса надолго уходит в глубокий минус, банк принудительно взыщет активы.`;
+  document.getElementById('bondHelp').innerHTML = `Ставка сейчас ${bondDay.toFixed(3)}%/день (~${bondMonth.toFixed(1)}%/мес), капитализация ежедневно, следует за ключевой ставкой. Инфляция ${(M.infl*INFL_K).toFixed(2)}%/мес — реальная доходность ${real>=0?'+':'−'}${Math.abs(real).toFixed(1)}%/мес. Безопасная гавань для свободной кассы, но в спад доходность падает.`;
+}
+
+const INFL_K = 0.25;
+const RE_TYPES = [
+  {id:'flat', name:'Жилые квартиры', unlock:500000, base:400000, rent:0.0016, cyc:0.6, vol:0.012, desc:'Стабильная аренда, слабо зависит от цикла.'},
+  {id:'office', name:'Коммерческая недвижимость', unlock:3000000, base:2500000, rent:0.0020, cyc:1.5, vol:0.02, desc:'Доходнее, но в спад арендаторы уходят и цена проваливается.'},
+  {id:'ind', name:'Склады и промзона', unlock:12000000, base:10000000, rent:0.0022, cyc:1.0, vol:0.015, desc:'Крупные объекты с высокой арендной доходностью.'}
+];
+if(!s.re){ s.re = {}; }
+if(!s.mortgage) s.mortgage = 0;
+RE_TYPES.forEach(t=>{ if(!s.re[t.id]) s.re[t.id] = {n:0, basis:0, p:t.base, hist:Array(20).fill(t.base)}; });
+function reValue(){ return RE_TYPES.reduce((a,t)=>a + s.re[t.id].n*s.re[t.id].p, 0); }
+function reStep(){
+  const M=s.macro, ci=M.costIndex;
+  RE_TYPES.forEach(t=>{
+    const o=s.re[t.id];
+    const target = t.base*ci*(1+(M.demand-1)*t.cyc*1.5)*clamp(1-(M.keyRate-8)*0.025, 0.6, 1.4);
+    o.p = Math.max(Math.round(t.base*0.3), Math.round(o.p + (target-o.p)*0.06 + (Math.random()-0.5)*o.p*t.vol*2));
+    o.hist.push(o.p); if(o.hist.length>40) o.hist.shift();
+    if(o.n>0) s.cash += o.n*o.p*(t.rent*(1+(M.demand-1)*t.cyc) - 0.0003);
+  });
+  s.mortgage = Math.min(s.mortgage, s.loanPrincipal);
+  for(let k=0; k<3 && s.mortgage>0 && s.mortgage>reValue()*0.85; k++){
+    const t = RE_TYPES.filter(x=>s.re[x.id].n>0).sort((a,b)=>s.re[b.id].p-s.re[a.id].p)[0];
+    if(!t){ s.mortgage=0; break; }
+    const o=s.re[t.id], rev=o.p*0.9, part=o.basis/o.n; o.n-=1; o.basis=o.n>0?o.basis-part:0;
+    const pay=Math.min(s.mortgage,rev); s.mortgage-=pay; s.loanPrincipal-=pay; s.cash+=rev-pay;
+    pushLog(`Банк принудительно продал объект (${t.name}) за ₽${fmt(rev)}: ипотечный долг превысил 85% стоимости залога.`);
+  }
+  s.taxCounter = (s.taxCounter||0)+1;
+  if(s.taxCounter>=30){
+    s.taxCounter = 0;
+    const eq=equityNow(), k=ci, br=[[1e6*k,0.004],[2e7*k,0.008],[3e8*k,0.012]];
+    let tax=0;
+    br.forEach((b,i)=>{ const hi=i<br.length-1?br[i+1][0]:Infinity; if(eq>b[0]) tax+=(Math.min(eq,hi)-b[0])*b[1]; });
+    tax=Math.round(tax);
+    if(tax>0){ s.cash-=tax; s.taxPaid=(s.taxPaid||0)+tax; pushLog(`Расход: налог на капитал за месяц ₽${fmt(tax)}.`); }
+  }
+}
+function renderRE(){
+  const el=document.getElementById('reBody'), eq=equityNow();
+  const total = RE_TYPES.reduce((a,t)=>a+s.re[t.id].n,0);
+  let html = `<div class="card" style="grid-column:1/-1"><div class="row"><span>Стоимость недвижимости</span><b>₽${fmtBig(reValue())}</b></div>
+    <div class="row"><span>Объектов</span><b>${total}</b></div>
+    <div class="row"><span>Налог на капитал (раз в 30 дн.), до следующего</span><b>${30-(s.taxCounter||0)} дн.</b></div>
+    <div class="row"><span>Уплачено налогов всего</span><b>₽${fmt(s.taxPaid||0)}</b></div>
+    <div class="help">Покупка +3% комиссии, продажа −2%. Цены следуют за спросом, инфляцией и ключевой ставкой: дорогие кредиты давят на рынок, спад роняет аренду. Налог: 0,4% в месяц на капитал выше ₽1 млн, 0,8% выше ₽20 млн, 1,2% выше ₽300 млн (пороги растут с инфляцией).</div></div>`;
+  RE_TYPES.forEach(t=>{
+    const o=s.re[t.id];
+    if(eq<t.unlock){ html+=`<div class="card"><h2>${t.name}</h2><div class="help">Открывается при капитале от ₽${fmt(t.unlock)}.</div></div>`; return; }
+    const M=s.macro, rentDay=o.n*o.p*(t.rent*(1+(M.demand-1)*t.cyc)-0.0003), pnl=o.n*o.p-o.basis, prev=o.hist[o.hist.length-2]||o.p;
+    html+=`<div class="card"><h2>${t.name}<span class="h2-end">₽${fmtBig(o.p)} / объект</span></h2>
+      <svg class="stock-spark" id="reSpark_${t.id}"></svg>
+      <div class="row"><span>За день</span><b class="${o.p>=prev?'good':'bad'}">${o.p>=prev?'+':'−'}${(Math.abs(o.p-prev)/prev*100).toFixed(2)}%</b></div>
+      <div class="row"><span>Владеете</span><b>${o.n} шт.</b></div>
+      <div class="row"><span>Аренда чистыми в день</span><b class="${rentDay>=0?'good':'bad'}">₽${fmt(rentDay)}</b></div>
+      ${o.n>0?`<div class="row"><span>Результат позиции</span><b class="${pnl>=0?'good':'bad'}">${pnl>=0?'+':'−'}₽${fmt(Math.abs(pnl))}</b></div>`:''}
+      <div class="help">${t.desc}</div>
+      <div class="controls"><input type="number" min="1" value="1" data-reqty="${t.id}" style="width:70px">
+        <button class="primary" data-rebuy="${t.id}">Купить</button><button data-resell="${t.id}" ${o.n<=0?'disabled':''}>Продать</button></div></div>`;
+  });
+  const mRoom=Math.max(0, reValue()*0.6 - s.mortgage), mRate=effLoanRate()*0.7*100;
+  html+=`<div class="card" style="grid-column:1/-1"><h2>Ипотека под залог недвижимости</h2>
+    <div class="row"><span>Ипотечный долг</span><b class="${s.mortgage>0?'bad':''}">₽${fmt(s.mortgage)}</b></div>
+    <div class="row"><span>Доступно (до 60% стоимости объектов)</span><b>₽${fmt(mRoom)}</b></div>
+    <div class="row"><span>Ставка (на 30% ниже обычной)</span><b>${mRate.toFixed(2)}%/день</b></div>
+    <div class="help">Ипотека входит в общий долг. Если долг превысит 85% стоимости залога (например, при падении рынка в спад), банк принудительно продаст объекты по 90% цены.</div>
+    <div class="controls"><input type="number" id="mortQty" min="1000" step="1000" value="100000" style="width:110px">
+      <button id="mortTake" class="primary" ${mRoom<1000?'disabled':''}>Взять</button><button id="mortRepay" ${s.mortgage<=0?'disabled':''}>Погасить</button></div></div>`;
+  el.innerHTML=html;
+  RE_TYPES.forEach(t=>{ const sp=document.getElementById('reSpark_'+t.id); if(sp) sparkline(sp, s.re[t.id].hist, '#22c55e', '#ef4444'); });
+  const q=id=>Math.max(1,Math.floor(parseFloat(el.querySelector(`[data-reqty="${id}"]`).value)||1));
+  el.querySelectorAll('[data-rebuy]').forEach(b=>b.onclick=()=>{
+    const id=b.dataset.rebuy, o=s.re[id], n=q(id), cost=n*o.p*1.03;
+    if(s.cash<cost){ pushLog('Недостаточно средств для покупки недвижимости.'); render(); return; }
+    s.cash-=cost; o.n+=n; o.basis+=cost;
+    pushLog(`Куплено объектов: ${n} (${RE_TYPES.find(t=>t.id===id).name}) за ₽${fmt(cost)}.`); render();
+  });
+  el.querySelectorAll('[data-resell]').forEach(b=>b.onclick=()=>{
+    const id=b.dataset.resell, o=s.re[id], n=Math.min(q(id),o.n); if(n<=0) return;
+    const rev=n*o.p*0.98, part=o.basis*n/o.n; o.n-=n; o.basis=o.n>0?o.basis-part:0; s.cash+=rev;
+    pushLog(`Продано объектов: ${n}, ${rev>=part?'прибыль':'убыток'} сделки ₽${fmt(Math.abs(rev-part))}.`); render();
+  });
+  const mq=()=>Math.max(0,Math.floor(parseFloat(document.getElementById('mortQty').value)||0));
+  document.getElementById('mortTake').onclick=()=>{ const a=Math.min(mq(), Math.max(0,reValue()*0.6-s.mortgage)); if(a<1000) return;
+    s.mortgage+=a; s.loanPrincipal+=a; s.cash+=a; s.hadLoan=true; pushLog(`Взят кредит ₽${fmt(a)} (ипотека). Общая задолженность: ₽${fmt(s.loanPrincipal)}.`); render(); };
+  document.getElementById('mortRepay').onclick=()=>{ const a=Math.min(mq(), s.mortgage, Math.max(0,s.cash)); if(a<=0) return;
+    s.mortgage-=a; s.loanPrincipal-=a; s.cash-=a; pushLog(`Погашено ₽${fmt(a)} ипотеки. Остаток: ₽${fmt(s.mortgage)}.`); render(); };
+}
+
+if(!s.staff) s.staff={morale:55, wage:1, benefits:false, skill:0, lowDays:0, strike:null, strikes:0};
+function staffMult(){ const S=s.staff; return S.strike ? 0 : (0.75+0.35*S.morale/100)*(1+0.04*S.skill)*(s.downDays>0?0.5:1); }
+function staffTarget(){ const S=s.staff, M=s.macro; return clamp(50+(S.wage-1)*100+(S.benefits?15:0)+S.skill*2+(M.demand-1)*30+1.5*prestigeRank(), 5, 100); }
+function wageBill(){ return s.wagePerDay*s.staff.wage*(s.staff.benefits?1.2:1)*s.macro.costIndex; }
+function settleCost(){ return Math.round(s.wagePerDay*s.staff.wage*s.macro.costIndex*15); }
+function trainCost(){ return Math.round(25000*(1+s.staff.skill)*s.macro.costIndex); }
+function staffStep(){
+  const S=s.staff;
+  if(S.strike){
+    S.strike.days -= 1; S.morale = Math.max(0, S.morale-1);
+    if(S.strike.days<=0){ S.strike=null; S.lowDays=0; S.morale=Math.max(S.morale,45); pushLog('Забастовка закончилась, производство возобновлено.'); }
+    return;
+  }
+  S.morale = clamp(S.morale + (staffTarget()-S.morale)*0.08 + (Math.random()-0.5)*3, 0, 100);
+  S.lowDays = S.morale<35 ? S.lowDays+1 : Math.max(0, S.lowDays-1);
+  if(S.lowDays>=4 && Math.random()<0.3){
+    S.strike = {days:3+Math.floor(Math.random()*4)}; S.strikes += 1;
+    pushLog('Профсоюз объявил забастовку: производство остановлено, зарплаты выплачиваются.');
+  }
+}
+function renderStaff(){
+  const S=s.staff, el=document.getElementById('staffBody'), mult=staffMult(), tgt=staffTarget();
+  const mc = S.morale>=65?'good':(S.morale<35?'bad':'');
+  const wl=[[0.8,'Экономная'],[1,'Рыночная'],[1.25,'Высокая']];
+  el.innerHTML=`
+  <div class="card" style="grid-column:1/-1"><h2>Коллектив${S.strike?' <span class="pill pill-bad h2-end">ЗАБАСТОВКА</span>':''}</h2>
+    <div class="row"><span>Мораль</span><b class="${mc}">${S.morale.toFixed(0)} / 100 (цель ${tgt.toFixed(0)})</b></div>
+    <div class="bar"><i style="width:${S.morale}%"></i></div>
+    <div class="row"><span>Производительность цехов</span><b class="${mult>=1?'good':'bad'}">${(mult*100).toFixed(0)}%</b></div>
+    <div class="row"><span>Фонд оплаты труда в день</span><b>₽${fmt(wageBill())}</b></div>
+    <div class="row"><span>Забастовок за игру</span><b>${S.strikes}</b></div>
+    ${S.strike?`<div class="help bad">Производство стоит ещё ${S.strike.days} дн. Зарплаты продолжают выплачиваться.</div>
+      <div class="controls"><button id="settleBtn" class="primary" ${s.cash<settleCost()?'disabled':''}>Договориться (₽${fmt(settleCost())})</button></div>`
+      : (S.lowDays>0?`<div class="help bad">Профсоюз недоволен (${S.lowDays} дн. низкой морали) — назревает забастовка.</div>`:'<div class="help">Мораль тянется к цели: зарплата, соцпакет и обучение поднимают её, спад экономики снижает. Ниже 35 накапливается недовольство, и профсоюз может остановить производство.</div>')}
+  </div>
+  <div class="card"><h2>Оплата труда</h2>
+    <div class="help" style="margin-top:0">Уровень зарплаты меняет фонд оплаты и целевую мораль (экономная −20, высокая +25).</div>
+    <div class="controls">${wl.map(w=>`<button data-wage="${w[0]}" class="${S.wage===w[0]?'primary':''}">${w[1]}</button>`).join('')}</div>
+    <div class="row" style="margin-top:12px"><span>Соцпакет (+20% к ФОТ, +15 к морали)</span><b>${S.benefits?'включён':'выключен'}</b></div>
+    <div class="controls"><button id="benBtn">${S.benefits?'Отключить':'Включить'}</button></div>
+  </div>
+  <div class="card"><h2>Обучение</h2>
+    <div class="row"><span>Квалификация</span><b>${S.skill} / 5</b></div>
+    <div class="help">Каждый уровень даёт +4% к выпуску цехов и +2 к целевой морали.</div>
+    <div class="controls"><button id="trainBtn" class="primary" ${S.skill>=5||s.cash<trainCost()?'disabled':''}>${S.skill>=5?'Максимум':'Повысить (₽'+fmt(trainCost())+')'}</button></div>
+  </div>`;
+  el.querySelectorAll('[data-wage]').forEach(b=>b.onclick=()=>{ S.wage=parseFloat(b.dataset.wage); render(); });
+  document.getElementById('benBtn').onclick=()=>{ S.benefits=!S.benefits; render(); };
+  document.getElementById('trainBtn').onclick=()=>{ const c=trainCost(); if(S.skill>=5||s.cash<c) return; s.cash-=c; S.skill+=1; pushLog(`Расход: обучение персонала, квалификация ${S.skill}, ₽${fmt(c)}.`); render(); };
+  const sb=document.getElementById('settleBtn');
+  if(sb) sb.onclick=()=>{ const c=settleCost(); if(s.cash<c||!S.strike) return; s.cash-=c; S.strike=null; S.lowDays=0; S.morale=Math.max(S.morale,60); pushLog(`Расход: переговоры с профсоюзом, забастовка прекращена, ₽${fmt(c)}.`); render(); };
+}
+
+const MARKETS = {
+  domestic:{name:'Внутренний рынок', reach:1},
+  export:{name:'Германия', unlock:150000, steel:640, parts:2300, ts:0.18, tp:0.22, reach:1},
+  tr:{name:'Турция', unlock:700000, steel:590, parts:2050, ts:0.10, tp:0.12, reach:1},
+  cn:{name:'Китай', unlock:3000000, steel:700, parts:2500, ts:0.25, tp:0.28, reach:2.2},
+  ae:{name:'ОАЭ', unlock:12000000, steel:760, parts:2800, ts:0.05, tp:0.05, reach:0.6}
+};
+if(!s.mk) s.mk={};
+['tr','cn','ae'].forEach(id=>{ if(!s.mk[id]) s.mk[id]={steel:MARKETS[id].steel, parts:MARKETS[id].parts}; });
+if(!s.plants) s.plants=[];
+function marketOpen(id){ return id==='domestic' || (id==='export' ? s.exportUnlocked : equityNow()>=MARKETS[id].unlock); }
+function marketsStep(PL,mods){
+  supplyDrift(PL,mods);
+  ['tr','cn','ae'].forEach(id=>{ const m=MARKETS[id], o=s.mk[id];
+    o.steel=Math.max(80,Math.round(o.steel+(m.steel*PL.steel*mods.steel-o.steel)*0.04+(Math.random()-0.5)*22));
+    o.parts=Math.max(300,Math.round(o.parts+(m.parts*PL.parts*mods.parts-o.parts)*0.04+(Math.random()-0.5)*50)); });
+}
+function renderMarkets(){
+  ['steel','parts'].forEach(k=>{
+    const sel=document.getElementById(k+'Market');
+    ['export','tr','cn','ae'].forEach(id=>{ const o=sel.querySelector(`option[value=${id}]`); if(o) o.disabled=!marketOpen(id); });
+    document.getElementById(k+'ExportTag').textContent = ['export','tr','cn','ae'].map(id=>{
+      const m=MARKETS[id]; if(!marketOpen(id)) return `${m.name}: с капитала ₽${fmtBig(m.unlock)}`;
+      const p = id==='export' ? (k==='steel'?s.exportSteelPrice:s.exportPartsPrice) : s.mk[id][k];
+      return `${m.name} ₽${fmt(p)} (пошлина ${Math.round((k==='steel'?m.ts:m.tp)*100)}%)`; }).join(' · ');
+  });
+}
+function sellGoods(kind){
+  const st=kind==='steel';
+  const qty=clamp(parseInt(document.getElementById(kind+'Qty').value)||0,1,st?500:200);
+  const actualQty=Math.min(qty, st?s.steel:s.parts);
+  if(actualQty<=0){ pushLog(st?'Нет стали на складе для продажи.':'Нет деталей на складе для продажи.'); render(); return; }
+  const market=document.getElementById(kind+'Market').value, mode=document.getElementById(kind+'Transport').value;
+  if(!marketOpen(market)){ pushLog('Этот рынок ещё не открыт.'); render(); return; }
+  if(mode==='sea' && market==='domestic'){ pushLog('Морем можно отправлять только на экспорт.'); render(); return; }
+  const M=MARKETS[market], mods=combinedEventMods();
+  const base = market==='domestic' ? (st?s.steelPrice:s.partsPrice) : market==='export' ? (st?s.exportSteelPrice:s.exportPartsPrice) : s.mk[market][kind];
+  const div=(st?{truck:300,rail:500,sea:700}:{truck:60,rail:100,sea:150})[mode]*s.marketReach*M.reach*(s.hubs[market]?1.5:1);
+  const impact=1-actualQty/div;
+  const gross=base*(1+(impact-1)/2)*actualQty;
+  const fee=gross*({truck:st?0.08:0.10, rail:st?0.03:0.04, sea:st?0.02:0.03}[mode])*s.transportFeeMultiplier*mods.transportFee;
+  const tariff = market==='domestic' ? 0 : gross*(st?M.ts:M.tp)*s.tariffMultiplier*mods.tariff*(s.hubs[market]?0.75:1);
+  const net=gross-fee-tariff, fl=st?80:300;
+  if(st){ s.steel-=actualQty; s.soldToday+=actualQty; } else s.parts-=actualQty;
+  if(market==='domestic'){ if(st) s.steelPrice=Math.max(50,Math.round(s.steelPrice*impact)); else s.partsPrice=Math.max(300,Math.round(s.partsPrice*impact)); }
+  else if(market==='export'){ if(st) s.exportSteelPrice=Math.max(fl,Math.round(s.exportSteelPrice*impact)); else s.exportPartsPrice=Math.max(fl,Math.round(s.exportPartsPrice*impact)); }
+  else s.mk[market][kind]=Math.max(fl,Math.round(s.mk[market][kind]*impact));
+  const label=`${actualQty}${st?'т стали':' деталей'} (${market==='domestic'?'внутр. рынок':'экспорт: '+M.name})`;
+  const delay={truck:0,rail:2,sea:5}[mode];
+  if(delay){ s.shipments.push({arriveDay:s.day+delay, amount:net, label}); pushLog(`Отгружено ${label} ${mode==='sea'?'морем':'по ж/д'}, ₽${fmt(net)} придут через ${delay} дн.`); }
+  else { s.cash+=net; pushLog(`Продано ${label} грузовиком за ₽${fmt(net)}.`); }
+  render();
+}
+const PLANTS=[
+  {id:'mill2', name:'Второй сталеплавильный комплекс', unlock:1500000, cost:900000, desc:'+25 т стали/день, склад +200 руды и +100 стали, ФОТ +₽700/день.', fx:s=>{s.factoryCapacity+=25;s.oreCap+=200;s.steelCap+=100;s.wagePerDay+=700;}},
+  {id:'parts2', name:'Второй цех обработки', unlock:2000000, cost:1100000, desc:'+10 деталей/день, склад +60, ФОТ +₽500/день.', fx:s=>{s.partsFactoryCapacity+=10;s.partsCap+=60;s.wagePerDay+=500;}},
+  {id:'mill3', name:'Металлургический завод №3', unlock:6000000, cost:3200000, req:'mill2', desc:'+60 т стали/день, склад +400 руды и +200 стали, ФОТ +₽1 600/день.', fx:s=>{s.factoryCapacity+=60;s.oreCap+=400;s.steelCap+=200;s.wagePerDay+=1600;}},
+  {id:'parts3', name:'Высокоточный цех', unlock:8000000, cost:3600000, req:'parts2', desc:'+25 деталей/день, склад +150, ФОТ +₽1 300/день.', fx:s=>{s.partsFactoryCapacity+=25;s.partsCap+=150;s.wagePerDay+=1300;}}
+];
+function renderPlants(){
+  const el=document.getElementById('plantsBody'), eq=equityNow();
+  el.innerHTML=PLANTS.map(p=>{
+    const own=s.plants.includes(p.id), cost=Math.round(p.cost*s.macro.costIndex), locked=eq<p.unlock||(p.req&&!s.plants.includes(p.req));
+    return `<div class="row" style="margin-top:8px;flex-direction:column;align-items:flex-start;gap:4px"><div style="display:flex;justify-content:space-between;width:100%"><b style="color:var(--text)">${p.name}</b><span>${own?'построен':'₽'+fmt(cost)}</span></div><div style="color:var(--dim)">${p.desc}</div>${own?'':locked?`<div class="help">Откроется при капитале от ₽${fmt(p.unlock)}${p.req?' и после предыдущей очереди':''}.</div>`:`<button data-plant="${p.id}" class="primary" ${s.cash<cost?'disabled':''}>Построить</button>`}</div>`;
+  }).join('');
+  el.querySelectorAll('[data-plant]').forEach(b=>b.onclick=()=>{
+    const p=PLANTS.find(x=>x.id===b.dataset.plant), c=Math.round(p.cost*s.macro.costIndex);
+    if(s.cash<c||s.plants.includes(p.id)) return;
+    s.cash-=c; p.fx(s); s.plants.push(p.id); pushLog(`Расход: построено «${p.name}», ₽${fmt(c)}.`); render();
+  });
+}
+
+// ===== ПОСТАВЩИКИ: общий каркас закупки сырья (сейчас руда; лес, бетон и др. добавляются записью в SUPPLY) =====
+const SUPPLY = {
+  ore:{ label:'Руда', unit:'т', own:'внутреннего рынка', base:120, stock:()=>s.ore, cap:()=>s.oreCap, add:n=>{ s.ore+=n; }, localPrice:()=>s.orePrice,
+    sources:[
+      {id:'kz', name:'Казахстан', unlock:400000, mult:0.90, fee:0.04, tariff:0, delay:2, div:400, via:'ж/д'},
+      {id:'au', name:'Австралия', unlock:3000000, mult:0.78, fee:0.03, tariff:0, delay:6, div:800, via:'морем'},
+      {id:'br', name:'Бразилия', unlock:8000000, mult:0.72, fee:0.035, tariff:0.05, delay:8, div:1200, via:'морем'}
+    ]},
+  lumber:{ label:'Лес', unit:'т', own:'своей лесопилки', base:90, req:()=>s.businesses.construction&&s.businesses.construction.opened,
+    stock:()=>s.lumber, cap:()=>s.lumberCap, add:n=>{ s.lumber+=n; }, localPrice:()=>Math.round(s.lumberCostPerUnit*s.macro.costIndex),
+    sources:[
+      {id:'fi', name:'Финляндия', unlock:900000, mult:0.92, fee:0.04, tariff:0, delay:3, div:200, via:'ж/д'},
+      {id:'ca', name:'Канада', unlock:1500000, mult:0.80, fee:0.03, tariff:0, delay:6, div:400, via:'морем'}
+    ]},
+  concrete:{ label:'Бетон', unit:'т', own:'своего завода', base:70, req:()=>s.businesses.construction&&s.businesses.construction.opened,
+    stock:()=>s.concrete, cap:()=>s.concreteCap, add:n=>{ s.concrete+=n; }, localPrice:()=>Math.round(s.concreteCostPerUnit*s.macro.costIndex),
+    sources:[
+      {id:'tr', name:'Турция', unlock:1200000, mult:0.88, fee:0.05, tariff:0, delay:3, div:250, via:'ж/д'},
+      {id:'cn', name:'Китай', unlock:4000000, mult:0.75, fee:0.04, tariff:0.06, delay:8, div:900, via:'морем'}
+    ]}
+};
+if(!s.sup) s.sup={};
+if(!s.inbound) s.inbound=[];
+if(!s.contracts) s.contracts=[];
+Object.keys(SUPPLY).forEach(r=>{ if(!s.sup[r]) s.sup[r]={}; SUPPLY[r].sources.forEach(x=>{ if(!s.sup[r][x.id]) s.sup[r][x.id]=Math.round(SUPPLY[r].base*x.mult); }); });
+function inboundValue(){ return s.inbound.reduce((a,x)=>a+x.qty*SUPPLY[x.res].localPrice(),0); }
+function inboundQty(r){ return s.inbound.filter(x=>x.res===r).reduce((a,x)=>a+x.qty,0); }
+function landed(x,p){ const m=combinedEventMods(); return p*(1+x.fee*s.transportFeeMultiplier*m.transportFee+x.tariff*s.tariffMultiplier*m.tariff); }
+function supplyDrift(PL,mods){
+  Object.keys(SUPPLY).forEach(r=>SUPPLY[r].sources.forEach(x=>{ const p=s.sup[r][x.id];
+    s.sup[r][x.id]=Math.max(20,Math.round(p+(SUPPLY[r].base*x.mult*(r==='ore'?PL.ore*mods.ore:s.macro.costIndex)-p)*0.04+(Math.random()-0.5)*SUPPLY[r].base*0.05)); }));
+}
+function supplyArrive(){
+  s.inbound=s.inbound.filter(x=>{
+    if(x.arriveDay>s.day) return true;
+    const R=SUPPLY[x.res], take=Math.max(0,Math.min(x.qty,R.cap()-R.stock())); R.add(take);
+    pushLog(`Прибыла поставка: ${fmt(take)}${R.unit} (${R.label.toLowerCase()}, ${x.src})${take<x.qty?`, ${fmt(x.qty-take)}${R.unit} не влезло на склад`:''}.`);
+    return false;
+  });
+  s.contracts=s.contracts.filter(c=>{
+    const R=SUPPLY[c.res], x=R.sources.find(y=>y.id===c.srcId), take=Math.max(0,Math.min(c.qty,R.cap()-R.stock()));
+    s.cash-=c.qty*c.landed; R.add(take); c.daysLeft-=1;
+    if(c.daysLeft<=0){ pushLog(`Контракт на поставку (${R.label.toLowerCase()}, ${x.name}) завершён.`); return false; }
+    return true;
+  });
+}
+function renderSupply(){
+  const el=document.getElementById('supplyBody'), eq=equityNow();
+  let html='';
+  Object.keys(SUPPLY).forEach(r=>{ const R=SUPPLY[r];
+    if(R.req && !R.req()) return;
+    html+=`<div class="eff-title">${R.label}</div><div class="help" style="margin-top:0">На складе ${fmt(R.stock())}/${R.cap()} ${R.unit}, в пути ${fmt(inboundQty(r))} ${R.unit}. Цена ${R.own}: ₽${fmt(R.localPrice())}/${R.unit}. Зарубежные поставщики дешевле, но везут 2-8 дней, оплата сразу, цена в пути может измениться. Контракт фиксирует цену на 20 дней.</div>`;
+    R.sources.forEach(x=>{
+      const key=r+'_'+x.id, p=s.sup[r][x.id], lp=landed(x,p), c=s.contracts.find(y=>y.res===r&&y.srcId===x.id);
+      if(eq<x.unlock){ html+=`<div class="row" style="margin-top:10px"><b style="color:var(--text)">${x.name}</b><span>с капитала ₽${fmtBig(x.unlock)}</span></div>`; return; }
+      html+=`<div class="row" style="margin-top:12px;flex-direction:column;align-items:flex-start;gap:4px">
+        <div style="display:flex;justify-content:space-between;width:100%"><b style="color:var(--text)">${x.name}</b><span>₽${fmt(p)} (с доставкой ₽${fmt(lp)}) · ${x.delay} дн. ${x.via}</span></div>
+        <div class="controls" style="margin-top:2px"><input type="number" min="1" value="100" data-sq="${key}" style="width:80px"><button class="primary" data-sbuy="${key}">Купить</button>
+        ${c?`<span style="font-size:12px;color:var(--dim);align-self:center">контракт: ${c.qty} ${R.unit}/день по ₽${fmt(c.landed)}, ещё ${c.daysLeft} дн.</span><button data-scancel="${key}">Расторгнуть</button>`
+           :`<input type="number" min="1" value="20" data-cq="${key}" style="width:64px"><button data-ssign="${key}">Контракт на 20 дн. (${R.unit}/день)</button>`}</div></div>`;
+    });
+  });
+  el.innerHTML=html;
+  const split=k=>{ const i=k.indexOf('_'); const r=k.slice(0,i), id=k.slice(i+1); return [r, SUPPLY[r].sources.find(x=>x.id===id)]; };
+  const qv=(a,k)=>Math.max(1,Math.floor(parseFloat(el.querySelector(`[data-${a}="${k}"]`).value)||1));
+  el.querySelectorAll('[data-sbuy]').forEach(b=>b.onclick=()=>{
+    const k=b.dataset.sbuy, [r,x]=split(k), R=SUPPLY[r], m=combinedEventMods();
+    const qty=Math.min(qv('sq',k),1000,R.cap()-R.stock()-inboundQty(r));
+    if(qty<=0){ pushLog('Склад заполнен с учётом товара в пути — закупка невозможна.'); render(); return; }
+    const impact=qty/x.div*m.buyImpact, p=s.sup[r][x.id], cost=landed(x,p*(1+impact/2))*qty;
+    if(cost>s.cash){ pushLog('Недостаточно средств для закупки.'); render(); return; }
+    s.cash-=cost; s.sup[r][x.id]=Math.round(p*(1+impact)); s.inbound.push({res:r,src:x.name,qty,arriveDay:s.day+x.delay});
+    pushLog(`Закуплено ${qty}${R.unit} (${R.label.toLowerCase()}, ${x.name}) за ₽${fmt(cost)}, придёт через ${x.delay} дн.`); render();
+  });
+  el.querySelectorAll('[data-ssign]').forEach(b=>b.onclick=()=>{
+    const k=b.dataset.ssign, [r,x]=split(k), qty=Math.min(qv('cq',k),500);
+    s.contracts.push({res:r,srcId:x.id,qty,landed:Math.round(landed(x,s.sup[r][x.id]*0.93)),daysLeft:20});
+    pushLog(`Подписан контракт: ${qty}${SUPPLY[r].unit}/день (${SUPPLY[r].label.toLowerCase()}, ${x.name}) на 20 дн. по фиксированной цене.`); render();
+  });
+  el.querySelectorAll('[data-scancel]').forEach(b=>b.onclick=()=>{
+    const k=b.dataset.scancel, [r,x]=split(k), i=s.contracts.findIndex(y=>y.res===r&&y.srcId===x.id); if(i<0) return;
+    const c=s.contracts[i], pen=Math.round(c.qty*c.landed*3); s.cash-=pen; s.contracts.splice(i,1);
+    pushLog(`Расход: неустойка за расторжение контракта (${x.name}) ₽${fmt(pen)}.`); render();
+  });
+}
+
+// ===== АВАРИИ И СТРАХОВАНИЕ =====
+if(s.ins===undefined){ s.ins=0; s.safety=0; s.downDays=0; s.incidents=0; }
+const INS=[{n:'Без страховки',r:0,c:0},{n:'Базовая (возмещает 60%)',r:0.0004,c:0.6},{n:'Полная (возмещает 100%)',r:0.0009,c:1}];
+function incidentChance(){ return 0.025*clamp(1+(50-s.staff.morale)/100,0.5,1.6)*Math.pow(0.85,s.safety); }
+function safetyCost(){ return Math.round(40000*(1+s.safety)*s.macro.costIndex); }
+function incidentStep(){
+  if(s.downDays>0) s.downDays-=1;
+  if(INS[s.ins].r>0) s.cash-=Math.max(0,equityNow())*INS[s.ins].r;
+  if(Math.random()>=incidentChance()) return;
+  const cov=INS[s.ins].c; s.incidents+=1;
+  const pick=a=>a[Math.floor(Math.random()*a.length)];
+  const fleets=['taxi','logistics_biz'].filter(id=>s.businesses[id]&&s.businesses[id].opened&&s.businesses[id].fleet.length>0);
+  const stocks=[['ore','руды',s.orePrice],['steel','стали',s.steelPrice],['parts','деталей',s.partsPrice]].filter(x=>s[x[0]]>=5);
+  let kind=pick(['fire','break','fleet','leak']);
+  if(kind==='fleet'&&!fleets.length) kind='leak';
+  if(kind==='fire'&&!stocks.length) kind='break';
+  let loss=0, text='';
+  if(kind==='fire'){
+    const [k,name,price]=pick(stocks), qty=Math.floor(s[k]*(0.25+Math.random()*0.15)); s[k]-=qty; loss=qty*price;
+    text=`Авария: пожар на складе, потеряно ${qty} ${k==='parts'?'деталей':'т '+name}`;
+  } else if(kind==='break'){
+    s.downDays=3+Math.floor(Math.random()*3); loss=wageBill()*s.downDays;
+    text=`Авария: поломка оборудования, выпуск вдвое ниже ${s.downDays} дн.`;
+  } else if(kind==='fleet'){
+    const id=pick(fleets), b=BUSINESSES.find(x=>x.id===id), f=s.businesses[id].fleet;
+    loss=vehCost(b,f.length); f.splice(Math.floor(Math.random()*f.length),1);
+    text=`Авария: разбит ${b.vehicleName} в «${b.name}»`;
+  } else {
+    loss=wageBill()*10; s.cash-=loss; loss*=0.5;
+    text='Экологический инцидент: штраф надзорных органов';
+  }
+  const comp=Math.round(loss*cov); s.cash+=comp;
+  pushLog(`${text}. ${cov>0?`Страховка вернула ₽${fmt(comp)} из ₽${fmt(loss)}.`:`Убыток ≈ ₽${fmt(loss)}.`}`);
+}
+function renderRisk(){
+  const el=document.getElementById('riskBody'), prem=Math.max(0,equityNow())*INS[s.ins].r;
+  el.innerHTML=`<div class="card" style="grid-column:1/-1"><h2>Безопасность и страхование</h2>
+    <div class="row"><span>Шанс аварии в день</span><b>${(incidentChance()*100).toFixed(2)}%</b></div>
+    <div class="row"><span>Аварий за игру</span><b>${s.incidents}</b></div>
+    <div class="row"><span>Страховой взнос в день</span><b>₽${fmt(prem)}</b></div>
+    ${s.downDays>0?`<div class="help bad">Оборудование в ремонте: выпуск вдвое ниже ещё ${s.downDays} дн.</div>`:''}
+    <div class="help">Пожары, поломки, аварии автопарка и штрафы. Шанс растёт при низкой морали и падает с охраной труда (−15% за уровень).</div>
+    <div class="controls">${INS.map((x,i)=>`<button data-ins="${i}" class="${s.ins===i?'primary':''}">${x.n}</button>`).join('')}</div>
+    <div class="row" style="margin-top:12px"><span>Охрана труда и обслуживание</span><b>${s.safety} / 3</b></div>
+    <div class="controls"><button id="safeBtn" class="primary" ${s.safety>=3||s.cash<safetyCost()?'disabled':''}>${s.safety>=3?'Максимум':'Улучшить (₽'+fmt(safetyCost())+')'}</button></div></div>`;
+  el.querySelectorAll('[data-ins]').forEach(b=>b.onclick=()=>{ s.ins=parseInt(b.dataset.ins); render(); });
+  document.getElementById('safeBtn').onclick=()=>{ const c=safetyCost(); if(s.safety>=3||s.cash<c) return; s.cash-=c; s.safety+=1; pushLog(`Расход: охрана труда, уровень ${s.safety}, ₽${fmt(c)}.`); render(); };
+}
+
+// ===== ГОСЗАКАЗЫ, КОНКУРЕНТЫ, ХАБЫ =====
+if(!s.tenders) s.tenders={offers:[],active:[],done:0,failed:0,next:1,auto:false};
+if(!s.hubs) s.hubs={};
+if(!s.rivals) s.rivals=[
+  {id:'dump',name:'Донсталь',strat:'демпингует сталь на внутреннем рынке',cap:10,cash:40000},
+  {id:'exp',name:'ЭкспортСталь',strat:'давит на экспортные цены',cap:8,cash:40000},
+  {id:'ore',name:'РудИнвест',strat:'скупает руду и поднимает её цену',cap:9,cash:40000}];
+function hubCost(id){ return Math.round((MARKETS[id].unlock*0.4+200000)*s.macro.costIndex); }
+function acceptTender(id){
+  const T=s.tenders, i=T.offers.findIndex(o=>o.id===id); if(i<0||T.active.length>=2) return;
+  const o=T.offers.splice(i,1)[0];
+  T.active.push({id:o.id,kind:o.kind,qty:o.qty,left:o.qty,price:o.price,daysLeft:o.days});
+  pushLog(`Принят госзаказ: ${o.qty}${o.kind==='steel'?'т стали':' деталей'} по ₽${fmt(o.price)} на ${o.days} дн.`);
+}
+function extrasStep(){
+  const T=s.tenders;
+  T.offers=T.offers.filter(o=>--o.expires>0);
+  if(T.offers.length<3 && Math.random()<0.15){
+    const kind=Math.random()<0.65?'steel':'parts', sc=1+0.12*Math.min(T.done,10);
+    const qty=Math.round((kind==='steel'?60+Math.random()*140:20+Math.random()*60)*sc);
+    const base=kind==='steel'?s.steelPrice:s.partsPrice;
+    T.offers.push({id:T.next++,kind,qty,price:Math.round(base*(1.12+Math.random()*0.2)*(1+0.02*prestigeRank())),days:20+Math.floor(Math.random()*21),expires:12});
+  }
+  if(T.auto) T.offers.slice().forEach(o=>{
+    const have=o.kind==='steel'?s.steel:s.parts, cap=o.kind==='steel'?s.factoryCapacity:s.partsFactoryCapacity;
+    if(T.active.length<2 && o.qty<=have+cap*o.days*0.5) acceptTender(o.id);
+  });
+  T.active=T.active.filter(c=>{
+    const q=Math.min(c.kind==='steel'?s.steel:s.parts, c.left);
+    if(q>0){ if(c.kind==='steel') s.steel-=q; else s.parts-=q; c.left-=q; s.cash+=q*c.price; }
+    if(c.left<=0){ T.done++; pushLog(`Госзаказ выполнен: ${c.qty}${c.kind==='steel'?'т стали':' деталей'}, выручка ₽${fmt(c.qty*c.price)}.`); return false; }
+    c.daysLeft-=1;
+    if(c.daysLeft<=0){ const pen=Math.round(c.left*c.price*0.3); s.cash-=pen; T.failed++; pushLog(`Расход: штраф за срыв госзаказа ₽${fmt(pen)} (недопоставлено ${c.left}).`); return false; }
+    return true;
+  });
+  const capMax=Math.max(30,s.factoryCapacity*1.2), jit=()=>0.4+Math.random();
+  s.rivals.forEach(r=>{
+    r.cash+=r.cap*(Math.random()*200-60);
+    if(r.cash>150000 && r.cap<capMax){ r.cap+=2; r.cash-=50000; pushLog(`${r.name} расширяет мощности до ${r.cap} т/день.`); }
+    else if(r.cash<-20000 && r.cap>4){ r.cap-=2; r.cash+=15000; }
+    if(r.id==='dump') s.steelPrice=Math.max(50,Math.round(s.steelPrice*(1-r.cap/8000*jit())));
+    else if(r.id==='exp'){ s.exportSteelPrice=Math.max(80,Math.round(s.exportSteelPrice*(1-r.cap/10000*jit()))); s.exportPartsPrice=Math.max(300,Math.round(s.exportPartsPrice*(1-r.cap/10000*jit()))); }
+    else s.orePrice=Math.round(s.orePrice*(1+r.cap/8000*jit()));
+  });
+  Object.keys(s.hubs).forEach(id=>{ if(s.hubs[id]) s.cash-=hubCost(id)*0.0008; });
+}
+function renderExtras(){
+  const T=s.tenders, u=k=>k==='steel'?'т стали':' деталей';
+  const tb=document.getElementById('tenderBody');
+  tb.innerHTML=`<div class="row"><span>Выполнено / сорвано</span><b>${T.done} / ${T.failed}</b></div>
+    <div class="help" style="margin-top:0">Заказы по цене выше рынка. Активный заказ автоматически забирает товар со склада каждый день и платит сразу за поставленное. За недопоставку к сроку штраф 30%. До 2 заказов одновременно; с ростом числа выполненных заказы крупнее.</div>
+    <div class="controls"><button id="tAuto" class="${T.auto?'primary':''}">Автопринятие: ${T.auto?'вкл':'выкл'}</button></div>`
+    + (T.active.length?`<div class="eff-title">В работе</div>`+T.active.map(c=>`<div class="row"><span>${c.qty}${u(c.kind)} по ₽${fmt(c.price)}, осталось ${fmt(c.left)}</span><b>${c.daysLeft} дн.</b></div>`).join(''):'')
+    + `<div class="eff-title">Предложения</div>` + (T.offers.length?T.offers.map(o=>`<div class="row" style="margin-top:6px"><span>${o.qty}${u(o.kind)} по ₽${fmt(o.price)} (рынок ₽${fmt(o.kind==='steel'?s.steelPrice:s.partsPrice)}), срок ${o.days} дн., истекает через ${o.expires}</span><button data-tacc="${o.id}" class="primary" ${T.active.length>=2?'disabled':''}>Принять</button></div>`).join(''):'<div class="help">Новых предложений пока нет.</div>');
+  document.getElementById('tAuto').onclick=()=>{ T.auto=!T.auto; render(); };
+  tb.querySelectorAll('[data-tacc]').forEach(b=>b.onclick=()=>{ acceptTender(parseInt(b.dataset.tacc)); render(); });
+  const tot=s.factoryCapacity+(s.competitorActive?s.competitor.capacity:0)+s.rivals.reduce((a,r)=>a+r.cap,0);
+  document.getElementById('rivalBody').innerHTML=`<div class="row"><span>Ваша доля производства стали</span><b>${(s.factoryCapacity/tot*100).toFixed(0)}%</b></div><div class="bar"><i style="width:${s.factoryCapacity/tot*100}%"></i></div>`
+    + s.rivals.map(r=>`<div class="row"><span>${r.name}: ${r.strat}</span><b>${r.cap} т/день</b></div>`).join('')
+    + '<div class="help">Их мощности растут, если они зарабатывают, и падают при убытках. Чем крупнее конкурент, тем сильнее давит на свою цену.</div>';
+  const ids=['export','tr','cn','ae'].filter(marketOpen);
+  document.getElementById('hubBody').innerHTML=`<div class="help" style="margin-top:0">Хаб в стране: пошлины на ваши поставки там ниже на 25%, а цена от крупных партий проседает на треть меньше. Содержание ~0,08% стоимости в день.</div>`
+    + ids.map(id=>`<div class="row" style="margin-top:8px"><span>${MARKETS[id].name}</span>${s.hubs[id]?'<span class="pill pill-good">хаб работает</span>':`<button data-hub="${id}" class="primary" ${s.cash<hubCost(id)?'disabled':''}>Открыть (₽${fmt(hubCost(id))})</button>`}</div>`).join('');
+  document.querySelectorAll('[data-hub]').forEach(b=>b.onclick=()=>{ const id=b.dataset.hub, c=hubCost(id); if(s.cash<c||s.hubs[id]) return;
+    s.cash-=c; s.hubs[id]=true; pushLog(`Расход: открыт торговый хаб (${MARKETS[id].name}), ₽${fmt(c)}.`); render(); });
+}
+
+// ===== МЕГАПРОЕКТЫ (поздняя игра): долгая стройка, материалы со склада, постоянный бонус =====
+if(!s.mega) s.mega={done:[],active:null};
+if(!s.megaCost) s.megaCost=1;
+const MEGA=[
+  {id:'port', name:'Мегапорт', unlock:1e9, cost:8e8, days:60, mats:{steel:1500,parts:200,concrete:3000}, perk:'Транспортные комиссии −20%, глубина рынков +25%.', fx:s=>{ s.transportFeeMultiplier*=0.8; s.marketReach*=1.25; }},
+  {id:'power', name:'Собственная электростанция', unlock:2e9, cost:1.5e9, days:90, mats:{steel:3000,parts:500,concrete:5000}, perk:'Постоянные расходы (зарплаты, обслуживание, склады) −12%.', fx:s=>{ s.megaCost*=0.88; }},
+  {id:'trade', name:'Торговая империя', unlock:3e9, cost:2e9, days:100, mats:{steel:1200,parts:400,concrete:2500,lumber:1500}, perk:'Экспортные пошлины −30%.', fx:s=>{ s.tariffMultiplier*=0.7; }},
+  {id:'steelworks', name:'Металлургический гигакомплекс', unlock:4e9, cost:3e9, days:120, mats:{steel:6000,parts:1200,concrete:8000}, perk:'+150 т стали/день, склады +1500 руды и +800 стали, ФОТ +₽8 000/день.', fx:s=>{ s.factoryCapacity+=150; s.oreCap+=1500; s.steelCap+=800; s.wagePerDay+=8000; }},
+  {id:'machine', name:'Машиностроительный кластер', unlock:6e9, cost:4e9, days:120, mats:{steel:5000,parts:2500,concrete:6000,lumber:2000}, perk:'+80 деталей/день, склад деталей +500, ФОТ +₽6 000/день.', fx:s=>{ s.partsFactoryCapacity+=80; s.partsCap+=500; s.wagePerDay+=6000; }},
+  {id:'bank', name:'Собственный банк', unlock:8e9, cost:5e9, days:90, mats:{steel:1000,parts:300,concrete:2000,lumber:1500}, perk:'Ставка по кредитам −20%, доходность облигаций +25%.', fx:s=>{ s.loanRate*=0.8; s.bondRate*=1.25; }}
+];
+const MEGA_MATS={steel:['т стали','steel'], parts:['деталей','parts'], concrete:['т бетона','concrete'], lumber:['т леса','lumber']};
+function megaStep(){
+  const A=s.mega.active; if(!A) return;
+  const P=MEGA.find(x=>x.id===A.id); let f=1; const need={};
+  Object.keys(P.mats).forEach(k=>{ need[k]=P.mats[k]/P.days; f=Math.min(f, s[k]/need[k]); });
+  f=Math.max(0,Math.min(1,f)); A.stalled=f<1;
+  Object.keys(need).forEach(k=>{ s[k]-=need[k]*f; });
+  A.progress+=f;
+  if(A.progress>=P.days-1e-9){ P.fx(s); s.mega.done.push(P.id); s.mega.active=null; pushLog(`Мегапроект завершён: «${P.name}». ${P.perk}`); }
+}
+function renderMega(){
+  const el=document.getElementById('megaBody'), eq=equityNow(), A=s.mega.active, ci=s.macro.costIndex;
+  const built=s.businesses.construction&&s.businesses.construction.opened;
+  let html=`<div class="help" style="margin-top:0">Долгие стройки на поздней стадии. Платишь деньги сразу, а материалы проект берёт со склада каждый день. Если чего-то не хватает, стройка идёт медленнее. Одновременно строится один проект, бонус остаётся навсегда. Проекты с бетоном и лесом требуют открытой стройкомпании.</div>`;
+  if(A){ const P=MEGA.find(x=>x.id===A.id);
+    html+=`<div class="eff-title">Строится</div><div class="row"><span>${P.name}</span><b>${Math.floor(A.progress)} / ${P.days} дн.</b></div><div class="bar"><i style="width:${A.progress/P.days*100}%"></i></div>
+      <div class="help ${A.stalled?'bad':''}">${A.stalled?'Не хватает материалов — стройка идёт медленнее. ':''}Ежедневно нужно: ${Object.keys(P.mats).map(k=>fmt(P.mats[k]/P.days)+' '+MEGA_MATS[k][0]).join(', ')}.</div>`; }
+  MEGA.forEach(P=>{
+    if(s.mega.done.includes(P.id)){ html+=`<div class="row" style="margin-top:10px"><span>${P.name}</span><span class="pill pill-good">построен</span></div><div class="help" style="margin-top:2px">${P.perk}</div>`; return; }
+    const cost=Math.round(P.cost*ci), needsB=(P.mats.concrete||P.mats.lumber)&&!built, locked=eq<P.unlock||needsB;
+    html+=`<div class="row" style="margin-top:12px;flex-direction:column;align-items:flex-start;gap:4px"><div style="display:flex;justify-content:space-between;width:100%"><b style="color:var(--text)">${P.name}</b><span>₽${fmtBig(cost)} · ${P.days} дн.</span></div>
+      <div style="color:var(--dim)">${P.perk}</div><div class="help" style="margin-top:0">Материалы: ${Object.keys(P.mats).map(k=>fmt(P.mats[k])+' '+MEGA_MATS[k][0]).join(', ')}.</div>
+      ${locked?`<div class="help">Откроется при капитале от ₽${fmtBig(P.unlock)}${needsB?' и открытой стройкомпании':''}.</div>`:`<button data-mega="${P.id}" class="primary" ${A||s.cash<cost?'disabled':''}>Начать</button>`}</div>`;
+  });
+  el.innerHTML=html;
+  el.querySelectorAll('[data-mega]').forEach(b=>b.onclick=()=>{
+    const P=MEGA.find(x=>x.id===b.dataset.mega), c=Math.round(P.cost*s.macro.costIndex);
+    if(s.mega.active||s.cash<c||s.mega.done.includes(P.id)) return;
+    s.cash-=c; s.mega.active={id:P.id,progress:0,stalled:false}; pushLog(`Расход: начат мегапроект «${P.name}», ₽${fmt(c)}.`); render();
+  });
+}
+
+// ===== РАЗВИТИЕ БИЗНЕСОВ: улучшения внутри каждого бизнеса [id, название, +выручка, −расходы, требуется] =====
+if(!s.bizUp) s.bizUp={};
+const BIZ_UPG={
+  taxi:[['dispatch','Диспетчерская служба',0.08,0],['app','Мобильное приложение',0.12,0],['garage','Собственный гараж',0,0.15],['premium','Премиум-класс',0.25,0,['dispatch','app']]],
+  restaurant:[['chef','Шеф-повар',0.10,0],['delivery','Доставка',0.15,0],['loyalty','Программа лояльности',0.08,0.05],['chain','Сеть кафе',0.25,0,['chef','delivery']]],
+  logistics_biz:[['routes','Оптимизация маршрутов',0.10,0],['gps','Телематика',0,0.12],['contracts','Долгосрочные контракты',0.15,0],['terminals','Складские терминалы',0.22,0,['routes','contracts']]],
+  hotel:[['reno','Ремонт номеров',0.10,0],['spa','СПА-центр',0.15,0],['club','Клубная программа',0.08,0.05],['stars','Категория «5 звёзд»',0.25,0,['reno','spa']]],
+  construction:[['crew','Собственные бригады',0.08,0.12],['bim','BIM-проектирование',0.12,0],['fleet','Парк техники',0.15,0],['general','Генподряд',0.22,0,['crew','bim']]],
+  it:[['qa','QA и процессы',0.08,0],['cloud','Облачная платформа',0.15,0],['ai','ИИ-продукты',0.20,0],['enterprise','Корпоративные клиенты',0.12,0.10,['cloud','ai']]],
+  port:[['crane','Портальные краны',0.10,0],['customs','Таможенный терминал',0.15,0],['rail','Железнодорожная ветка',0.20,0,['crane','customs']]]
+};
+function bizRev(id){ return (BIZ_UPG[id]||[]).reduce((a,u)=>(s.bizUp[id]||[]).includes(u[0])?a*(1+u[2]):a,1); }
+function bizCost(id){ return (BIZ_UPG[id]||[]).reduce((a,u)=>(s.bizUp[id]||[]).includes(u[0])?a*(1-u[3]):a,1); }
+function upgCost(b,i){ return Math.round(b.cost*(0.5+0.4*i)*s.macro.costIndex); }
+function renderBizDev(){
+  const el=document.getElementById('bizDevBody'); let html='', any=false;
+  BUSINESSES.forEach(b=>{
+    const st=s.businesses[b.id]; if(!st||!st.opened||!BIZ_UPG[b.id]) return; any=true;
+    const own=s.bizUp[b.id]||[];
+    html+=`<div class="eff-title">${BIZ_SHORT[b.id]||b.name} · выручка ×${bizRev(b.id).toFixed(2)}, расходы ×${bizCost(b.id).toFixed(2)}</div>`
+      + (s.builds[b.id]?`<div class="row"><span>Идёт стройка: ${s.builds[b.id].name}</span><b>${s.builds[b.id].daysLeft} дн.</b></div><div class="bar"><i style="width:${(1-s.builds[b.id].daysLeft/s.builds[b.id].total)*100}%"></i></div>`:'');
+    BIZ_UPG[b.id].forEach((u,i)=>{
+      const eff=[u[2]?`выручка +${Math.round(u[2]*100)}%`:'',u[3]?`расходы −${Math.round(u[3]*100)}%`:''].filter(Boolean).join(', ');
+      const need=(u[4]||[]).filter(r=>!own.includes(r)), c=upgCost(b,i);
+      html+=`<div class="row" style="margin-top:6px"><span>${u[1]} <span style="color:var(--dim)">(${eff})</span></span>`
+        + (own.includes(u[0])?'<span class="pill pill-good">есть</span>':need.length?`<span style="color:var(--dim);font-size:11px">нужно: ${need.map(r=>BIZ_UPG[b.id].find(x=>x[0]===r)[1]).join(', ')}</span>`:`<button data-bup="${b.id}:${u[0]}:${i}" class="primary" ${s.cash<c||s.builds[b.id]?'disabled':''}>₽${fmt(c)}</button>`)+'</div>';
+    });
+  });
+  el.innerHTML = any ? html : '<div class="help" style="margin-top:0">Откройте бизнес, чтобы улучшать его здесь.</div>';
+  el.querySelectorAll('[data-bup]').forEach(bt=>bt.onclick=()=>{
+    const [id,u,i]=bt.dataset.bup.split(':'), b=BUSINESSES.find(x=>x.id===id), c=upgCost(b,parseInt(i));
+    if(s.cash<c||(s.bizUp[id]||[]).includes(u)) return;
+    if(s.builds[id]){ pushLog('В этом бизнесе уже идёт стройка, дождитесь её окончания.'); render(); return; }
+    const nm=BIZ_UPG[id].find(x=>x[0]===u)[1], d=3+2*parseInt(i);
+    s.cash-=c; s.builds[id]={kind:'upg',id:u,name:nm,daysLeft:d,total:d};
+    pushLog(`Расход: начато улучшение «${nm}» (${BIZ_SHORT[id]||b.name}), ₽${fmt(c)}, ${d} дн.`); render();
+  });
+}
+
+// ===== НЕФТЕГАЗ: разведка, скважины, трубопровод, контракты =====
+if(!s.oil) s.oil={open:false, fields:[], pipe:1, po:600, pg:250, contracts:[], next:1, total:0, last:null};
+const OIL={licence:20e6, unlock:10e6, explore:3e6, well:2e6, wellMax:10, rate:{oil:100,gas:140}, base:{oil:600,gas:250}, opex:8000, pipeUnit:300};
+function oilPipeCost(){ return Math.round(8e6*(1+s.oil.pipe)*s.macro.costIndex); }
+function oilStep(){
+  const O=s.oil; if(!O.open) return;
+  const M=s.macro, ci=M.costIndex;
+  ['oil','gas'].forEach(k=>{ const key=k==='oil'?'po':'pg', tg=OIL.base[k]*ci*(1+(M.demand-1)*1.2);
+    O[key]=Math.max(100,Math.round(O[key]+(tg-O[key])*0.04+(Math.random()-0.5)*O[key]*0.05)); });
+  const prod={oil:0,gas:0}; let cost=0;
+  O.fields.forEach(f=>{
+    if(f.blow>0){ f.blow-=1; return; }
+    if(f.left<=0||f.wells<=0) return;
+    const q=Math.min(f.left, f.wells*OIL.rate[f.type]*(0.3+0.7*f.left/f.reserve));
+    f.left-=q; prod[f.type]+=q; cost+=f.wells*OIL.opex*ci;
+    if(Math.random()<0.0004*f.wells){
+      f.blow=10; const loss=1e6*ci, comp=loss*INS[s.ins].c; s.cash-=loss-comp;
+      pushLog(`Авария на «${f.name}»: скважины остановлены на 10 дн., ремонт ₽${fmt(loss)}${comp>0?`, страховка вернула ₽${fmt(comp)}`:''}.`);
+    }
+  });
+  let capLeft=OIL.pipeUnit*O.pipe, rev=0, lost=0;
+  O.contracts=O.contracts.filter(c=>{
+    const d=Math.min(prod[c.kind],c.vol,capLeft); prod[c.kind]-=d; capLeft-=d; rev+=d*c.price;
+    const sh=c.vol-d; if(sh>0) rev-=sh*c.price*0.2;
+    c.days-=1; if(c.days<=0) pushLog(`Контракт на ${c.kind==='oil'?'нефть':'газ'} завершён.`); return c.days>0;
+  });
+  ['oil','gas'].forEach(k=>{ const d=Math.min(prod[k],capLeft); capLeft-=d; rev+=d*(k==='oil'?O.po:O.pg); lost+=prod[k]-d; });
+  s.cash+=rev-cost; O.total+=rev-cost; O.last={rev,cost,lost};
+}
+function renderOil(){
+  const el=document.getElementById('oilBody'), O=s.oil, ci=s.macro.costIndex, eq=equityNow();
+  const licence=Math.round(OIL.licence*ci);
+  if(!O.open){
+    el.innerHTML=`<div class="card" style="grid-column:1/-1"><h2>Нефтегазовый бизнес</h2>
+      <div class="help" style="margin-top:0">Разведка месторождений, бурение скважин, трубопровод и долгие контракты на поставку. Самый доходный бизнес в игре, но требует крупных вложений и терпения: не каждая разведка находит запасы, а месторождения истощаются.</div>
+      ${eq<OIL.unlock?`<div class="help">Откроется при капитале от ₽${fmtBig(OIL.unlock)}.</div>`:`<div class="controls"><button id="oilOpen" class="primary" ${s.cash<licence?'disabled':''}>Получить лицензию (₽${fmt(licence)})</button></div>`}</div>`;
+    const b=document.getElementById('oilOpen'); if(b) b.onclick=()=>{ if(s.cash<licence) return; s.cash-=licence; O.open=true; pushLog(`Расход: лицензия на добычу, ₽${fmt(licence)}.`); render(); };
+    return;
+  }
+  const L=O.last||{rev:0,cost:0,lost:0}, cap=OIL.pipeUnit*O.pipe, expl=Math.round(OIL.explore*ci), wellC=Math.round(OIL.well*ci), pc=oilPipeCost();
+  let html=`<div class="card" style="grid-column:1/-1"><h2>Нефтегаз</h2>
+    <div class="row"><span>Цена нефти / газа</span><b>₽${fmt(O.po)} / ₽${fmt(O.pg)}</b></div>
+    <div class="row"><span>Пропускная способность трубы</span><b>${fmt(cap)} ед./день (ур. ${O.pipe})</b></div>
+    <div class="row"><span>Вчера: выручка / расходы</span><b class="${L.rev-L.cost>=0?'good':'bad'}">₽${fmt(L.rev)} / ₽${fmt(L.cost)}</b></div>
+    ${L.lost>0?`<div class="help bad">Не хватает трубы: потеряно ${fmt(L.lost)} ед. добычи. Расширьте трубопровод.</div>`:''}
+    <div class="row"><span>Всего заработано</span><b>₽${fmt(O.total)}</b></div>
+    <div class="controls"><button id="oExpO" class="primary" ${s.cash<expl?'disabled':''}>Разведка нефти (₽${fmt(expl)})</button><button id="oExpG" class="primary" ${s.cash<expl?'disabled':''}>Разведка газа (₽${fmt(expl)})</button><button id="oPipe" ${s.cash<pc?'disabled':''}>Труба +1 ур. (₽${fmt(pc)})</button></div>
+    <div class="help">Разведка находит запасы с шансом 70%, иначе деньги потеряны. Каждая скважина даёт около 100 ед. нефти или 140 ед. газа в день, но добыча падает по мере истощения. Излишки, не влезающие в трубу, сгорают.</div></div>`;
+  O.fields.forEach(f=>{
+    const pct=f.left/f.reserve*100, wc=Math.round(OIL.well*ci);
+    html+=`<div class="card"><h2>${f.name}<span class="h2-end">${f.type==='oil'?'нефть':'газ'}</span></h2>
+      <div class="row"><span>Остаток запасов</span><b>${fmt(f.left)} из ${fmt(f.reserve)}</b></div><div class="bar"><i style="width:${pct}%"></i></div>
+      <div class="row"><span>Скважин</span><b>${f.wells} / ${OIL.wellMax}</b></div>
+      ${f.blow>0?`<div class="help bad">Авария: добыча остановлена ещё ${f.blow} дн.</div>`:''}${f.left<=0?'<div class="help">Месторождение истощено.</div>':''}
+      ${f.left>0&&f.wells<OIL.wellMax?`<div class="controls"><button data-well="${f.id}" class="primary" ${s.cash<wc?'disabled':''}>Пробурить скважину (₽${fmt(wc)})</button></div>`:''}</div>`;
+  });
+  html+=`<div class="card" style="grid-column:1/-1"><h2>Контракты на поставку</h2><div class="help" style="margin-top:0">Фиксированная цена на 30 дней (случайно −5…+8% к рынку). Продукт сначала идёт по контракту; за недопоставку штраф 20% цены. До 3 контрактов.</div>`
+    + O.contracts.map(c=>`<div class="row"><span>${c.kind==='oil'?'Нефть':'Газ'}: ${fmt(c.vol)} ед./день по ₽${fmt(c.price)}</span><b>${c.days} дн.</b></div>`).join('')
+    + (O.contracts.length<3?`<div class="controls"><select id="cKind"><option value="oil">Нефть</option><option value="gas">Газ</option></select><input type="number" id="cVol" min="10" value="100" style="width:80px"><button id="cSign" class="primary">Подписать</button></div>`:'')+'</div>';
+  el.innerHTML=html;
+  const explore=type=>{ if(s.cash<expl) return; s.cash-=expl;
+    if(Math.random()<0.7){ const reserve=Math.round((type==='oil'?300000:400000)*(0.5+Math.random()*2.5));
+      O.fields.push({id:O.next,name:`Месторождение №${O.next}`,type,reserve,left:reserve,wells:0,blow:0}); O.next++;
+      pushLog(`Разведка успешна: найдено месторождение ${type==='oil'?'нефти':'газа'}, запасы ${fmt(reserve)} ед. Затраты ₽${fmt(expl)}.`);
+    } else pushLog(`Расход: разведка не нашла запасов, потеряно ₽${fmt(expl)}.`);
+    render(); };
+  document.getElementById('oExpO').onclick=()=>explore('oil'); document.getElementById('oExpG').onclick=()=>explore('gas');
+  document.getElementById('oPipe').onclick=()=>{ const c=oilPipeCost(); if(s.cash<c) return; s.cash-=c; O.pipe+=1; pushLog(`Расход: трубопровод расширен до уровня ${O.pipe}, ₽${fmt(c)}.`); render(); };
+  el.querySelectorAll('[data-well]').forEach(b=>b.onclick=()=>{ const f=O.fields.find(x=>x.id===parseInt(b.dataset.well)), c=Math.round(OIL.well*s.macro.costIndex);
+    if(!f||s.cash<c||f.wells>=OIL.wellMax) return; s.cash-=c; f.wells+=1; pushLog(`Расход: скважина на «${f.name}», ₽${fmt(c)}.`); render(); });
+  const sg=document.getElementById('cSign');
+  if(sg) sg.onclick=()=>{ const kind=document.getElementById('cKind').value, vol=Math.max(10,Math.floor(parseFloat(document.getElementById('cVol').value)||10));
+    const price=Math.round((kind==='oil'?O.po:O.pg)*(0.95+Math.random()*0.13)*(1+0.02*prestigeRank()));
+    O.contracts.push({kind,vol,price,days:30}); pushLog(`Подписан контракт: ${fmt(vol)} ед./день ${kind==='oil'?'нефти':'газа'} по ₽${fmt(price)} на 30 дн.`); render(); };
+}
+
+// ===== АВТОПАРК: классы машин, гараж, время на доставку и стройку =====
+const VCLS=[{c:1,r:1,u:1,life:300000,d:1},{c:2.5,r:2.7,u:2.2,life:380000,d:2},{c:6.5,r:7.7,u:5.5,life:450000,d:4},{c:18,r:22.7,u:15,life:500000,d:6}];
+const VNAMES={taxi:['Эконом','Комфорт','Бизнес','Элита'], logistics_biz:['Фургон','Грузовик','Тягач','Автопоезд']};
+if(!s.garage) s.garage={};
+if(!s.orders) s.orders=[];
+if(!s.builds) s.builds={};
+['taxi','logistics_biz'].forEach(id=>{ if(!s.garage[id]){ const st=s.businesses[id]; s.garage[id]={slots:Math.max(10,Math.ceil(((st&&st.fleet)?st.fleet.length:0)/10)*10)}; } });
+function usedSlots(id){ const st=s.businesses[id]; return (st&&st.fleet?st.fleet.length:0)+s.orders.filter(o=>o.id===id).length; }
+function vehClsCost(b,cls,n){ return Math.round(vehCost(b,n)*VCLS[cls].c); }
+function garageCost(id){ const b=BUSINESSES.find(x=>x.id===id); return Math.round(b.vehicleCost*10*(1+s.garage[id].slots/10)*s.macro.costIndex); }
+function garageDays(id){ return 6+2*(s.garage[id].slots/10); }
+function fleetStep(){
+  s.orders=s.orders.filter(o=>{
+    o.left-=1; if(o.left>0) return true;
+    const st=s.businesses[o.id], b=BUSINESSES.find(x=>x.id===o.id);
+    if(st&&st.opened&&st.fleet.length<s.garage[o.id].slots){ st.fleet.push({km:0,cls:o.cls}); pushLog(`${b.name}: прибыл ${VNAMES[o.id][o.cls].toLowerCase()}. Автопарк: ${st.fleet.length}.`); }
+    else { s.cash+=vehClsCost(b,o.cls,0)*0.9; pushLog(`${b.name}: нет места в гараже, заказ отменён с возвратом 90%.`); }
+    return false;
+  });
+  Object.keys(s.builds).forEach(id=>{
+    const B=s.builds[id]; B.daysLeft-=1; if(B.daysLeft>0) return;
+    if(B.kind==='garage'){ s.garage[id].slots+=10; pushLog(`Гараж достроен: теперь ${s.garage[id].slots} мест.`); }
+    else { (s.bizUp[id]=s.bizUp[id]||[]).push(B.id); pushLog(`Улучшение готово: «${B.name}».`); }
+    delete s.builds[id];
+  });
+}
+function fleetInfo(b){
+  const st=s.businesses[b.id], g=s.garage[b.id], ord=s.orders.filter(o=>o.id===b.id).length;
+  const cnt=VNAMES[b.id].map((n,i)=>[n,st.fleet.filter(v=>(v.cls||0)===i).length]).filter(x=>x[1]>0).map(x=>x[0]+' '+x[1]).join(', ')||'пусто';
+  const worst=st.fleet.length?Math.max(...st.fleet.map(v=>v.km/VCLS[v.cls||0].life)):0;
+  return `<div class="row"><span>Гараж</span><b>${st.fleet.length+ord} / ${g.slots} мест</b></div><div class="row"><span>Состав</span><b>${cnt}</b></div><div class="row"><span>Самая изношенная</span><b>${Math.round(worst*100)}% ресурса</b></div>${ord?`<div class="help">В доставке: ${ord}</div>`:''}`;
+}
+function fleetControls(b){
+  const id=b.id, g=s.garage[id], n=usedSlots(id), free=g.slots-n, bd=s.builds[id];
+  let h='<div class="controls" style="flex-wrap:wrap">'+VNAMES[id].map((nm,i)=>{ const c=vehClsCost(b,i,n);
+    return `<button data-order="${id}:${i}" class="${i===0?'primary':''}" ${free<=0||s.cash<c?'disabled':''}>${nm} · ₽${fmtBig(c)} · ${VCLS[i].d} дн.</button>`; }).join('')+'</div>';
+  h+=`<div class="help">Класс выше: дороже, но больше дохода с одного места гаража. Ресурс пробега: ${VCLS.map(x=>fmt(x.life)).join(' / ')} км.${free<=0?' <b>Гараж заполнен.</b>':''}</div>`;
+  if(bd) h+=`<div class="row"><span>Идёт стройка: ${bd.name}</span><b>${bd.daysLeft} дн.</b></div><div class="bar"><i style="width:${(1-bd.daysLeft/bd.total)*100}%"></i></div>`;
+  else { const gc=garageCost(id); h+=`<div class="controls"><button data-garage="${id}" ${s.cash<gc?'disabled':''}>Расширить гараж +10 мест (₽${fmt(gc)}, ${garageDays(id)} дн.)</button></div>`; }
+  return h;
+}
+
+// ===== КОЛЛЕКЦИИ И ПРЕСТИЖ =====
+const CI={coin:'<circle cx="12" cy="12" r="9" fill="#e0b13a" stroke="#a97c12"/><circle cx="12" cy="12" r="5.5" fill="none" stroke="#a97c12"/>',
+  art:'<path d="M12 3a9 9 0 1 0 0 18c1.5 0 2-1 1.5-2s0-2 1.5-2h2a3 3 0 0 0 3-3c0-5-4-11-8-11z" fill="#b0743e" stroke="#7a4a20"/><circle cx="8" cy="10" r="1.3" fill="#3b6fe0"/><circle cx="12" cy="7.5" r="1.3" fill="#e0b13a"/><circle cx="16" cy="10" r="1.3" fill="#e0523b"/>',
+  car:'<path d="M4 14l1.6-4.6A2 2 0 0 1 7.5 8h9a2 2 0 0 1 1.9 1.4L20 14v3H4z" fill="#cfd6e4" stroke="#8892a8"/><circle cx="8" cy="17.5" r="1.8" fill="#4a5165"/><circle cx="16" cy="17.5" r="1.8" fill="#4a5165"/>',
+  gem:'<path d="M6 4h12l4 5-10 12L2 9z" fill="#6cc9f0" stroke="#2f8fb8"/><path d="M2 9h20M9 4l3 5 3-5M12 9v12" fill="none" stroke="#2f8fb8"/>',
+  stamp:'<rect x="5" y="4" width="14" height="16" rx="1" fill="#f3ead2" stroke="#b8a878" stroke-dasharray="1.5 1.5"/><rect x="8" y="7" width="8" height="10" fill="#c4553b"/>',
+  star:'<path d="M12 2l3 6.5 7 .8-5.2 4.8 1.5 7L12 17.5 5.7 21l1.5-7L2 9.3l7-.8z" fill="#a78bfa" stroke="#6d4fd6"/>'};
+const COLLS=[
+  {id:'coins',name:'Монеты',ic:'coin',base:30000,g:1.3,unlockK:3,items:['Рубль 1921','Полтина 1924','Червонец 1923','Золотая десятка 1899','Империал 1897','Талер Марии Терезии','Соверен 1871','Двойной орёл 1905','Гульден 1650','Флорин 1450','Луидор 1640','Золотая гинея 1663','Дублон 1715','Динарий Августа','Статер Александра','Тетрадрахма Афин','Ауреус Нерона','Кленовый лист 1979','Крюгерранд 1967','Слиток «Гордость»']},
+  {id:'art',name:'Картины',ic:'art',base:200000,g:1.35,unlockK:3,items:['Осенний берег','Тихая гавань','Утро в порту','Зимний двор','Старая мельница','Городской вечер','Лодки на рассвете','Рыночная площадь','Летний сад','Туманный мост','Дорога в горы','Вечерний чай','Портрет дамы','Натюрморт с грушами','Штормовое море','Балкон у моря','Ночной город','Золотая осень','Охота на рассвете','Бал в зале','Тайная вечеря','Женщина у окна','Императорский приём','Звёздная ночь','Улыбка эпохи']},
+  {id:'cars',name:'Ретро-автомобили',ic:'car',base:100000,g:1.3,unlockK:3,items:['Москвич 400','Победа 1949','Волга ГАЗ-21','ЗИС-110','Чайка ГАЗ-13','Ford Model T','Chevrolet Bel Air 1957','Cadillac Eldorado 1959','Mercedes 190SL','Jaguar E-Type','Porsche 356','Aston Martin DB5','Bentley Blower','Mercedes 300SL Gullwing','Bugatti Type 57','Duesenberg SJ','Rolls-Royce Phantom I','Alfa Romeo 8C','Ferrari 250 GTO','Bugatti Royale']},
+  {id:'jewels',name:'Драгоценности',ic:'gem',base:500000,g:1.35,unlockK:3,items:['Серебряное кольцо','Жемчужное колье','Золотые часы','Рубиновая брошь','Сапфировые серьги','Изумрудный браслет','Бриллиант 1 карат','Диадема княгини','Колье «Северное сияние»','Розовый бриллиант','Изумруд «Змеиный глаз»','Сапфир «Морской король»','Рубин «Голубь крови»','Жёлтый алмаз 10 карат','Тиара династии','Ожерелье императрицы','Голубой бриллиант','Алмаз «Звезда Севера»','Бриллиант «Утренняя заря»','Алмаз «Тысяча лет»']},
+  {id:'stamps',name:'Марки',ic:'stamp',base:15000,g:1.4,unlockK:3,items:['Синяя серия 1858','Красная почта','Первый выпуск','Военная серия','Царский герб','Перевёрнутый портрет','Ошибка печати','Чёрный пенни 1840','Аэромарка 1913','Красный пенни','Зелёный трёхгрошовик','Прусская синяя','Опечатка «Дракон»','Марка-невидимка','Императорский тираж']},
+  {id:'unique',name:'Уникальные предметы',ic:'star',base:50000000,g:4,unlockK:2,items:['Корона Тумана','Чаша Победителей','Меч Хана','Яйцо Мастера','Печать Империи']}
+];
+const RANKS=[[15,'Новичок света'],[50,'Уважаемый гость'],[110,'Влиятельная персона'],[190,'Элита'],[290,'Легенда высшего света']];
+if(!s.col){ s.col={own:{},idx:{},open:null}; }
+COLLS.forEach(c=>{ if(!s.col.own[c.id]) s.col.own[c.id]=[]; if(!s.col.idx[c.id]) s.col.idx[c.id]=1; });
+function colPrice(c,i){ return Math.round(c.base*Math.pow(c.g,i)*s.col.idx[c.id]*s.macro.costIndex); }
+function colValue(){ return COLLS.reduce((a,c)=>a+s.col.own[c.id].reduce((x,i)=>x+colPrice(c,i)*0.9,0),0); }
+function itemPrestige(c,i){ return 1+Math.floor(i*3/c.items.length); }
+function prestigePoints(){ return COLLS.reduce((a,c)=>a+s.col.own[c.id].reduce((x,i)=>x+itemPrestige(c,i),0)+(s.col.own[c.id].length>=c.items.length?20:0),0); }
+function prestigeRank(){ const p=prestigePoints(); return RANKS.filter(r=>p>=r[0]).length; }
+function colStep(){ COLLS.forEach(c=>{ const v=s.col.idx[c.id]; s.col.idx[c.id]=clamp(v*(1+0.0002+(Math.random()-0.5)*0.008+(1-v)*0.002),0.6,3); }); }
+function renderCol(){
+  const el=document.getElementById('colBody'), pts=prestigePoints(), rk=prestigeRank(), nx=RANKS[rk], eq=equityNow();
+  let html=`<div class="card" style="grid-column:1/-1"><h2>Престиж среди элиты</h2>
+    <div class="row"><span>Ранг</span><b>${rk?RANKS[rk-1][1]:'Пока никто'} (${rk}/5)</b></div>
+    <div class="row"><span>Очки престижа</span><b>${pts}${nx?' / '+nx[0]:''}</b></div>${nx?`<div class="bar"><i style="width:${Math.min(100,pts/nx[0]*100)}%"></i></div>`:''}
+    <div class="help">Каждый ранг открывает закрытые связи: госзаказы дороже на 2%, нефтяные контракты на 2%, мораль персонала +1,5, кредиты дешевле на 3%. Сейчас: ×${rk} от каждого. Редкие предметы дают больше очков, законченная коллекция ещё +20.</div>
+    <div class="row"><span>Стоимость коллекций (по 90% рынка)</span><b>₽${fmtBig(colValue())}</b></div></div>`;
+  COLLS.forEach(c=>{
+    const own=s.col.own[c.id], open=s.col.open===c.id;
+    html+=`<div class="card"><h2><svg viewBox="0 0 24 24" style="width:26px;height:26px;flex:none">${CI[c.ic]}</svg>${c.name}<span class="h2-end">${own.length} из ${c.items.length}</span></h2>
+      <div class="bar"><i style="width:${own.length/c.items.length*100}%"></i></div>
+      <div class="controls"><button data-colopen="${c.id}">${open?'Свернуть':'Открыть'}</button></div>`;
+    if(open){ html+=c.items.map((nm,i)=>{ const p=colPrice(c,i), have=own.includes(i), lock=eq<p*c.unlockK;
+      return `<div class="row" style="margin-top:6px"><span>${nm} <span style="color:var(--dim);font-size:11px">★${itemPrestige(c,i)}</span></span>`
+        +(have?`<button data-colsell="${c.id}:${i}">Продать ₽${fmtBig(p*0.9)}</button>`:lock?`<span style="color:var(--dim);font-size:11px">нужен капитал ₽${fmtBig(p*c.unlockK)}</span>`:`<button data-colbuy="${c.id}:${i}" class="primary" ${s.cash<p?'disabled':''}>₽${fmtBig(p)}</button>`)+'</div>'; }).join(''); }
+    html+='</div>';
+  });
+  el.innerHTML=html;
+  el.querySelectorAll('[data-colopen]').forEach(b=>b.onclick=()=>{ s.col.open=s.col.open===b.dataset.colopen?null:b.dataset.colopen; render(); });
+  el.querySelectorAll('[data-colbuy]').forEach(b=>b.onclick=()=>{ const [id,i]=b.dataset.colbuy.split(':'), c=COLLS.find(x=>x.id===id), k=parseInt(i), p=colPrice(c,k);
+    if(s.cash<p||s.col.own[id].includes(k)) return; s.cash-=p; s.col.own[id].push(k); pushLog(`Расход: в коллекцию «${c.name}» добавлено «${c.items[k]}», ₽${fmt(p)}.`);
+    if(s.col.own[id].length>=c.items.length) pushLog(`Коллекция «${c.name}» собрана полностью! +20 очков престижа.`); render(); });
+  el.querySelectorAll('[data-colsell]').forEach(b=>b.onclick=()=>{ const [id,i]=b.dataset.colsell.split(':'), c=COLLS.find(x=>x.id===id), k=parseInt(i), p=colPrice(c,k)*0.9;
+    const j=s.col.own[id].indexOf(k); if(j<0) return; s.col.own[id].splice(j,1); s.cash+=p; pushLog(`Продан предмет «${c.items[k]}» за ₽${fmt(p)}.`); render(); });
+}
+const TECHS = [
+  {id:'smelting', name:'Улучшенная плавка', cost:40000, days:4,
+   desc:'Расход руды на тонну стали: 2,0 → 1,6т.',
+   effect:s=>{ s.oreRatio = 1.6; }},
+  {id:'automation', name:'Автоматизация цеха', cost:35000, days:3,
+   desc:'Мощность цеха обработки деталей +5 шт/день немедленно.',
+   effect:s=>{ s.partsFactoryCapacity += 5; }},
+  {id:'efficiency', name:'Энергоэффективность', cost:25000, days:3,
+   desc:'Зарплаты и обслуживание дешевле на 15%.',
+   effect:s=>{ s.wagePerDay = Math.round(s.wagePerDay*0.85); s.upkeepPerDay = Math.round(s.upkeepPerDay*0.85); }},
+  {id:'logistics', name:'Логистическая оптимизация', cost:30000, days:4,
+   desc:'Комиссии за доставку (грузовик/ж-д) дешевле на 30%.',
+   effect:s=>{ s.transportFeeMultiplier *= 0.7; }},
+  {id:'export_relations', name:'Экспортные связи', cost:45000, days:5,
+   desc:'Экспортные пошлины ниже на 25%.',
+   effect:s=>{ s.tariffMultiplier *= 0.75; }},
+  {id:'credit_rating', name:'Финансовая репутация', cost:20000, days:2,
+   desc:'Ставка по кредиту ниже на 30%.',
+   effect:s=>{ s.loanRate *= 0.7; }},
+];
+const STAGES = [
+  {name:'Маленький бизнес', min:0},
+  {name:'Региональная компания', min:150000},
+  {name:'Национальная компания', min:700000},
+  {name:'Международная корпорация', min:3000000},
+  {name:'Холдинг', min:12000000},
+  {name:'Глобальный промышленный игрок', min:50000000},
+  {name:'Финансовая империя', min:250000000},
+  {name:'Мировая держава', min:1000000000},
+  {name:'Легенда экономики', min:10000000000},
+];
+function stageFor(netWorth){
+  let idx=0;
+  for(let i=0;i<STAGES.length;i++){ if(netWorth>=STAGES[i].min) idx=i; }
+  return {current:STAGES[idx], next:STAGES[idx+1]||null, idx};
+}
+function save(){ s.lastSeen = Date.now(); localStorage.setItem(KEY, JSON.stringify(s)); }
+function load(){ try{ const r=localStorage.getItem(KEY); return r?JSON.parse(r):null; }catch(e){ return null; } }
+let suppressLog = false;
+function pushLog(msg){ if(suppressLog) return; s.log.unshift(`Д${s.day}: ${msg}`); if(s.log.length>60) s.log.pop(); }
+
+function sparkline(el, data, colorUp, colorDown){
+  const w=280,h=56,pad=4;
+  const min=Math.min(...data), max=Math.max(...data);
+  const range=(max-min)||1;
+  const pts=data.map((v,i)=>{
+    const x=pad+i*((w-pad*2)/(data.length-1));
+    const y=h-pad-((v-min)/range)*(h-pad*2);
+    return [x,y];
+  });
+  const path=pts.map((p,i)=>(i===0?'M':'L')+p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+  const trendUp = data[data.length-1] >= data[0];
+  el.setAttribute('viewBox',`0 0 ${w} ${h}`);
+  el.innerHTML = `<path d="${path}" fill="none" stroke="${trendUp?colorUp:colorDown}" stroke-width="2"/>`;
+}
+
+function render(){
+  document.getElementById('achCount').textContent = `${s.achievements.length} / ${ACHIEVEMENTS.length}`;
+  document.getElementById('achievementsBody').innerHTML = `<div class="ach-grid">${ACHIEVEMENTS.map(a=>{
+    const unlocked = s.achievements.includes(a.id);
+    return `<div class="ach-badge ${unlocked?'unlocked':''}" title="${a.desc}">
+      <div class="ach-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg></div>
+      <div class="ach-name">${unlocked?a.name:'???'}</div>
+    </div>`;
+  }).join('')}</div>`;
+
+  const mgrEl = document.getElementById('managersBody');
+  const hiredList = MANAGERS.filter(m=>s.managers[m.id]);
+  const avatarsHtml = hiredList.length ? `<div class="avatars" style="margin-bottom:14px">${hiredList.map(m=>`
+    <div class="avatar-item">
+      <div class="avatar-circle">${m.name.charAt(0)}</div>
+      <div class="aname">${m.name.split(' ')[0]}</div>
+      <div class="arole">${m.name.split(' ').slice(1).join(' ')}</div>
+    </div>`).join('')}</div>` : '';
+  mgrEl.innerHTML = avatarsHtml + MANAGERS.map(m=>{
+    const hired = s.managers[m.id];
+    return `<div class="row" style="margin-top:8px;flex-direction:column;align-items:flex-start;gap:4px">
+      <div style="display:flex;justify-content:space-between;width:100%"><b style="color:var(--text)">${m.name}</b><span>${hired?'нанят · ₽'+fmt(m.salary)+'/день':'₽'+fmt(m.hireCost)+' + ₽'+fmt(m.salary)+'/день'}</span></div>
+      <div style="color:var(--dim)">${m.desc}</div>
+      <button data-mgr="${m.id}" class="mgrBtn" ${(!hired && s.cash<m.hireCost)?'disabled':''}>${hired?'Уволить':'Нанять'}</button>
+    </div>`;
+  }).join('');
+  mgrEl.querySelectorAll('.mgrBtn').forEach(btn=>{
+    btn.onclick = () => {
+      const m = MANAGERS.find(x=>x.id===btn.dataset.mgr);
+      if(s.managers[m.id]){
+        s.managers[m.id] = false;
+        pushLog(`${m.name} уволен.`);
+      } else {
+        if(s.cash<m.hireCost) return;
+        s.cash -= m.hireCost;
+        s.managers[m.id] = true;
+        pushLog(`Нанят ${m.name}.`);
+      }
+      render();
+    };
+  });
+
+  const offlineEl = document.getElementById('offlineBanner');
+  if(offlineSummary){
+    offlineEl.style.display = 'block';
+    const sign = offlineSummary.profit>=0?'+':'';
+    offlineEl.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+      <div>Пока вас не было: прошло <b>${offlineSummary.days} дн.</b>, результат <b class="${offlineSummary.profit>=0?'good':'bad'}">${sign}₽${fmt(offlineSummary.profit)}</b></div>
+      <button id="dismissOfflineBtn">Понятно</button>
+    </div>`;
+    document.getElementById('dismissOfflineBtn').onclick = () => { offlineSummary=null; render(); };
+  } else {
+    offlineEl.style.display = 'none';
+  }
+
+  document.getElementById('day').textContent = s.day;
+  document.getElementById('cash').textContent = '₽'+fmt(s.cash);
+  document.getElementById('cash').className = s.cash<0?'bad':'';
+
+  const inTransit = s.shipments.reduce((sum,sh)=>sum+sh.amount,0);
+  const grossAssets = s.cash + s.ore*s.orePrice + s.steel*s.steelPrice + s.parts*s.partsPrice + inTransit + s.bonds + portfolioValue() + reValue() + inboundValue() + colValue();
+  const netWorth = grossAssets - s.loanPrincipal;
+  document.getElementById('netWorth').textContent = '₽'+fmt(grossAssets);
+  document.getElementById('equityVal').textContent = '₽'+fmt(netWorth);
+  sparkline(document.getElementById('profitSpark'), s.profitHistory, '#22c55e', '#ef4444');
+  sparkline(document.getElementById('assetsSpark'), s.assetsHistory, '#38bdf8', '#ef4444');
+  sparkline(document.getElementById('equitySpark'), s.equityHistory, '#22d3ee', '#ef4444');
+
+  document.getElementById('oreStockTxt').textContent = `${fmt(s.ore)} / ${s.oreCap} т`;
+  document.getElementById('oreBar').style.width = clamp(s.ore/s.oreCap*100,0,100)+'%';
+  document.getElementById('steelStockTxt').textContent = `${fmt(s.steel)} / ${s.steelCap} т`;
+  document.getElementById('steelBar').style.width = clamp(s.steel/s.steelCap*100,0,100)+'%';
+
+  const overflow = Math.max(0,(s.ore+s.steel)-(s.oreCap+s.steelCap)*0.001); // placeholder, real cost computed on tick
+  document.getElementById('storageCost').textContent = '4';
+
+  const possibleProd = Math.min(s.factoryCapacity, Math.floor(s.ore/s.oreRatio));
+  document.getElementById('prodTxt').textContent = `${possibleProd} / ${s.factoryCapacity} т`;
+  document.getElementById('prodBar').style.width = clamp(possibleProd/s.factoryCapacity*100,0,100)+'%';
+  document.getElementById('factoryCap').textContent = `уровень ${s.expandLevel}`;
+  document.getElementById('expandCost').textContent = fmt(expandCost());
+  document.getElementById('expandBtn').disabled = s.cash < expandCost();
+
+  document.getElementById('orePriceTag').textContent = '₽'+fmt(s.orePrice)+'/т';
+  document.getElementById('steelPriceTag').textContent = '₽'+fmt(s.steelPrice)+'/т';
+  sparkline(document.getElementById('oreChart'), s.oreHistory, '#e2645c', '#4fb3a6');
+  sparkline(document.getElementById('steelChart'), s.steelHistory, '#4fb3a6', '#e2645c');
+
+  const mineEl = document.getElementById('mineBody');
+  const MINE_COST = 300000;
+  if(s.mineOwned){
+    mineEl.innerHTML = `
+      <div class="row"><span>Добыча</span><b>+${s.mineDailyOre} т/день на склад бесплатно</b></div>
+      <div class="row"><span>Обслуживание</span><b>₽${fmt(s.mineUpkeep)}/день</b></div>
+      <div class="help">Собственная руда идёт напрямую на склад, минуя рынок и его колебания цены.</div>`;
+  } else if(netWorth < 400000){
+    mineEl.innerHTML = `<div class="help">Доступно при стоимости компании от ₽400 000 (сейчас ₽${fmt(netWorth)}). Собственная добыча снижает зависимость от рынка руды, но замораживает крупный капитал.</div>`;
+  } else {
+    mineEl.innerHTML = `
+      <div class="help">Даёт +${s.mineDailyOre}т руды в день бесплатно (в рамках ёмкости склада), но требует ₽${fmt(s.mineUpkeep)}/день на обслуживание. Капитал замораживается сразу.</div>
+      <div class="controls"><button id="buyMineBtn" class="primary" ${s.cash<MINE_COST?'disabled':''}>Купить рудник (₽${fmt(MINE_COST)})</button></div>`;
+    document.getElementById('buyMineBtn')?.addEventListener('click', ()=>{
+      if(s.cash<MINE_COST || s.mineOwned) return;
+      s.cash -= MINE_COST;
+      s.mineOwned = true;
+      s.wagePerDay += 0;
+      pushLog('Приобретён рудник в Казахстане — вертикальная интеграция снижает зависимость от рынка руды.');
+      render();
+    });
+  }
+
+  const constructionOpened = s.businesses.construction && s.businesses.construction.opened;
+  function renderMaterialFactory(elId, label, unit, stock, cap, capacity, costPerUnit, expandLevel, expandStep, expandCapStep, baseExpandCost, onExpand){
+    const el = document.getElementById(elId);
+    if(!constructionOpened){
+      el.innerHTML = `<div class="help">Откроется после запуска стройкомпании во вкладке «Бизнесы» — материалы идут напрямую на её заказы.</div>`;
+      return;
+    }
+    const produced = Math.min(capacity, cap-stock);
+    const expandCost = Math.round((baseExpandCost + expandLevel*Math.round(baseExpandCost*0.7))*s.macro.costIndex);
+    el.innerHTML = `
+      <div class="row"><span>Запас</span><b>${fmt(stock)} / ${cap} ${unit}</b></div>
+      <div class="bar"><i style="width:${clamp(stock/cap*100,0,100)}%"></i></div>
+      <div class="row"><span>Производство сегодня</span><b>${produced} / ${capacity} ${unit}, ₽${fmt(costPerUnit)}/${unit}</b></div>
+      <div class="help">Материал не продаётся на рынке — расходуется только на заказы стройки.</div>
+      <div class="controls"><button id="${elId}ExpandBtn" ${s.cash<expandCost?'disabled':''}>Расширить (₽${fmt(expandCost)})</button></div>`;
+    document.getElementById(elId+'ExpandBtn').onclick = () => {
+      if(s.cash<expandCost) return;
+      s.cash -= expandCost;
+      onExpand();
+      pushLog(`${label} расширен(а).`);
+      render();
+    };
+  }
+  renderMaterialFactory('lumberBody','Лесопилка','т', s.lumber, s.lumberCap, s.lumberFactoryCapacity, s.lumberCostPerUnit, s.lumberExpandLevel, 0,0, 12000,
+    ()=>{ s.lumberFactoryCapacity+=8; s.lumberCap+=80; s.lumberExpandLevel+=1; });
+  renderMaterialFactory('concreteBody','Бетонный завод','т', s.concrete, s.concreteCap, s.concreteFactoryCapacity, s.concreteCostPerUnit, s.concreteExpandLevel, 0,0, 14000,
+    ()=>{ s.concreteFactoryCapacity+=10; s.concreteCap+=100; s.concreteExpandLevel+=1; });
+
+  const holdingEl = document.getElementById('holdingBody');
+  const HOLDING_THRESHOLD = 12000000;
+  if(netWorth < HOLDING_THRESHOLD){
+    holdingEl.innerHTML = `<div class="help">Структура холдинга с дочерними компаниями открывается на этапе «Холдинг» — при стоимости компании от ₽${fmt(HOLDING_THRESHOLD)} (сейчас ₽${fmt(netWorth)}).</div>`;
+  } else {
+    holdingEl.innerHTML = SUBSIDIARIES.map(sub=>{
+      const owned = s.subsidiaries.includes(sub.id);
+      return `<div class="row" style="margin-top:8px;flex-direction:column;align-items:flex-start;gap:4px">
+        <div style="display:flex;justify-content:space-between;align-items:center;width:100%"><span style="display:flex;align-items:center;gap:10px">${iconBox(sub.id)}<b style="color:var(--text)">${sub.name}</b></span>${owned?'<span class="pill pill-good">в составе</span>':'<span style="color:var(--dim);font-size:12px">₽'+fmt(sub.cost)+'</span>'}</div>
+        <div style="color:var(--dim)">${sub.desc}</div>
+        ${owned?'':`<button data-sub="${sub.id}" class="buySubBtn" ${s.cash<sub.cost?'disabled':''}>Учредить</button>`}
+      </div>`;
+    }).join('');
+    holdingEl.querySelectorAll('.buySubBtn').forEach(btn=>{
+      btn.onclick = () => {
+        const sub = SUBSIDIARIES.find(x=>x.id===btn.dataset.sub);
+        if(s.cash<sub.cost || s.subsidiaries.includes(sub.id)) return;
+        s.cash -= sub.cost;
+        sub.effect(s);
+        s.subsidiaries.push(sub.id);
+        pushLog(`Учреждена дочерняя компания: ${sub.name}.`);
+        render();
+      };
+    });
+  }
+
+  document.getElementById('portfolioVal').textContent = '₽'+fmt(portfolioValue());
+  const stocksEl = document.getElementById('stocksList');
+  const groupTitles = {giants:'Гиганты рынка', local:'Отечественные компании', crypto:'Криптовалюты'};
+  const feesOf = st => st.kind==='crypto' ? {buy:0.004, sell:0.004} : {buy:0, sell:0.005};
+  const r6 = x => Math.round(x*1e6)/1e6;
+  let lastGroup = null;
+  stocksEl.innerHTML = STOCKS.map(st=>{
+    const price = s.stockPrices[st.id];
+    const hist = s.stockHistory[st.id];
+    const owned = s.portfolio[st.id]||0;
+    const isCrypto = st.kind==='crypto';
+    const dec = isCrypto ? 4 : 0;
+    const pct = owned/st.shares*100;
+    const pctTxt = owned<=0 ? '0' : (pct>=0.01 ? pct.toFixed(2) : '<0,01');
+    const prev = hist.length>1 ? hist[hist.length-2] : price;
+    const change = price-prev;
+    const changePct = prev ? change/prev*100 : 0;
+    const lo = Math.min(...hist), hi = Math.max(...hist);
+    const pos = hi>lo ? (price-lo)/(hi-lo) : 0.5;
+    const zone = pos<=0.2 ? ' <span class="pill pill-good">у дна периода</span>' : (pos>=0.8 ? ' <span class="pill pill-bad">у пика периода</span>' : '');
+    const basis = s.costBasis[st.id]||0;
+    const posPnl = owned>0 ? owned*price - basis : 0;
+    const mcap = price*st.shares;
+    const buyoutCost = Math.round((st.shares-owned)*price*1.25);
+    const fullyOwned = !isCrypto && owned>=st.shares;
+    const defQty = isCrypto ? 0.01 : (st.group==='giants' ? 1 : 100);
+    const head = st.group!==lastGroup ? `<div class="group-title">${groupTitles[st.group]||''}</div>` : '';
+    lastGroup = st.group;
+    return head + `<div class="card">
+      <h2>${st.name} <span class="h2-end">${st.ticker} · ${st.sector}</span></h2>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px">
+        <div style="font-size:22px;font-weight:800">₽${fmt(price)}</div>
+        <div class="${change>=0?'good':'bad'}" style="font-weight:700;font-size:13px">${change>=0?'+':''}${fmt(change)} (${changePct>=0?'+':''}${changePct.toFixed(2)}%)</div>
+      </div>
+      <svg class="stock-spark" id="spark_${st.id}"></svg>
+      <div class="row"><span>Диапазон ${hist.length} дн.${zone}</span><b>₽${fmt(lo)} – ₽${fmt(hi)}</b></div>
+      <div class="row"><span>Капитализация</span><b>₽${fmtBig(mcap)}</b></div>
+      ${isCrypto?'':`<div class="row"><span>Дивиденд</span><b>${st.dividendRate>0?(st.dividendRate*100).toFixed(st.dividendRate<0.01?2:1)+'% каждые 20 дн.':'не платит'}</b></div>`}
+      <div class="row"><span>${isCrypto?'В портфеле':'Ваша доля'}</span><b>${fmtQty(owned,dec)}${isCrypto?' '+st.ticker:' шт. ('+pctTxt+'%)'}${fullyOwned?' · <span class="pill pill-good">100%</span>':''}</b></div>
+      ${owned>0?`<div class="row"><span>Результат позиции</span><b class="${posPnl>=0?'good':'bad'}">${posPnl>=0?'+':'−'}₽${fmt(Math.abs(posPnl))}</b></div>`:''}
+      <div class="controls">
+        <input type="number" min="0" step="${isCrypto?'0.001':'1'}" value="${defQty}" data-qty="${st.id}" style="width:96px">
+        <button class="primary buyStockBtn" data-stock="${st.id}">Купить</button>
+        <button class="sellStockBtn" data-stock="${st.id}" ${owned<=0?'disabled':''}>Продать</button>
+      </div>
+      <div class="controls" style="margin-top:6px">
+        <button class="qbtn quickBuyBtn" data-stock="${st.id}">Макс. покупка</button>
+        <button class="qbtn quickSellBtn" data-stock="${st.id}" ${owned<=0?'disabled':''}>Продать всё</button>
+        ${(fullyOwned||isCrypto)?'':`<button class="qbtn buyoutBtn" data-stock="${st.id}" ${s.cash<buyoutCost?'disabled':''}>Выкупить компанию (₽${fmtBig(buyoutCost)})</button>`}
+      </div>
+    </div>`;
+  }).join('');
+  STOCKS.forEach(st=>sparkline(document.getElementById('spark_'+st.id), s.stockHistory[st.id], '#22c55e', '#ef4444'));
+  const qtyInput = st => stocksEl.querySelector(`[data-qty="${st.id}"]`);
+  const readQty = st => { const v = parseFloat(qtyInput(st).value)||0; return st.kind==='crypto' ? Math.floor(v*1e4)/1e4 : Math.floor(v); };
+  stocksEl.querySelectorAll('.buyStockBtn').forEach(btn=>{
+    btn.onclick = () => {
+      const st = STOCKS.find(x=>x.id===btn.dataset.stock);
+      const owned = s.portfolio[st.id]||0;
+      const actual = Math.min(readQty(st), st.shares-owned);
+      const cost = actual*s.stockPrices[st.id]*(1+feesOf(st).buy);
+      if(actual<=0 || s.cash<cost) return;
+      s.cash -= cost;
+      s.portfolio[st.id] = r6(owned+actual);
+      s.costBasis[st.id] = (s.costBasis[st.id]||0)+cost;
+      pushLog(`Куплено ${fmtQty(actual,st.kind==='crypto'?4:0)} ${st.ticker} за ₽${fmt(cost)}.`);
+      render();
+    };
+  });
+  stocksEl.querySelectorAll('.sellStockBtn').forEach(btn=>{
+    btn.onclick = () => {
+      const st = STOCKS.find(x=>x.id===btn.dataset.stock);
+      const owned = s.portfolio[st.id]||0;
+      const actual = Math.min(readQty(st), owned);
+      if(actual<=0) return;
+      const revenue = actual*s.stockPrices[st.id]*(1-feesOf(st).sell);
+      const basis = s.costBasis[st.id]||0;
+      const basisPart = basis*actual/owned;
+      const result = revenue-basisPart;
+      const left = r6(owned-actual);
+      s.cash += revenue;
+      s.portfolio[st.id] = left;
+      s.costBasis[st.id] = left<=0 ? 0 : basis-basisPart;
+      pushLog(`Продано ${fmtQty(actual,st.kind==='crypto'?4:0)} ${st.ticker}: ${result>=0?'прибыль':'убыток'} сделки ₽${fmt(Math.abs(result))}.`);
+      render();
+    };
+  });
+  stocksEl.querySelectorAll('.quickBuyBtn').forEach(btn=>{
+    btn.onclick = () => {
+      const st = STOCKS.find(x=>x.id===btn.dataset.stock);
+      const owned = s.portfolio[st.id]||0;
+      let q = s.cash/(s.stockPrices[st.id]*(1+feesOf(st).buy));
+      q = st.kind==='crypto' ? Math.floor(q*1e4)/1e4 : Math.floor(q);
+      qtyInput(st).value = Math.max(0, Math.min(q, st.shares-owned));
+    };
+  });
+  stocksEl.querySelectorAll('.quickSellBtn').forEach(btn=>{
+    btn.onclick = () => {
+      const st = STOCKS.find(x=>x.id===btn.dataset.stock);
+      qtyInput(st).value = s.portfolio[st.id]||0;
+    };
+  });
+  stocksEl.querySelectorAll('.buyoutBtn').forEach(btn=>{
+    btn.onclick = () => {
+      const st = STOCKS.find(x=>x.id===btn.dataset.stock);
+      const owned = s.portfolio[st.id]||0;
+      const cost = Math.round((st.shares-owned)*s.stockPrices[st.id]*1.25);
+      if(s.cash<cost || owned>=st.shares) return;
+      s.cash -= cost;
+      s.costBasis[st.id] = (s.costBasis[st.id]||0)+cost;
+      s.portfolio[st.id] = st.shares;
+      s.everBoughtOutCompany = true;
+      pushLog(`Компания ${st.name} выкуплена полностью за ₽${fmt(cost)}.`);
+      render();
+    };
+  });
+
+  const bizListEl = document.getElementById('businessList');
+  bizListEl.innerHTML = BUSINESSES.map(b=>{
+    const st = s.businesses[b.id];
+    if(netWorth < b.unlock){
+      return `<div class="card"><h2>${iconBox(b.id)}${b.name}</h2><div class="help">Открывается при стоимости компании от ₽${fmt(b.unlock)} (сейчас ₽${fmt(netWorth)}).</div></div>`;
+    }
+    if(!st || !st.opened){
+      return `<div class="card"><h2>${iconBox(b.id)}${b.name}</h2><div class="help">${b.desc}</div>
+        <div class="controls"><button data-open="${b.id}" class="primary buyBizBtn" ${s.cash<b.cost?'disabled':''}>Открыть (₽${fmt(b.cost)})</button></div></div>`;
+    }
+    if(b.fleet){
+      const fleet = st.fleet;
+      const avgKm = fleet.length ? Math.round(fleet.reduce((a,v)=>a+v.km,0)/fleet.length) : 0;
+      const maxKm = fleet.length ? Math.max(...fleet.map(v=>v.km)) : 0;
+      const estDaily = Math.round(fleet.reduce((sum,v)=>{
+        const K=VCLS[v.cls||0], eff = Math.max(0.4, 1-(v.km/K.life)*0.3);
+        return sum + b.revenuePerVehicle*K.r*eff*bizFactor(b.id) - b.upkeepPerVehicle*K.u*s.macro.costIndex;
+      },0));
+      const vehicleCost = vehCost(b, fleet.length);
+      return `<div class="card"><h2>${iconBox(b.id)}${b.name} <span class="h2-end">${fleet.length} ${b.vehicleName}(ы)</span></h2>
+        <div class="row"><span>Средний пробег</span><b>${fmt(avgKm)} км</b></div>
+        ${fleetInfo(b)}
+        <div class="row"><span>Ориентировочно в день</span><b class="${estDaily>=0?'good':'bad'}">${estDaily>=0?'+':''}₽${fmt(estDaily)}</b></div>${cycleLine(b.id)}
+        <div class="help">${b.desc}</div>
+        ${fleetControls(b)}
+        <div class="controls" style="margin-top:6px">
+          <span style="font-size:11px;color:var(--dim);align-self:center">Цель автопарка (для менеджера):</span>
+          <input type="number" min="0" value="${s.fleetTargets[b.id]||0}" data-target="${b.id}" style="width:60px">
+        </div>
+      </div>`;
+    }
+    if(b.projects){
+      const proj = st.activeProject;
+      let body;
+      if(proj){
+        const p = b.projectList.find(x=>x.id===proj.id);
+        const pct = clamp((p.days-proj.daysLeft)/p.days*100,0,100);
+        body = `<div class="row"><span>В работе: ${proj.name}</span><b>${proj.daysLeft} дн. осталось</b></div>
+          <div class="bar"><i style="width:${pct}%"></i></div>
+          <div class="help">${p.successChance<1?`Шанс успеха ${Math.round(p.successChance*100)}% · при удаче ₽${fmt(proj.payout)}, при провале — частичный возврат.`:`По завершении: ₽${fmt(proj.payout)} одной суммой.`}</div>`;
+      } else {
+        const stockLine = b.needsMaterials ? ` Склад: сталь ${fmt(s.steel)}т, бетон ${fmt(s.concrete)}т, лес ${fmt(s.lumber)}т.` : '';
+        body = `<div class="help">${b.desc} Выполнено проектов: ${st.completedCount}.${stockLine}</div>` +
+          b.projectList.map(p=>{
+            const matOk = !b.needsMaterials || (s.steel>=(p.steelNeeded||0) && s.concrete>=(p.concreteNeeded||0) && s.lumber>=(p.lumberNeeded||0));
+            const canStart = s.cash>=projCash(p) && matOk;
+            const matText = b.needsMaterials ? ` + ${p.steelNeeded}т стали + ${p.concreteNeeded}т бетона + ${p.lumberNeeded}т леса` : '';
+            const chanceText = p.successChance<1 ? ` · шанс успеха ${Math.round(p.successChance*100)}%` : '';
+            return `<div class="row" style="margin-top:6px;flex-direction:column;align-items:flex-start;gap:4px">
+              <div style="display:flex;justify-content:space-between;width:100%"><b style="color:var(--text)">${p.name}</b><span>${p.days} дн.${chanceText}</span></div>
+              <div style="color:var(--dim)">₽${fmt(projCash(p))}${matText} → выплата ₽${fmt(projPay(b,p))}</div>
+              <button data-project="${p.id}" data-bizid="${b.id}" class="primary startProjectBtn" ${canStart?'':'disabled'}>Взять проект</button>
+            </div>`;
+          }).join('');
+      }
+      return `<div class="card"><h2>${iconBox(b.id)}${b.name}</h2>${body}${cycleLine(b.id)}</div>`;
+    }
+    const upgradeCost = Math.round(b.cost*(0.7+st.level*0.55)*s.macro.costIndex);
+    const estDaily = Math.round(b.baseRevenue*st.level*bizFactor(b.id) - b.upkeep*st.level*s.macro.costIndex);
+    return `<div class="card"><h2>${iconBox(b.id)}${b.name} <span class="h2-end">уровень ${st.level}</span></h2>
+      <div class="row"><span>Ориентировочно в день</span><b class="${estDaily>=0?'good':'bad'}">${estDaily>=0?'+':''}₽${fmt(estDaily)}</b></div>${cycleLine(b.id)}
+      <div class="help">${b.desc}</div>
+      <div class="controls"><button data-upgrade="${b.id}" ${s.cash<upgradeCost||st.level>=8?'disabled':''}>${st.level>=8?'Максимальный уровень':'Развить (₽'+fmt(upgradeCost)+')'}</button></div></div>`;
+  }).join('');
+  bizListEl.querySelectorAll('.buyBizBtn').forEach(btn=>{
+    btn.onclick = () => {
+      const b = BUSINESSES.find(x=>x.id===btn.dataset.open);
+      if(s.cash<b.cost || (s.businesses[b.id]&&s.businesses[b.id].opened)) return;
+      s.cash -= b.cost;
+      s.businesses[b.id] = b.fleet ? {opened:true, fleet:[]} : (b.projects ? {opened:true, activeProject:null, completedCount:0} : {opened:true, level:1});
+      if(b.onOpen) b.onOpen(s);
+      pushLog(`Открыт новый бизнес: ${b.name}.`);
+      render();
+    };
+  });
+  bizListEl.querySelectorAll('[data-upgrade]').forEach(btn=>{
+    btn.onclick = () => {
+      const b = BUSINESSES.find(x=>x.id===btn.dataset.upgrade);
+      const st = s.businesses[b.id];
+      const upgradeCost = Math.round(b.cost*(0.7+st.level*0.55)*s.macro.costIndex);
+      if(s.cash<upgradeCost || st.level>=8) return;
+      s.cash -= upgradeCost;
+      st.level += 1;
+      pushLog(`${b.name} развит до уровня ${st.level}.`);
+      render();
+    };
+  });
+  bizListEl.querySelectorAll('[data-buyvehicle]').forEach(btn=>{
+    btn.onclick = () => {
+      const b = BUSINESSES.find(x=>x.id===btn.dataset.buyvehicle);
+      const st = s.businesses[b.id];
+      const vehicleCost = vehCost(b, st.fleet.length);
+      if(s.cash<vehicleCost) return;
+      s.cash -= vehicleCost;
+      st.fleet.push({km:0});
+      pushLog(`${b.name}: куплен(а) новый(ая) ${b.vehicleName}. Автопарк: ${st.fleet.length}.`);
+      render();
+    };
+  });
+  bizListEl.querySelectorAll('[data-order]').forEach(btn=>btn.onclick=()=>{
+    const [id,k]=btn.dataset.order.split(':'), cls=parseInt(k), b=BUSINESSES.find(x=>x.id===id), n=usedSlots(id), c=vehClsCost(b,cls,n);
+    if(s.garage[id].slots-n<=0||s.cash<c) return;
+    s.cash-=c; s.orders.push({id,cls,left:VCLS[cls].d});
+    pushLog(`Расход: заказан ${VNAMES[id][cls].toLowerCase()} для «${b.name}», ₽${fmt(c)}, доставка ${VCLS[cls].d} дн.`); render();
+  });
+  bizListEl.querySelectorAll('[data-garage]').forEach(btn=>btn.onclick=()=>{
+    const id=btn.dataset.garage, c=garageCost(id); if(s.builds[id]||s.cash<c) return;
+    const d=garageDays(id); s.cash-=c; s.builds[id]={kind:'garage',name:'гараж +10 мест',daysLeft:d,total:d};
+    pushLog(`Расход: начато расширение гаража, ₽${fmt(c)}, ${d} дн.`); render();
+  });
+  bizListEl.querySelectorAll('.startProjectBtn').forEach(btn=>{
+    btn.onclick = () => {
+      const b = BUSINESSES.find(x=>x.id===btn.dataset.bizid);
+      const p = b.projectList.find(x=>x.id===btn.dataset.project);
+      const st = s.businesses[b.id];
+      const matOk = !b.needsMaterials || (s.steel>=(p.steelNeeded||0) && s.concrete>=(p.concreteNeeded||0) && s.lumber>=(p.lumberNeeded||0));
+      if(st.activeProject || s.cash<projCash(p) || !matOk) return;
+      s.cash -= projCash(p);
+      if(b.needsMaterials){
+        s.steel -= p.steelNeeded||0; s.concrete -= p.concreteNeeded||0; s.lumber -= p.lumberNeeded||0;
+      }
+      st.activeProject = {id:p.id, name:p.name, daysLeft:p.days, payout:projPay(b,p), successChance:p.successChance!==undefined?p.successChance:1};
+      pushLog(`${b.name}: взят проект «${p.name}» (${p.days} дн.).`);
+      render();
+    };
+  });
+  bizListEl.querySelectorAll('[data-target]').forEach(inp=>{
+    inp.onchange = () => {
+      s.fleetTargets[inp.dataset.target] = clamp(parseInt(inp.value)||0, 0, 200);
+      save();
+    };
+  });
+
+  const banner = document.getElementById('eventsBanner');
+  banner.style.display = (s.activeEvents.length||s.staff.strike) ? 'flex' : 'none';
+  banner.innerHTML = (s.staff.strike?`<span class="event-chip" style="color:var(--bad)">Забастовка · ${s.staff.strike.days} дн.</span>`:'') + s.activeEvents.map(e=>`<span class="event-chip">${e.name} · ${e.daysLeft} дн.</span>`).join('');
+
+  const stage = stageFor(netWorth);
+  document.getElementById('stageName').textContent = stage.current.name;
+  document.getElementById('stageSub').textContent = stage.next
+    ? `До «${stage.next.name}»: ₽${fmt(Math.max(0,stage.next.min-netWorth))}`
+    : 'Высшая ступень достигнута';
+  const stagePct = stage.next ? clamp((netWorth-stage.current.min)/(stage.next.min-stage.current.min)*100,0,100) : 100;
+  document.getElementById('stageBar').style.width = stagePct+'%';
+
+  const steelExpTag = document.getElementById('steelExportTag');
+  const partsExpTag = document.getElementById('partsExportTag');
+  document.getElementById('steelMarket').querySelector('option[value=export]').disabled = !s.exportUnlocked;
+  document.getElementById('partsMarket').querySelector('option[value=export]').disabled = !s.exportUnlocked;
+  if(s.exportUnlocked){
+    steelExpTag.textContent = `Экспорт (Германия): ₽${fmt(s.exportSteelPrice)}/т, пошлина 18%`;
+    partsExpTag.textContent = `Экспорт (Германия): ₽${fmt(s.exportPartsPrice)}/шт, пошлина 22%`;
+  } else {
+    steelExpTag.textContent = `Экспорт откроется при стоимости компании ₽150 000`;
+    partsExpTag.textContent = `Экспорт откроется при стоимости компании ₽150 000`;
+  }
+
+  const possibleParts = Math.min(s.partsFactoryCapacity, Math.floor(s.steel/3));
+  document.getElementById('partsProdTxt').textContent = `${possibleParts} / ${s.partsFactoryCapacity} шт`;
+  document.getElementById('partsProdBar').style.width = clamp(possibleParts/s.partsFactoryCapacity*100,0,100)+'%';
+  document.getElementById('partsStockTxt').textContent = `${fmt(s.parts)} / ${s.partsCap} шт`;
+  document.getElementById('partsBar').style.width = clamp(s.parts/s.partsCap*100,0,100)+'%';
+  document.getElementById('partsFactoryCap').textContent = `уровень ${s.expandLevel2}`;
+  document.getElementById('expandPartsCost').textContent = fmt(expandPartsCost());
+  document.getElementById('expandPartsBtn').disabled = s.cash < expandPartsCost();
+  document.getElementById('partsPriceTag').textContent = '₽'+fmt(s.partsPrice)+'/шт';
+  sparkline(document.getElementById('partsChart'), s.partsHistory, '#4fb3a6', '#e2645c');
+
+  document.getElementById('log').innerHTML = s.log.map((l,i)=>{
+    const m = l.match(/^(Д\d+): (.*?)(?:\s*(₽[\d\s]+[\d]))?\.?$/);
+    if(!m) return `<div class="tx-row"><div class="tx-body"><div class="tx-title">${l}</div></div></div>`;
+    const [, day, text, amount] = m;
+    const isNeg = /списан|убыт|кризис|уволен|пауза|недозагруж|переполнен|минус|закончилась/i.test(text) && !amount;
+    const sign = amount ? (/куплен|потрач|расход|взят кредит|учреждена|списан|убыток|вложено|выкуплена/i.test(text) ? '' : '+') : '';
+    return `<div class="tx-row">
+      <div class="tx-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/></svg></div>
+      <div class="tx-body"><div class="tx-title">${text}</div><div class="tx-sub">${day}</div></div>
+      ${amount?`<div class="tx-amt ${sign==='+'?'good':(isNeg?'bad':'')}">${sign}${amount}</div>`:''}
+    </div>`;
+  }).join('');
+  document.getElementById('pauseBtn').textContent = s.running ? 'Пауза' : 'Продолжить';
+  document.getElementById('autoStatus').textContent = s.running
+    ? `Автоматический режим включён — день сменяется каждые ${s.settings.tickSec} сек.`
+    : 'Автоматический режим на паузе';
+
+  document.getElementById('loanTxt').textContent = '₽'+fmt(s.loanPrincipal);
+  document.getElementById('loanTxt').className = s.loanPrincipal>0 ? 'bad' : '';
+  document.getElementById('bondsVal').textContent = '₽'+fmt(s.bonds);
+  document.getElementById('loanInterestTxt').textContent = '₽'+fmt(s.loanPrincipal*effLoanRate());
+  const loanLimit = Math.max(50000, netWorth*s.creditLimitFactor);
+  document.getElementById('loanLimitTxt').textContent = '₽'+fmt(loanLimit);
+  document.getElementById('borrowBtn').disabled = s.loanPrincipal>=loanLimit;
+
+  const researchActiveEl = document.getElementById('researchActive');
+  if(s.research){
+    const tech = TECHS.find(t=>t.id===s.research.id);
+    const pct = clamp((tech.days - s.research.daysLeft)/tech.days*100, 0, 100);
+    researchActiveEl.innerHTML = `<div class="row"><span>Идёт: ${tech.name}</span><b>${s.research.daysLeft} дн. осталось</b></div><div class="bar"><i style="width:${pct}%"></i></div>`;
+  } else {
+    researchActiveEl.innerHTML = '<div class="help">Сейчас ничего не исследуется.</div>';
+  }
+  const listEl = document.getElementById('researchList');
+  listEl.innerHTML = TECHS.filter(t=>!s.completedTechs.includes(t.id)).map(t=>`
+    <div class="row" style="margin-top:8px;flex-direction:column;align-items:flex-start;gap:4px">
+      <div style="display:flex;justify-content:space-between;width:100%"><b style="color:var(--text)">${t.name}</b><span>₽${fmt(t.cost)} · ${t.days} дн.</span></div>
+      <div style="color:var(--dim)">${t.desc}</div>
+      <button data-tech="${t.id}" class="startResearchBtn" ${s.research || s.cash<t.cost ? 'disabled':''}>Начать исследование</button>
+    </div>`).join('') || '<div class="help">Все доступные технологии изучены.</div>';
+  listEl.querySelectorAll('.startResearchBtn').forEach(btn=>{
+    btn.onclick = () => {
+      const tech = TECHS.find(t=>t.id===btn.dataset.tech);
+      if(s.research || s.cash<tech.cost) return;
+      s.cash -= tech.cost;
+      s.research = {id:tech.id, daysLeft:tech.days};
+      pushLog(`Начато исследование: ${tech.name} (₽${fmt(tech.cost)}, ${tech.days} дн.).`);
+      render();
+    };
+  });
+
+  const compEl = document.getElementById('competitorBody');
+  if(s.competitorActive){
+    const c = s.competitor;
+    const canAcquire = c.status==='кризис';
+    const acquireCost = Math.round(c.capacity*12000 + 30000);
+    compEl.innerHTML = `
+      <div class="row"><span>Компания</span><b>${c.name}</b></div>
+      <div class="row"><span>Производственная мощность</span><b>${c.capacity} т/день</b></div>
+      <div class="row"><span>Финансовое состояние</span><span class="pill ${c.status==='кризис'?'pill-bad':(c.status==='расширяется'?'pill-good':'pill-neutral')}">${c.status}</span></div>
+      <div class="help">Конкурент закупает руду и продаёт сталь на тех же рынках, что и вы — его активность двигает цены.</div>
+      ${canAcquire ? `<div class="controls"><button id="acquireBtn" class="primary" ${s.cash<acquireCost?'disabled':''}>Поглотить конкурента (₽${fmt(acquireCost)})</button></div><div class="help">Конкурент в кризисе — окно для поглощения. Уйдёт с рынка, но капитал на это уходит немалый, а место на рынке рано или поздно займёт кто-то новый.</div>`
+        : ''}`;
+    document.getElementById('acquireBtn')?.addEventListener('click', ()=>{
+      if(s.cash<acquireCost) return;
+      s.cash -= acquireCost;
+      s.competitorActive = false;
+      s.competitorRespawnDay = s.day + 15 + Math.floor(Math.random()*15);
+      s.everAcquiredCompetitor = true;
+      pushLog(`Поглощена компания ${c.name} за ₽${fmt(acquireCost)}. Временная монополия на рынке.`);
+      render();
+    });
+  } else {
+    compEl.innerHTML = `<div class="help">Рынок временно свободен от прямого конкурента — цены реагируют только на ваши действия и мировые события. Но надолго монополия не задержится: рано или поздно на рынок выйдет новый игрок.</div>`;
+  }
+
+  renderMacro();
+  renderRE();
+  renderSupply();
+  renderMarkets();
+  renderPlants();
+  renderStaff();
+  renderRisk();
+  renderExtras();
+  renderMega();
+  renderBizDev();
+  renderOil();
+  renderCol();
+  save();
+}
+
+function expandCost(){ return Math.round((15000 + s.expandLevel*12000)*s.macro.costIndex); }
+function expandPartsCost(){ return Math.round((20000 + s.expandLevel2*16000)*s.macro.costIndex); }
+
+document.getElementById('buyOreBtn').onclick = () => {
+  const qty = clamp(parseInt(document.getElementById('oreQty').value)||0, 1, 500);
+  const capacityLeft = s.oreCap - s.ore;
+  const actualQty = Math.min(qty, capacityLeft);
+  if(actualQty<=0){ pushLog('Склад руды заполнен — покупка невозможна.'); render(); return; }
+  // цена растёт от объёма закупки за раз (эластичность спроса на сырьё), события усиливают эффект
+  const buyImpact = combinedEventMods().buyImpact;
+  const impact = 1 + (actualQty/200)*buyImpact;
+  const avgPrice = s.orePrice * (1 + (impact-1)/2);
+  const cost = avgPrice*actualQty;
+  if(cost>s.cash){ pushLog('Недостаточно средств для закупки руды.'); render(); return; }
+  s.cash -= cost;
+  s.ore += actualQty;
+  s.orePrice = Math.round(s.orePrice*impact);
+  s.boughtToday += actualQty;
+  pushLog(`Закуплено ${actualQty}т руды за ₽${fmt(cost)}.`);
+  render();
+};
+
+document.getElementById('sellSteelBtn').onclick = () => sellGoods('steel');
+document.getElementById('sellPartsBtn').onclick = () => sellGoods('parts');
+
+document.getElementById('expandPartsBtn').onclick = () => {
+  const cost = expandPartsCost();
+  if(s.cash<cost) return;
+  s.cash -= cost;
+  s.partsFactoryCapacity += 3;
+  s.partsCap += 30;
+  s.wagePerDay += 120;
+  s.expandLevel2 += 1;
+  pushLog(`Цех обработки расширен до уровня ${s.expandLevel2}. Мощность: ${s.partsFactoryCapacity} шт/день.`);
+  render();
+};
+
+document.getElementById('investBtn').onclick = () => {
+  const amt = clamp(parseInt(document.getElementById('bondQty').value)||0, 1000, 50000000);
+  if(s.cash<amt) return;
+  s.cash -= amt;
+  s.bonds += amt;
+  pushLog(`Вложено ₽${fmt(amt)} в облигации. Всего в облигациях: ₽${fmt(s.bonds)}.`);
+  render();
+};
+
+document.getElementById('withdrawBtn').onclick = () => {
+  if(s.bonds<=0) return;
+  const amt = s.bonds;
+  s.cash += amt;
+  s.bonds = 0;
+  pushLog(`Выведено ₽${fmt(amt)} из облигаций.`);
+  render();
+};
+
+document.getElementById('borrowBtn').onclick = () => {
+  const amt = clamp(parseInt(document.getElementById('loanQty').value)||0, 1000, 5000000);
+  const netWorth = s.cash + s.ore*s.orePrice + s.steel*s.steelPrice + s.parts*s.partsPrice
+    + s.shipments.reduce((sum,sh)=>sum+sh.amount,0) + s.bonds + portfolioValue() + reValue() + inboundValue() + colValue() - s.loanPrincipal;
+  const limit = Math.max(50000, netWorth*s.creditLimitFactor);
+  const room = limit - s.loanPrincipal;
+  if(room<=0){ pushLog('Кредитный лимит исчерпан.'); render(); return; }
+  const wantMode = document.getElementById('loanMode').value;
+  if(s.loanPrincipal>0 && s.loanMode!==wantMode){ pushLog('Нельзя смешивать плавающую и фиксированную ставку: сначала погасите текущий кредит.'); render(); return; }
+  const actual = Math.min(amt, room);
+  if(wantMode==='fixed'){
+    const newMult = rateFactor()*1.15;
+    s.loanFixedMult = s.loanPrincipal>0 ? (s.loanFixedMult*s.loanPrincipal + newMult*actual)/(s.loanPrincipal+actual) : newMult;
+  }
+  s.loanMode = wantMode;
+  s.loanPrincipal += actual;
+  s.cash += actual;
+  s.hadLoan = true;
+  pushLog(`Взят кредит ₽${fmt(actual)}. Общая задолженность: ₽${fmt(s.loanPrincipal)}.`);
+  render();
+};
+
+document.getElementById('repayBtn').onclick = () => {
+  const amt = clamp(parseInt(document.getElementById('loanQty').value)||0, 1000, 5000000);
+  const actual = Math.min(amt, s.loanPrincipal, Math.max(0,s.cash));
+  if(actual<=0){ pushLog('Нечего гасить или недостаточно средств.'); render(); return; }
+  s.loanPrincipal -= actual;
+  s.mortgage = Math.min(s.mortgage||0, s.loanPrincipal);
+  s.cash -= actual;
+  pushLog(`Погашено ₽${fmt(actual)} кредита. Остаток: ₽${fmt(s.loanPrincipal)}.`);
+  render();
+};
+
+document.getElementById('expandBtn').onclick = () => {
+  const cost = expandCost();
+  if(s.cash<cost) return;
+  s.cash -= cost;
+  s.factoryCapacity += 10;
+  s.oreCap += 150;
+  s.steelCap += 80;
+  s.wagePerDay += 150;
+  s.expandLevel += 1;
+  pushLog(`Завод расширен до уровня ${s.expandLevel}. Мощность: ${s.factoryCapacity}т/день.`);
+  render();
+};
+
+function advanceDay(silent){
+  const cashBefore = s.cash;
+  macroStep();
+  staffStep();
+  supplyArrive();
+  fleetStep();
+  incidentStep();
+  extrasStep();
+  megaStep();
+  oilStep();
+  colStep();
+  const M = s.macro, ci = M.costIndex, PL = priceLevels();
+
+  // прибытие отгрузок по ж/д, отправленных ранее
+  s.shipments = s.shipments.filter(sh => {
+    if(sh.arriveDay <= s.day){
+      s.cash += sh.amount;
+      pushLog(`Прибыла отгрузка: ${sh.label}, ₽${fmt(sh.amount)} зачислено.`);
+      return false;
+    }
+    return true;
+  });
+
+  // завод №1: руда → сталь
+  const wantProd = Math.min(Math.floor(s.factoryCapacity*staffMult()), Math.floor(s.ore/s.oreRatio));
+  const spaceLeft = s.steelCap - s.steel;
+  const produced = Math.max(0, Math.min(wantProd, spaceLeft));
+  s.ore -= produced*s.oreRatio;
+  s.steel += produced;
+  if(produced>0) s.everProducedSteel = true;
+
+  // цех №2: сталь → детали
+  const wantParts = Math.min(Math.floor(s.partsFactoryCapacity*staffMult()), Math.floor(s.steel/3));
+  const partsSpaceLeft = s.partsCap - s.parts;
+  const producedParts = Math.max(0, Math.min(wantParts, partsSpaceLeft));
+  s.steel -= producedParts*3;
+  s.parts += producedParts;
+
+  // собственный рудник: бесплатная руда на склад + обслуживание
+  if(s.mineOwned){
+    s.ore = Math.min(s.oreCap, s.ore + s.mineDailyOre);
+  }
+
+  // расходы
+  const storageOverflow = Math.max(0, s.ore - s.oreCap*0.7) + Math.max(0, s.steel - s.steelCap*0.7) + Math.max(0, s.parts - s.partsCap*0.7);
+  const storageCost = storageOverflow*4;
+  const dailyCosts = (s.wagePerDay*s.staff.wage*(s.staff.benefits?1.2:1) + s.upkeepPerDay + storageCost + (s.mineOwned ? s.mineUpkeep : 0))*ci*(s.megaCost||1);
+  s.cash -= dailyCosts;
+
+  // рынок: цены дрейфуют к базовому уровню (искажённому событиями) + случайные колебания
+  const mods = combinedEventMods();
+  const oreDrift = (120*PL.ore*mods.ore - s.orePrice)*0.04 + (Math.random()-0.5)*6;
+  const steelDrift = (520*PL.steel*mods.steel - s.steelPrice)*0.04 + (Math.random()-0.5)*18;
+  const partsDrift = (1800*PL.parts*mods.parts - s.partsPrice)*0.04 + (Math.random()-0.5)*40;
+  s.orePrice = Math.max(30, Math.round(s.orePrice + oreDrift));
+  s.steelPrice = Math.max(80, Math.round(s.steelPrice + steelDrift));
+  s.partsPrice = Math.max(300, Math.round(s.partsPrice + partsDrift));
+
+  s.oreHistory.push(s.orePrice); if(s.oreHistory.length>20) s.oreHistory.shift();
+  s.steelHistory.push(s.steelPrice); if(s.steelHistory.length>20) s.steelHistory.shift();
+  s.partsHistory.push(s.partsPrice); if(s.partsHistory.length>20) s.partsHistory.shift();
+
+  const exSteelDrift = (640*PL.steel*mods.steel - s.exportSteelPrice)*0.04 + (Math.random()-0.5)*22;
+  const exPartsDrift = (2300*PL.parts*mods.parts - s.exportPartsPrice)*0.04 + (Math.random()-0.5)*50;
+  s.exportSteelPrice = Math.max(80, Math.round(s.exportSteelPrice + exSteelDrift));
+  s.exportPartsPrice = Math.max(300, Math.round(s.exportPartsPrice + exPartsDrift));
+  s.exportSteelHistory.push(s.exportSteelPrice); if(s.exportSteelHistory.length>20) s.exportSteelHistory.shift();
+  s.exportPartsHistory.push(s.exportPartsPrice); if(s.exportPartsHistory.length>20) s.exportPartsHistory.shift();
+  marketsStep(PL, mods);
+
+  const currentNetWorth = s.cash + s.ore*s.orePrice + s.steel*s.steelPrice + s.parts*s.partsPrice
+    + s.shipments.reduce((sum,sh)=>sum+sh.amount,0) + s.bonds + portfolioValue() + reValue() + inboundValue() + colValue() - s.loanPrincipal;
+  if(!s.exportUnlocked && currentNetWorth>=150000){
+    s.exportUnlocked = true;
+    pushLog('Компания вышла на региональный уровень — открыт экспортный рынок в Германию.');
+  }
+
+  // мировые события: истечение старых, шанс нового
+  s.activeEvents = s.activeEvents.filter(e=>{
+    e.daysLeft -= 1;
+    if(e.daysLeft<=0){ pushLog(`Событие закончилось: ${e.name}.`); return false; }
+    return true;
+  });
+  if(s.activeEvents.length<2 && Math.random()<0.08){
+    const pool = EVENTS.filter(ev=>!s.activeEvents.some(ae=>ae.id===ev.id));
+    if(pool.length){
+      const pick = pool[Math.floor(Math.random()*pool.length)];
+      s.activeEvents.push({id:pick.id, name:pick.name, daysLeft:pick.days, mods:pick.mods});
+      pushLog(`Событие: ${pick.name} (на ${pick.days} дн.).`);
+    }
+  }
+
+  // исследования
+  if(s.research){
+    s.research.daysLeft -= 1;
+    if(s.research.daysLeft <= 0){
+      const tech = TECHS.find(t=>t.id===s.research.id);
+      tech.effect(s);
+      s.completedTechs.push(tech.id);
+      pushLog(`Исследование завершено: ${tech.name}.`);
+      s.research = null;
+    }
+  }
+
+  // капитализация облигаций
+  if(s.bonds>0){ s.bonds = s.bonds*(1+effBondRate()); }
+
+  // биржа: колебания цен (скрытый тренд + шум) и дивиденды
+  STOCKS.forEach(st=>{
+    const price = s.stockPrices[st.id];
+    if(st.trendVol){
+      s.stockTrend[st.id] = clamp((s.stockTrend[st.id]||0)*0.97 + (Math.random()-0.5)*st.trendVol, -0.7, 0.9);
+    }
+    const target = st.basePrice*(1+(s.stockTrend[st.id]||0))*stockMacroFactor(st);
+    const vol = st.volPct ? price*st.volPct : st.volatility;
+    const pull = st.pull!==undefined ? st.pull : 0.015;
+    const drift = (target-price)*pull + (Math.random()-0.5)*vol*2;
+    s.stockPrices[st.id] = Math.max(Math.round(st.basePrice*0.15), Math.round(price + drift));
+    s.stockHistory[st.id].push(s.stockPrices[st.id]);
+    if(s.stockHistory[st.id].length>40) s.stockHistory[st.id].shift();
+  });
+  s.dividendCounter += 1;
+  if(s.dividendCounter>=20){
+    s.dividendCounter = 0;
+    let totalDiv = 0;
+    STOCKS.forEach(st=>{
+      const owned = s.portfolio[st.id]||0;
+      if(owned>0 && st.dividendRate>0){
+        const payout = owned*s.stockPrices[st.id]*st.dividendRate;
+        s.cash += payout; totalDiv += payout;
+      }
+    });
+    if(totalDiv>0) pushLog(`Дивиденды по акциям: +₽${fmt(totalDiv)}.`);
+  }
+
+  reStep();
+
+  // обслуживание кредита
+  if(s.loanPrincipal>0){
+    const interest = s.loanPrincipal*effLoanRate() - Math.min(s.mortgage||0,s.loanPrincipal)*effLoanRate()*0.3;
+    s.cash -= interest;
+  }
+
+  // риск принудительного взыскания при затяжной глубокой просадке кассы
+  if(s.cash < -80000){
+    s.distressDays += 1;
+  } else {
+    s.distressDays = 0;
+  }
+  if(s.distressDays >= 3){
+    const forcedSteel = Math.round(s.steel*0.6);
+    const forcedParts = Math.round(s.parts*0.6);
+    const proceeds = forcedSteel*s.steelPrice*0.7 + forcedParts*s.partsPrice*0.7;
+    s.steel -= forcedSteel; s.parts -= forcedParts;
+    const debtPayoff = Math.min(s.loanPrincipal, proceeds);
+    s.loanPrincipal -= debtPayoff;
+    s.cash += (proceeds - debtPayoff);
+    s.factoryCapacity = Math.max(5, Math.round(s.factoryCapacity*0.8));
+    s.partsFactoryCapacity = Math.max(3, Math.round(s.partsFactoryCapacity*0.8));
+    s.distressDays = 0;
+    pushLog(`Банк инициировал взыскание: продан запас склада за ₽${fmt(proceeds)}, мощности сокращены. Касса на грани — действуйте осторожнее.`);
+  }
+
+  // конкурент: закупает руду, производит сталь, продаёт на тех же рынках — двигает цены
+  if(s.competitorActive){
+    const c = s.competitor;
+    const compBuy = c.capacity*2;
+    const compBuyCost = compBuy*s.orePrice*1.05;
+    c.cash -= compBuyCost;
+    s.orePrice = Math.round(s.orePrice*(1 + compBuy/500));
+    const compProduced = c.capacity;
+    const compSellRevenue = compProduced*s.steelPrice*0.95;
+    c.cash += compSellRevenue;
+    s.steelPrice = Math.max(80, Math.round(s.steelPrice*(1 - compProduced/450)));
+    c.cash -= c.capacity*90; // зарплаты конкурента
+
+    if(c.cash < -20000 && c.capacity > 4){
+      c.capacity -= 2; c.cash += 15000; c.status = 'кризис';
+      pushLog(`${c.name} сокращает производство из-за убытков.`);
+    } else if(c.cash > 180000){
+      c.capacity += 2; c.cash -= 50000; c.status = 'расширяется';
+      pushLog(`${c.name} расширяет мощности до ${c.capacity}т/день.`);
+    } else {
+      c.status = 'стабильно';
+    }
+    s.oreHistory[s.oreHistory.length-1] = s.orePrice;
+    s.steelHistory[s.steelHistory.length-1] = s.steelPrice;
+  } else if(s.competitorRespawnDay!==null && s.day>=s.competitorRespawnDay){
+    const pool = RIVAL_NAMES.filter(n=>n!==s.competitor.name);
+    const newName = pool[Math.floor(Math.random()*pool.length)];
+    const newCapacity = Math.max(10, Math.round(s.factoryCapacity*(0.7+Math.random()*0.5)));
+    s.competitor = { name:newName, cash:60000, capacity:newCapacity, status:'стабильно' };
+    s.competitorActive = true;
+    s.competitorRespawnDay = null;
+    pushLog(`На рынок вышел новый игрок: ${newName} (мощность ${newCapacity}т/день). Монополия закончилась.`);
+  }
+
+  // материалы для собственной стройки: лесопилка и бетонный завод
+  if(s.businesses.construction && s.businesses.construction.opened){
+    const lumberProd = Math.min(s.lumberFactoryCapacity, s.lumberCap-s.lumber);
+    s.lumber += lumberProd; s.cash -= lumberProd*s.lumberCostPerUnit*ci;
+    const concreteProd = Math.min(s.concreteFactoryCapacity, s.concreteCap-s.concrete);
+    s.concrete += concreteProd; s.cash -= concreteProd*s.concreteCostPerUnit*ci;
+  }
+
+  // портфель бизнесов вне металлургии
+  BUSINESSES.forEach(b=>{
+    const st = s.businesses[b.id];
+    if(!st || !st.opened) return;
+    if(b.fleet){
+      let dayRevenue = 0;
+      st.fleet = st.fleet.filter(v=>{
+        const K=VCLS[v.cls||0];
+        v.km += b.kmMin + Math.random()*(b.kmMax-b.kmMin);
+        const eff = Math.max(0.4, 1-(v.km/K.life)*0.3);
+        const rev = b.revenuePerVehicle*K.r*eff*(1 + (Math.random()*2-1)*b.volatility)*bizFactor(b.id);
+        dayRevenue += rev - b.upkeepPerVehicle*K.u*ci*bizCost(b.id);
+        if(v.km >= K.life){
+          pushLog(`${b.name}: ${VNAMES[b.id][v.cls||0].toLowerCase()} списан при пробеге ${fmt(K.life)} км.`);
+          return false;
+        }
+        return true;
+      });
+      s.cash += dayRevenue;
+      return;
+    }
+    if(b.projects){
+      s.cash -= b.idleUpkeep*ci;
+      if(st.activeProject){
+        st.activeProject.daysLeft -= 1;
+        if(st.activeProject.daysLeft<=0){
+          const chance = st.activeProject.successChance;
+          if(chance>=1 || Math.random()<chance){
+            s.cash += st.activeProject.payout;
+            st.completedCount += 1;
+            pushLog(`${b.name}: сдан проект «${st.activeProject.name}», выплата ₽${fmt(st.activeProject.payout)}.`);
+          } else {
+            const refund = Math.round(st.activeProject.payout*0.12);
+            s.cash += refund;
+            pushLog(`${b.name}: проект «${st.activeProject.name}» провалился. Частичный возврат ₽${fmt(refund)}.`);
+          }
+          st.activeProject = null;
+        }
+      }
+      return;
+    }
+    let rev = b.baseRevenue*st.level*(1 + (Math.random()*2-1)*b.volatility)*bizFactor(b.id);
+    if(b.seasonal){
+      const season = 1 + 0.4*Math.sin((s.day/45)*Math.PI);
+      rev *= season;
+    }
+    s.cash += rev - b.upkeep*st.level*ci*bizCost(b.id);
+    if(b.bonusChance && Math.random()<b.bonusChance){
+      const bonus = b.bonusMult*st.level;
+      s.cash += bonus;
+      pushLog(`${b.name}: крупная удача — ₽${fmt(bonus)} разовым доходом.`);
+    }
+  });
+
+  // эффективные менеджеры: автоматизация рутины
+  if(s.managers.procurement){
+    s.cash -= 400;
+    if(s.ore < s.oreCap*0.4){
+      const qty = Math.floor(s.oreCap*0.8 - s.ore);
+      const cost = qty*s.orePrice*1.1;
+      if(qty>0 && s.cash>=cost){
+        s.cash -= cost;
+        s.ore += qty;
+        s.orePrice = Math.round(s.orePrice*(1+qty/220));
+        pushLog(`Менеджер по закупкам докупил ${qty}т руды за ₽${fmt(cost)}.`);
+      }
+    }
+  }
+  if(s.managers.sales){
+    s.cash -= 450;
+    if(s.steel > s.steelCap*0.7){
+      const qty = Math.floor(s.steel - s.steelCap*0.3);
+      const gross = qty*s.steelPrice*0.97;
+      const fee = gross*0.08*s.transportFeeMultiplier;
+      s.steel -= qty; s.cash += gross-fee;
+      s.steelPrice = Math.max(50, Math.round(s.steelPrice*(1-qty/320)));
+      pushLog(`Менеджер по продажам сбыл ${qty}т стали за ₽${fmt(gross-fee)}.`);
+    }
+    if(s.parts > s.partsCap*0.7){
+      const qty = Math.floor(s.parts - s.partsCap*0.3);
+      const gross = qty*s.partsPrice*0.97;
+      const fee = gross*0.10*s.transportFeeMultiplier;
+      s.parts -= qty; s.cash += gross-fee;
+      s.partsPrice = Math.max(300, Math.round(s.partsPrice*(1-qty/70)));
+      pushLog(`Менеджер по продажам сбыл ${qty} деталей за ₽${fmt(gross-fee)}.`);
+    }
+  }
+  if(s.managers.fleet){
+    s.cash -= 350;
+    ['taxi','logistics_biz'].forEach(id=>{
+      const b = BUSINESSES.find(x=>x.id===id);
+      const st = s.businesses[id];
+      const target = s.fleetTargets[id]||0;
+      if(st && st.opened && usedSlots(id) < Math.min(target, s.garage[id].slots)){
+        const cost = vehClsCost(b, 0, usedSlots(id));
+        if(s.cash>=cost){
+          s.cash -= cost;
+          s.orders.push({id, cls:0, left:VCLS[0].d});
+          pushLog(`Менеджер автопарка купил ${b.vehicleName} для «${b.name}».`);
+        }
+      }
+    });
+  }
+
+  const profit = s.cash - cashBefore;
+  const curAssets = s.cash + s.ore*s.orePrice + s.steel*s.steelPrice + s.parts*s.partsPrice
+    + s.shipments.reduce((sum,sh)=>sum+sh.amount,0) + s.bonds + portfolioValue() + reValue() + inboundValue() + colValue();
+  s.profitHistory.push(profit); if(s.profitHistory.length>20) s.profitHistory.shift();
+  s.assetsHistory.push(curAssets); if(s.assetsHistory.length>20) s.assetsHistory.shift();
+  s.equityHistory.push(curAssets-s.loanPrincipal); if(s.equityHistory.length>20) s.equityHistory.shift();
+
+  const curEquity = curAssets - s.loanPrincipal;
+  ACHIEVEMENTS.forEach(a=>{
+    if(s.achievements.includes(a.id)) return;
+    if(a.check(s, curEquity)){
+      s.achievements.push(a.id);
+      s.cash += a.reward;
+      pushLog(`🏅 Достижение: «${a.name}» (+₽${fmt(a.reward)}).`);
+    }
+  });
+
+  if(!silent){
+    document.getElementById('profitToday').textContent = (profit>=0?'+':'')+'₽'+fmt(profit);
+    document.getElementById('profitToday').className = 'hero-delta '+(profit>=0?'good':'bad');
+    document.getElementById('profitTodayVal').textContent = (profit>=0?'+':'')+'₽'+fmt(profit);
+    document.getElementById('profitTodayVal').className = 'stat-val '+(profit>=0?'good':'bad');
+  }
+
+  pushLog(`Произведено ${produced}т стали и ${producedParts} деталей. Расходы: ₽${fmt(dailyCosts)}.`);
+  if(produced < wantProd && s.ore < s.factoryCapacity*2){
+    pushLog('Завод недозагружен — не хватает руды.');
+  }
+  if(producedParts < wantParts && s.steel < s.partsFactoryCapacity*3){
+    pushLog('Цех обработки недозагружен — не хватает стали.');
+  }
+  if(s.cash<0){
+    pushLog('Касса ушла в минус. Компания на грани банкротства.');
+  }
+
+  s.day += 1;
+  s.soldToday = 0; s.boughtToday = 0;
+  if(!silent){
+    nextTickAt = Date.now() + TICK_MS;
+    render();
+  }
+}
+
+function scheduleTimer(){
+  if(timer) clearInterval(timer);
+  if(!s.running) return;
+  nextTickAt = Date.now() + TICK_MS;
+  timer = setInterval(() => {
+    if(!s.running) return;
+    if(Date.now() >= nextTickAt) advanceDay();
+  }, 1000);
+}
+
+let offlineSummary = null;
+function catchUpOffline(){
+  if(!s.lastSeen || !s.settings.offline){ return; }
+  const elapsed = Date.now() - s.lastSeen;
+  let days = Math.min(Math.floor(elapsed/TICK_MS), 500);
+  if(days<=0) return;
+  const cashBefore = s.cash;
+  const dayBefore = s.day;
+  suppressLog = true;
+  for(let i=0;i<days;i++) advanceDay(true);
+  suppressLog = false;
+  const profit = s.cash - cashBefore;
+  pushLog(`Пока вас не было: прошло ${s.day-dayBefore} дн., итоговый результат ₽${fmt(profit)}.`);
+  offlineSummary = {days:s.day-dayBefore, profit};
+}
+
+document.getElementById('forceNextBtn').onclick = () => advanceDay();
+
+document.getElementById('pauseBtn').onclick = () => {
+  s.running = !s.running;
+  if(s.running){ scheduleTimer(); pushLog('Автоматический режим возобновлён.'); }
+  else { pushLog('Автоматический режим поставлен на паузу.'); }
+  render();
+};
+
+setInterval(() => {
+  if(!s.running) { document.getElementById('autoCountdown').textContent = ''; return; }
+  const left = Math.max(0, Math.ceil((nextTickAt - Date.now())/1000));
+  document.getElementById('autoCountdown').textContent = `Следующий день через ${left} сек.`;
+}, 250);
+
+// ===== настройки =====
+(function(){
+  const ov=document.getElementById('settingsOverlay');
+  const speed=document.getElementById('setSpeed'), off=document.getElementById('setOffline'), cmp=document.getElementById('setCompact');
+  document.getElementById('gearBtn').onclick=()=>{
+    speed.value=String(s.settings.tickSec); off.value=s.settings.offline?'1':'0'; cmp.value=s.settings.compact?'1':'0'; document.getElementById('setMacro').value=String(s.settings.macroK===undefined?1:s.settings.macroK);
+    ov.style.display='flex';
+  };
+  const close=()=>{ ov.style.display='none'; };
+  document.getElementById('settingsCloseBtn').onclick=close;
+  ov.addEventListener('click',e=>{ if(e.target===ov) close(); });
+  speed.onchange=()=>{ s.settings.tickSec=parseInt(speed.value)||60; TICK_MS=s.settings.tickSec*1000; scheduleTimer(); render(); };
+  off.onchange=()=>{ s.settings.offline=off.value==='1'; save(); };
+  cmp.onchange=()=>{ s.settings.compact=cmp.value==='1'; render(); };
+  document.getElementById('setMacro').onchange=e=>{ s.settings.macroK=parseFloat(e.target.value); render(); };
+  document.getElementById('tutorialBtn').onclick=()=>{ close(); document.getElementById('onboardingOverlay').style.display='flex'; };
+  document.getElementById('resetBtn').onclick=()=>{
+    if(!confirm('Полностью сбросить игру? Весь прогресс будет удалён.')) return;
+    if(!confirm('Точно сбросить? Это необратимо.')) return;
+    s.running=false; clearInterval(timer);
+    localStorage.removeItem(KEY);
+    location.reload();
+  };
+})();
+
+// ===== экспорт / импорт сохранения =====
+(function(){
+  const box=document.getElementById('saveBox'), msg=document.getElementById('saveMsg');
+  const say=t=>{ msg.textContent=t; };
+  const encode=()=>{ save(); return 'FERRUM1:'+btoa(unescape(encodeURIComponent(JSON.stringify(s)))); };
+  document.getElementById('exportBtn').onclick=()=>{
+    const code=encode(); box.value=code;
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(code).then(()=>say('Код скопирован. Вставь его в заметки.'),()=>{ box.select(); say('Автокопирование не сработало: код в поле выше, выдели и скопируй вручную.'); });
+    } else { box.select(); say('Код в поле выше — выдели и скопируй вручную.'); }
+  };
+  document.getElementById('downloadBtn').onclick=()=>{
+    try{
+      const a=document.createElement('a');
+      a.href=URL.createObjectURL(new Blob([encode()],{type:'text/plain'}));
+      a.download='ferrum-save-day'+s.day+'.txt';
+      document.body.appendChild(a); a.click(); a.remove();
+      say('Файл сформирован. Если скачивание не началось, используй экспорт кодом.');
+    }catch(e){ say('Не удалось скачать файл, используй экспорт кодом.'); }
+  };
+  document.getElementById('importBtn').onclick=()=>{
+    const raw=box.value.trim();
+    if(!raw.startsWith('FERRUM1:')){ say('Это не код сейва (должен начинаться с FERRUM1:).'); return; }
+    let data;
+    try{ data=JSON.parse(decodeURIComponent(escape(atob(raw.slice(8))))); }catch(e){ say('Код повреждён или скопирован не полностью.'); return; }
+    if(!data||typeof data.day!=='number'||typeof data.cash!=='number'||!data.macro&&!data.ore&&data.ore!==0){ say('В коде нет данных игры.'); return; }
+    if(!confirm('Загрузить сейв (день '+data.day+', касса ₽'+fmt(data.cash)+')? Текущий прогресс будет заменён.')) return;
+    s.running=false; clearInterval(timer);
+    localStorage.setItem(KEY, JSON.stringify(data));
+    location.reload();
+  };
+})();
+
+catchUpOffline();
+scheduleTimer();
+render();
+</script>
+</body>
+</html>
