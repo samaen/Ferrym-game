@@ -105,6 +105,8 @@ svg{width:100%;height:56px;display:block}
 .ach-badge .ach-ic svg{width:100%;height:100%}
 .ach-badge .ach-name{font-size:9.5px;font-weight:700;line-height:1.25;overflow-wrap:break-word}
 .bottom-nav .tab-btn{flex:1;min-width:0}
+#toastBox{position:fixed;left:12px;right:12px;bottom:calc(88px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:6px;z-index:60;pointer-events:none}
+.toast{background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:12px;padding:10px 12px;font-size:12.5px;color:var(--text);box-shadow:0 6px 20px rgba(0,0,0,.35)}
 .subnav{gap:8px;margin:0 0 14px;overflow-x:auto}
 .subnav button{background:var(--panel2);border:1px solid var(--line);color:var(--dim);border-radius:20px;padding:8px 14px;font-size:12.5px;font-weight:600;white-space:nowrap;flex-shrink:0;cursor:pointer}
 .subnav button.active{color:var(--accent);border-color:var(--accent);background:rgba(56,189,248,.12)}
@@ -163,6 +165,7 @@ button.danger{border-color:var(--bad);color:var(--bad)}
 
 <div id="eventsBanner" style="margin-bottom:14px;gap:8px;flex-wrap:wrap;display:flex;overflow-x:auto"></div>
 
+<div id="toastBox"></div>
 <div class="bottom-nav">
   <button class="tab-btn active" data-group="overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Обзор</button>
   <button class="tab-btn" data-group="production"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 3h22l-3 5H4z"/><path d="M21 8v13H3V8"/><line x1="9" y1="13" x2="9" y2="17"/><line x1="15" y1="13" x2="15" y2="17"/></svg>Производство</button>
@@ -196,6 +199,8 @@ button.danger{border-color:var(--bad);color:var(--bad)}
     <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>Журнал</h2>
     <div class="log" id="log"></div>
   </div>
+  <div class="card"><h2>Куда уходят деньги</h2><div id="ledgerBody"></div></div>
+  <div class="card"><h2>Что дальше</h2><div id="adviceBody"></div></div>
 </div>
 
 <div class="tab-panel grid" data-panel="production">
@@ -244,6 +249,9 @@ button.danger{border-color:var(--bad);color:var(--bad)}
     <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8"/><rect x="13" y="3" width="8" height="8"/><rect x="3" y="13" width="8" height="8"/><rect x="13" y="13" width="8" height="8"/></svg></span>Бетонный завод</h2>
     <div id="concreteBody"></div>
   </div>
+  <div class="card" style="grid-column:1/-1"><h2>Резерв стали</h2>
+    <div class="help" style="margin-top:0">Цех деталей не трогает сталь ниже этого уровня, а менеджер по продажам её не продаёт. Держите резерв под стройку, госзаказы и продажи.</div>
+    <div class="controls"><input type="number" id="steelReserve" min="0" step="10" style="width:90px"> <span style="align-self:center;color:var(--dim);font-size:12px">т стали</span></div></div>
   <div class="card" style="grid-column:1/-1"><h2>Новые мощности</h2><div id="plantsBody"></div></div>
 </div>
 
@@ -311,7 +319,6 @@ button.danger{border-color:var(--bad);color:var(--bad)}
   <div class="card" style="grid-column:1/-1"><h2>Госзаказы и тендеры</h2><div id="tenderBody"></div></div>
   <div class="card" style="grid-column:1/-1"><h2>Конкуренты и доля рынка</h2><div id="rivalBody"></div></div>
   <div class="card" style="grid-column:1/-1"><h2>Торговые хабы за рубежом</h2><div id="hubBody"></div></div>
-  <div class="card" style="grid-column:1/-1"><h2>Зарубежные поставщики</h2><div id="supplyBody"></div></div>
 </div>
 
 <div class="tab-panel grid" data-panel="finance">
@@ -339,6 +346,7 @@ button.danger{border-color:var(--bad);color:var(--bad)}
       <button id="withdrawBtn">Вывести всё</button>
     </div>
   </div>
+  <div class="card" style="grid-column:1/-1"><h2>Накопления</h2><div id="depBody"></div></div>
 </div>
 
 <div class="tab-panel grid" data-panel="research">
@@ -688,9 +696,9 @@ BUSINESSES.find(b=>b.id==='construction').projectList = CONSTRUCTION_PROJECTS;
 BUSINESSES.find(b=>b.id==='it').projectList = IT_PROJECTS;
 const MANAGERS = [
   {id:'procurement', name:'Менеджер по закупкам', hireCost:80000, salary:400,
-   desc:'Докупает руду каждый день, если склад заполнен меньше чем на 40%, до 80% ёмкости.'},
+   desc:'Докупает руду, когда склад меньше 40%, только по цене не выше 130% нормы и не тратя больше 35% кассы за раз.'},
   {id:'sales', name:'Менеджер по продажам', hireCost:90000, salary:450,
-   desc:'Продаёт сталь и детали на внутреннем рынке грузовиком, если склад заполнен больше чем на 70%.'},
+   desc:'Продаёт излишки стали и деталей на внутреннем рынке грузовиком, только по цене не ниже 90% нормы и не трогая резерв под госзаказы и производство деталей.'},
   {id:'fleet', name:'Менеджер автопарка', hireCost:70000, salary:350,
    desc:'Поддерживает заданный размер автопарка в такси и логистике — докупает машины вместо списанных и до цели.'},
 ];
@@ -772,7 +780,7 @@ function priceLevels(){
 }
 function equityNow(){
   return s.cash + s.ore*s.orePrice + s.steel*s.steelPrice + s.parts*s.partsPrice
-    + s.shipments.reduce((a,sh)=>a+sh.amount,0) + s.bonds + portfolioValue() + reValue() + inboundValue() + colValue() - s.loanPrincipal;
+    + s.shipments.reduce((a,sh)=>a+sh.amount,0) + s.bonds + portfolioValue() + reValue() + inboundValue() + colValue() + depValue() - s.loanPrincipal;
 }
 function cycleLine(id){
   const dem = (s.macro.demand-1)*(BIZ_CYC[id]||1)*100;
@@ -892,7 +900,7 @@ function reStep(){
     const target = t.base*ci*(1+(M.demand-1)*t.cyc*1.5)*clamp(1-(M.keyRate-8)*0.025, 0.6, 1.4);
     o.p = Math.max(Math.round(t.base*0.3), Math.round(o.p + (target-o.p)*0.06 + (Math.random()-0.5)*o.p*t.vol*2));
     o.hist.push(o.p); if(o.hist.length>40) o.hist.shift();
-    if(o.n>0) s.cash += o.n*o.p*(t.rent*(1+(M.demand-1)*t.cyc) - 0.0003);
+    if(o.n>0){ const r=o.n*o.p*(t.rent*(1+(M.demand-1)*t.cyc) - 0.0003); s.cash += r; L('Аренда недвижимости',r); }
   });
   s.mortgage = Math.min(s.mortgage, s.loanPrincipal);
   for(let k=0; k<3 && s.mortgage>0 && s.mortgage>reValue()*0.85; k++){
@@ -909,7 +917,7 @@ function reStep(){
     let tax=0;
     br.forEach((b,i)=>{ const hi=i<br.length-1?br[i+1][0]:Infinity; if(eq>b[0]) tax+=(Math.min(eq,hi)-b[0])*b[1]; });
     tax=Math.round(tax);
-    if(tax>0){ s.cash-=tax; s.taxPaid=(s.taxPaid||0)+tax; pushLog(`Расход: налог на капитал за месяц ₽${fmt(tax)}.`); }
+    if(tax>0){ s.cash-=tax; L('Налог на капитал',-tax); s.taxPaid=(s.taxPaid||0)+tax; pushLog(`Расход: налог на капитал за месяц ₽${fmt(tax)}.`); }
   }
 }
 function renderRE(){
@@ -1028,7 +1036,6 @@ if(!s.mk) s.mk={};
 if(!s.plants) s.plants=[];
 function marketOpen(id){ return id==='domestic' || (id==='export' ? s.exportUnlocked : equityNow()>=MARKETS[id].unlock); }
 function marketsStep(PL,mods){
-  supplyDrift(PL,mods);
   ['tr','cn','ae'].forEach(id=>{ const m=MARKETS[id], o=s.mk[id];
     o.steel=Math.max(80,Math.round(o.steel+(m.steel*PL.steel*mods.steel-o.steel)*0.04+(Math.random()-0.5)*22));
     o.parts=Math.max(300,Math.round(o.parts+(m.parts*PL.parts*mods.parts-o.parts)*0.04+(Math.random()-0.5)*50)); });
@@ -1053,7 +1060,7 @@ function sellGoods(kind){
   if(mode==='sea' && market==='domestic'){ pushLog('Морем можно отправлять только на экспорт.'); render(); return; }
   const M=MARKETS[market], mods=combinedEventMods();
   const base = market==='domestic' ? (st?s.steelPrice:s.partsPrice) : market==='export' ? (st?s.exportSteelPrice:s.exportPartsPrice) : s.mk[market][kind];
-  const div=(st?{truck:300,rail:500,sea:700}:{truck:60,rail:100,sea:150})[mode]*s.marketReach*M.reach*(s.hubs[market]?1.5:1);
+  const div=(st?{truck:2400,rail:4000,sea:5600}:{truck:360,rail:600,sea:900})[mode]*s.marketReach*M.reach*(s.hubs[market]?1.5:1);
   const impact=1-actualQty/div;
   const gross=base*(1+(impact-1)/2)*actualQty;
   const fee=gross*({truck:st?0.08:0.10, rail:st?0.03:0.04, sea:st?0.02:0.03}[mode])*s.transportFeeMultiplier*mods.transportFee;
@@ -1066,7 +1073,7 @@ function sellGoods(kind){
   const label=`${actualQty}${st?'т стали':' деталей'} (${market==='domestic'?'внутр. рынок':'экспорт: '+M.name})`;
   const delay={truck:0,rail:2,sea:5}[mode];
   if(delay){ s.shipments.push({arriveDay:s.day+delay, amount:net, label}); pushLog(`Отгружено ${label} ${mode==='sea'?'морем':'по ж/д'}, ₽${fmt(net)} придут через ${delay} дн.`); }
-  else { s.cash+=net; pushLog(`Продано ${label} грузовиком за ₽${fmt(net)}.`); }
+  else { s.cash+=net; L('Продажи стали и деталей',net); pushLog(`Продано ${label} грузовиком за ₽${fmt(net)}.`); }
   render();
 }
 const PLANTS=[
@@ -1075,7 +1082,9 @@ const PLANTS=[
   {id:'mill3', name:'Металлургический завод №3', unlock:6000000, cost:3200000, req:'mill2', desc:'+60 т стали/день, склад +400 руды и +200 стали, ФОТ +₽1 600/день.', fx:s=>{s.factoryCapacity+=60;s.oreCap+=400;s.steelCap+=200;s.wagePerDay+=1600;}},
   {id:'parts3', name:'Высокоточный цех', unlock:8000000, cost:3600000, req:'parts2', desc:'+25 деталей/день, склад +150, ФОТ +₽1 300/день.', fx:s=>{s.partsFactoryCapacity+=25;s.partsCap+=150;s.wagePerDay+=1300;}}
 ];
-function renderPlants(){
+function renderReserve(){ const inp=document.getElementById('steelReserve'); if(inp && document.activeElement!==inp) inp.value=s.steelReserve||0; }
+document.getElementById('steelReserve').onchange=e=>{ s.steelReserve=clamp(parseInt(e.target.value)||0,0,s.steelCap); e.target.value=s.steelReserve; save(); };
+function renderPlants(){ renderReserve();
   const el=document.getElementById('plantsBody'), eq=equityNow();
   el.innerHTML=PLANTS.map(p=>{
     const own=s.plants.includes(p.id), cost=Math.round(p.cost*s.macro.costIndex), locked=eq<p.unlock||(p.req&&!s.plants.includes(p.req));
@@ -1112,6 +1121,7 @@ const SUPPLY = {
 if(!s.sup) s.sup={};
 if(!s.inbound) s.inbound=[];
 if(!s.contracts) s.contracts=[];
+if(s.inbound.length||s.contracts.length){ s.cash+=inboundValue(); s.inbound=[]; s.contracts=[]; }
 Object.keys(SUPPLY).forEach(r=>{ if(!s.sup[r]) s.sup[r]={}; SUPPLY[r].sources.forEach(x=>{ if(!s.sup[r][x.id]) s.sup[r][x.id]=Math.round(SUPPLY[r].base*x.mult); }); });
 function inboundValue(){ return s.inbound.reduce((a,x)=>a+x.qty*SUPPLY[x.res].localPrice(),0); }
 function inboundQty(r){ return s.inbound.filter(x=>x.res===r).reduce((a,x)=>a+x.qty,0); }
@@ -1181,7 +1191,7 @@ function incidentChance(){ return 0.025*clamp(1+(50-s.staff.morale)/100,0.5,1.6)
 function safetyCost(){ return Math.round(40000*(1+s.safety)*s.macro.costIndex); }
 function incidentStep(){
   if(s.downDays>0) s.downDays-=1;
-  if(INS[s.ins].r>0) s.cash-=Math.max(0,equityNow())*INS[s.ins].r;
+  if(INS[s.ins].r>0){ const pr=Math.max(0,equityNow())*INS[s.ins].r; s.cash-=pr; L('Страховка',-pr); }
   if(Math.random()>=incidentChance()) return;
   const cov=INS[s.ins].c; s.incidents+=1;
   const pick=a=>a[Math.floor(Math.random()*a.length)];
@@ -1252,7 +1262,7 @@ function extrasStep(){
   });
   T.active=T.active.filter(c=>{
     const q=Math.min(c.kind==='steel'?s.steel:s.parts, c.left);
-    if(q>0){ if(c.kind==='steel') s.steel-=q; else s.parts-=q; c.left-=q; s.cash+=q*c.price; }
+    if(q>0){ if(c.kind==='steel') s.steel-=q; else s.parts-=q; c.left-=q; s.cash+=q*c.price; L('Госзаказы',q*c.price); }
     if(c.left<=0){ T.done++; pushLog(`Госзаказ выполнен: ${c.qty}${c.kind==='steel'?'т стали':' деталей'}, выручка ₽${fmt(c.qty*c.price)}.`); return false; }
     c.daysLeft-=1;
     if(c.daysLeft<=0){ const pen=Math.round(c.left*c.price*0.3); s.cash-=pen; T.failed++; pushLog(`Расход: штраф за срыв госзаказа ₽${fmt(pen)} (недопоставлено ${c.left}).`); return false; }
@@ -1344,9 +1354,9 @@ const BIZ_UPG={
   it:[['qa','QA и процессы',0.08,0],['cloud','Облачная платформа',0.15,0],['ai','ИИ-продукты',0.20,0],['enterprise','Корпоративные клиенты',0.12,0.10,['cloud','ai']]],
   port:[['crane','Портальные краны',0.10,0],['customs','Таможенный терминал',0.15,0],['rail','Железнодорожная ветка',0.20,0,['crane','customs']]]
 };
-function bizRev(id){ return (BIZ_UPG[id]||[]).reduce((a,u)=>(s.bizUp[id]||[]).includes(u[0])?a*(1+u[2]):a,1); }
+function bizRev(id){ return (BIZ_UPG[id]||[]).reduce((a,u)=>(s.bizUp[id]||[]).includes(u[0])?a*(1+u[2]):a,1)*synergy(id); }
 function bizCost(id){ return (BIZ_UPG[id]||[]).reduce((a,u)=>(s.bizUp[id]||[]).includes(u[0])?a*(1-u[3]):a,1); }
-function upgCost(b,i){ return Math.round(b.cost*(0.5+0.4*i)*s.macro.costIndex); }
+function upgCost(b,i){ return Math.round((b.fleet?b.vehicleCost*12:b.cost)*(0.5+0.4*i)*s.macro.costIndex); }
 function renderBizDev(){
   const el=document.getElementById('bizDevBody'); let html='', any=false;
   BUSINESSES.forEach(b=>{
@@ -1399,7 +1409,7 @@ function oilStep(){
     c.days-=1; if(c.days<=0) pushLog(`Контракт на ${c.kind==='oil'?'нефть':'газ'} завершён.`); return c.days>0;
   });
   ['oil','gas'].forEach(k=>{ const d=Math.min(prod[k],capLeft); capLeft-=d; rev+=d*(k==='oil'?O.po:O.pg); lost+=prod[k]-d; });
-  s.cash+=rev-cost; O.total+=rev-cost; O.last={rev,cost,lost};
+  s.cash+=rev-cost; O.total+=rev-cost; L('Нефтегаз',rev-cost); O.last={rev,cost,lost};
 }
 function renderOil(){
   const el=document.getElementById('oilBody'), O=s.oil, ci=s.macro.costIndex, eq=equityNow();
@@ -1478,13 +1488,13 @@ function fleetInfo(b){
   const st=s.businesses[b.id], g=s.garage[b.id], ord=s.orders.filter(o=>o.id===b.id).length;
   const cnt=VNAMES[b.id].map((n,i)=>[n,st.fleet.filter(v=>(v.cls||0)===i).length]).filter(x=>x[1]>0).map(x=>x[0]+' '+x[1]).join(', ')||'пусто';
   const worst=st.fleet.length?Math.max(...st.fleet.map(v=>v.km/VCLS[v.cls||0].life)):0;
-  return `<div class="row"><span>Гараж</span><b>${st.fleet.length+ord} / ${g.slots} мест</b></div><div class="row"><span>Состав</span><b>${cnt}</b></div><div class="row"><span>Самая изношенная</span><b>${Math.round(worst*100)}% ресурса</b></div>${ord?`<div class="help">В доставке: ${ord}</div>`:''}`;
+  return `<div class="row"><span>Гараж</span><b>${st.fleet.length+ord} / ${g.slots} мест</b></div><div class="row"><span>Состав</span><b>${cnt}</b></div><div class="row"><span>Синергия с другими бизнесами</span><b>×${synergy(b.id).toFixed(2)}</b></div><div class="row"><span>Самая изношенная</span><b>${Math.round(worst*100)}% ресурса</b></div>${ord?`<div class="help">В доставке: ${ord}</div>`:''}`;
 }
 function fleetControls(b){
   const id=b.id, g=s.garage[id], n=usedSlots(id), free=g.slots-n, bd=s.builds[id];
-  let h='<div class="controls" style="flex-wrap:wrap">'+VNAMES[id].map((nm,i)=>{ const c=vehClsCost(b,i,n);
-    return `<button data-order="${id}:${i}" class="${i===0?'primary':''}" ${free<=0||s.cash<c?'disabled':''}>${nm} · ₽${fmtBig(c)} · ${VCLS[i].d} дн.</button>`; }).join('')+'</div>';
-  h+=`<div class="help">Класс выше: дороже, но больше дохода с одного места гаража. Ресурс пробега: ${VCLS.map(x=>fmt(x.life)).join(' / ')} км.${free<=0?' <b>Гараж заполнен.</b>':''}</div>`;
+  let h='<div class="controls" style="flex-wrap:wrap">'+VNAMES[id].map((nm,i)=>{ const oc=orderCost(b,i,n), c=oc.cash;
+    return `<button data-order="${id}:${i}" class="${i===0?'primary':''}" ${free<=0||s.cash<c?'disabled':''}>${nm} · ₽${fmtBig(c)} · ${PREQ[i]} дет. · ${VCLS[i].d} дн.</button>`; }).join('')+'</div>';
+  h+=`<div class="help">Каждая машина требует деталей: со склада бесплатно, недостающие докупаются у дилера дороже на 15%. Класс выше: дороже, но больше дохода с одного места. Ресурс пробега: ${VCLS.map(x=>fmt(x.life)).join(' / ')} км.${free<=0?' <b>Гараж заполнен.</b>':''}</div>`;
   if(bd) h+=`<div class="row"><span>Идёт стройка: ${bd.name}</span><b>${bd.daysLeft} дн.</b></div><div class="bar"><i style="width:${(1-bd.daysLeft/bd.total)*100}%"></i></div>`;
   else { const gc=garageCost(id); h+=`<div class="controls"><button data-garage="${id}" ${s.cash<gc?'disabled':''}>Расширить гараж +10 мест (₽${fmt(gc)}, ${garageDays(id)} дн.)</button></div>`; }
   return h;
@@ -1539,6 +1549,84 @@ function renderCol(){
   el.querySelectorAll('[data-colsell]').forEach(b=>b.onclick=()=>{ const [id,i]=b.dataset.colsell.split(':'), c=COLLS.find(x=>x.id===id), k=parseInt(i), p=colPrice(c,k)*0.9;
     const j=s.col.own[id].indexOf(k); if(j<0) return; s.col.own[id].splice(j,1); s.cash+=p; pushLog(`Продан предмет «${c.items[k]}» за ₽${fmt(p)}.`); render(); });
 }
+
+// ===== ЖУРНАЛ ДЕНЕГ и обёртка дня =====
+if(!s.led) s.led={};
+if(!s.ledLast) s.ledLast={};
+function L(cat,amt){ s.led[cat]=(s.led[cat]||0)+amt; }
+function advanceDay(silent){ TOAST_ON=false; try{ return advanceDayCore(silent); } finally { TOAST_ON=true; } }
+function renderLedger(){
+  const el=document.getElementById('ledgerBody'); if(!el) return;
+  const items=Object.entries(s.ledLast).filter(x=>Math.abs(x[1])>=1).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1]));
+  const inc=items.filter(x=>x[1]>0), exp=items.filter(x=>x[1]<0), tot=items.reduce((a,x)=>a+x[1],0);
+  const rows=(arr,c)=>arr.map(x=>`<div class="row"><span>${x[0]}</span><b class="${c}">${x[1]>0?'+':'−'}₽${fmt(Math.abs(x[1]))}</b></div>`).join('');
+  el.innerHTML = items.length ? `${inc.length?'<div class="eff-title">Пришло</div>'+rows(inc,'good'):''}${exp.length?'<div class="eff-title">Ушло</div>'+rows(exp,'bad'):''}
+    <div class="row" style="margin-top:8px"><span>Итого по этим статьям</span><b class="${tot>=0?'good':'bad'}">${tot>=0?'+':'−'}₽${fmt(Math.abs(tot))}</b></div>
+    <div class="help">Учтены игровой день и ваши сделки с прошлого тика. Ежедневные расходы (зарплаты, содержание), выручка бизнесов, проценты, аренда, налоги, продажи и закупки.</div>`
+    : '<div class="help" style="margin-top:0">Данные появятся после первого игрового дня.</div>';
+}
+
+// ===== ГЛУБИНА АВТОПАРКА: насыщение спроса, детали из своего производства, топливо, синергия =====
+const PREQ=[2,6,16,40];
+const DEM0={taxi:9999, logistics_biz:9999};
+const SYN={taxi:{hotel:.08,restaurant:.05}, restaurant:{hotel:.10,taxi:.05}, hotel:{taxi:.08,restaurant:.06}, logistics_biz:{construction:.08,port:.10}, construction:{logistics_biz:.08}, port:{logistics_biz:.10}};
+function demandCap(id){ return (DEM0[id]||999)+4*(s.bizUp[id]||[]).length+3*prestigeRank(); }
+function satur(id,n){ const D=demandCap(id); return n<=D?1:Math.pow(D/n,0.6); }
+function synergy(id){ const m=SYN[id]||{}; return 1+Object.keys(m).reduce((a,k)=>a+((k==='oil'?(s.oil&&s.oil.open):(s.businesses[k]&&s.businesses[k].opened))?m[k]:0),0); }
+function fuelK(){ const M=s.macro, idx=(s.oil&&s.oil.open)?s.oil.po/(600*M.costIndex):1+(M.demand-1)*1.2; return 0.6+0.4*clamp(idx,0.5,2); }
+function orderCost(b,cls,n){ const need=PREQ[cls], use=Math.min(s.parts,need), miss=need-use; return {cash:Math.round(vehClsCost(b,cls,n)+miss*s.partsPrice*1.15), use, miss, need}; }
+function renderAdvice(){
+  const el=document.getElementById('adviceBody'); if(!el) return; const tips=[];
+  ['taxi','logistics_biz'].forEach(id=>{ const st=s.businesses[id]; if(!st||!st.opened) return; const n=st.fleet.length, D=demandCap(id);
+    if(n>D) tips.push(`«${BIZ_SHORT[id]}»: машин больше, чем спрос города (${D}). Каждая новая приносит меньше. Берите классом выше или развивайте другие бизнесы.`);
+    else if(n>=D-3) tips.push(`«${BIZ_SHORT[id]}» подходит к насыщению рынка (${n} из ${D}). Улучшения бизнеса и престиж расширяют спрос.`); });
+  const t=s.businesses.taxi; if(t&&t.opened&&t.fleet.length>=6&&!(s.businesses.hotel&&s.businesses.hotel.opened)) tips.push('Отель даст такси +8% выручки, а кафе +5%: бизнесы усиливают друг друга.');
+  if(s.parts<PREQ[0]*2) tips.push('Для машин нужны детали: свои дешевле рыночных (у дилера +15%). Запустите цепочку руда → сталь → детали.');
+  if(s.businesses.construction&&s.businesses.construction.opened&&!(s.steelReserve>0)) tips.push('Задайте резерв стали на вкладке «Производство», иначе цех деталей съест всю сталь.');
+  el.innerHTML = tips.length ? tips.slice(0,3).map(x=>`<div class="help" style="margin:6px 0">• ${x}</div>`).join('') : '<div class="help" style="margin-top:0">Всё идёт штатно. Расширяйтесь во все стороны.</div>';
+}
+
+// ===== ДОРОГИЕ БИЗНЕСЫ СРЕДНЕЙ И ПОЗДНЕЙ ИГРЫ =====
+[
+ ['gas','АЗС «Магистраль»',9e6,'Сеть заправок: стабильный поток, любит дешёвую нефть.',0.6,'АЗС','taxi',[['shops','Магазины при АЗС',0.10,0],['cards','Топливные карты',0.12,0],['premium','Премиальное топливо',0.16,0.05,['shops','cards']]],{oil:.15,taxi:.05}],
+ ['mall','Торговый центр «Галерея»',22e6,'Аренда площадей и потоки покупателей. Сильно зависит от спроса.',1.4,'ТЦ','restaurant',[['parking','Многоуровневая парковка',0.08,0],['cinema','Кинотеатр',0.12,0],['brands','Якорные бренды',0.18,0,['parking','cinema']]],{restaurant:.08,hotel:.05}],
+ ['shipping','Судоходная компания «Волна»',60e6,'Морские перевозки грузов между портами.',1.0,'Судоходство','logistics_biz',[['containers','Контейнерный парк',0.10,0],['terminal','Свой терминал',0.14,0],['fleet2','Обновление флота',0.20,0.05,['containers','terminal']]],{port:.15}],
+ ['media','Медиахолдинг «Эхо»',150e6,'ТВ, реклама и стриминг. Реклама растёт вместе с экономикой.',1.2,'Медиа','it',[['tv','Свой телеканал',0.10,0],['ads','Рекламная сеть',0.14,0],['stream','Стриминг',0.20,0,['tv','ads']]],{it:.10}],
+ ['airline','Авиакомпания «Небо»',400e6,'Пассажирские и грузовые рейсы. Высокая выручка, высокие расходы, зависимость от цикла.',1.7,'Авиа','hotel',[['routes','Новые маршруты',0.10,0],['hub','Собственный хаб',0.15,0],['premium','Бизнес-класс',0.22,0.05,['routes','hub']]],{hotel:.08,media:.06}],
+ ['bank','Инвестиционный банк «Капитал»',1e9,'Кредитование, управление активами, комиссии.',0.9,'Банк','it',[['retail','Розничные клиенты',0.10,0],['corp','Корпоративные счета',0.15,0],['wealth','Управление капиталом',0.22,0.05,['retail','corp']]],{it:.10,media:.06}]
+].forEach(([id,name,cost,desc,cyc,short,icon,upg,syn])=>{
+  const net={gas:.012,mall:.010,shipping:.0085,media:.007,airline:.006,bank:.005}[id], rv=cost*net/0.4;
+  BUSINESSES.push({id,name,unlock:Math.round(cost*0.7),cost,baseRevenue:Math.round(rv),upkeep:Math.round(rv*0.6),volatility:0.2,desc});
+  BIZ_ICON_PATHS[id]=BIZ_ICON_PATHS[icon]||BIZ_ICON_PATHS.taxi; BIZ_CYC[id]=cyc; BIZ_SHORT[id]=short; BIZ_UPG[id]=upg; SYN[id]=syn;
+});
+SYN.taxi.gas=.05; SYN.restaurant.mall=.08; SYN.port.shipping=.10; SYN.hotel.airline=.05;
+
+// ===== НАКОПЛЕНИЯ: срочные вклады и автоотчисление =====
+if(!s.deps) s.deps=[];
+if(s.sweep===undefined) s.sweep=0;
+const DEPT=[{d:30,k:1.4},{d:90,k:1.9},{d:180,k:2.4}];
+function depValue(){ return s.deps.reduce((a,x)=>a+x.amt,0); }
+function depStep(){
+  s.deps=s.deps.filter(x=>{
+    x.amt*=1+x.rate; x.left-=1;
+    if(x.left<=0){ s.cash+=x.amt; pushLog(`Вклад закрыт: получено ₽${fmt(x.amt)} (вложено ₽${fmt(x.p)}).`); return false; }
+    return true;
+  });
+}
+function renderDep(){
+  const el=document.getElementById('depBody'); if(!el) return;
+  const rb=effBondRate();
+  el.innerHTML=`<div class="help" style="margin-top:0">Вклад под ставку выше облигаций, но деньги заморожены до конца срока. При досрочном закрытии возвращается только вложенная сумма без процентов.</div>`
+   + s.deps.map((x,i)=>`<div class="row"><span>₽${fmt(x.p)} → ₽${fmt(x.amt)}, ${(x.rate*100).toFixed(3)}%/день</span><span>${x.left} дн. <button data-depx="${i}">Закрыть</button></span></div>`).join('')
+   + `<div class="controls"><input type="number" id="depQty" min="1000" step="1000" value="10000" style="width:100px">`
+   + DEPT.map((t,i)=>`<button data-dep="${i}" class="primary">${t.d} дн. · ${(rb*t.k*100).toFixed(2)}%/день</button>`).join('')+`</div>`
+   + `<div class="row" style="margin-top:12px"><span>Автоотчисление прибыли в облигации</span><select id="sweepSel">${[0,0.1,0.25,0.5].map(v=>`<option value="${v}" ${s.sweep===v?'selected':''}>${v?Math.round(v*100)+'%':'выключено'}</option>`).join('')}</select></div>
+     <div class="help">Каждый день с положительной прибылью выбранная доля автоматически переводится в облигации: касса не лежит без дела.</div>`;
+  el.querySelectorAll('[data-dep]').forEach(b=>b.onclick=()=>{ const t=DEPT[parseInt(b.dataset.dep)], a=Math.floor(parseFloat(document.getElementById('depQty').value)||0);
+    if(a<1000||a>s.cash) return; s.cash-=a; s.deps.push({p:a,amt:a,rate:effBondRate()*t.k,left:t.d}); pushLog(`Открыт вклад ₽${fmt(a)} на ${t.d} дн.`); render(); });
+  el.querySelectorAll('[data-depx]').forEach(b=>b.onclick=()=>{ const x=s.deps.splice(parseInt(b.dataset.depx),1)[0]; if(!x) return; s.cash+=x.p; pushLog(`Вклад закрыт досрочно: возвращено ₽${fmt(x.p)} без процентов.`); render(); });
+  document.getElementById('sweepSel').onchange=e=>{ s.sweep=parseFloat(e.target.value); save(); };
+}
 const TECHS = [
   {id:'smelting', name:'Улучшенная плавка', cost:40000, days:4,
    desc:'Расход руды на тонну стали: 2,0 → 1,6т.',
@@ -1578,7 +1666,12 @@ function stageFor(netWorth){
 function save(){ s.lastSeen = Date.now(); localStorage.setItem(KEY, JSON.stringify(s)); }
 function load(){ try{ const r=localStorage.getItem(KEY); return r?JSON.parse(r):null; }catch(e){ return null; } }
 let suppressLog = false;
-function pushLog(msg){ if(suppressLog) return; s.log.unshift(`Д${s.day}: ${msg}`); if(s.log.length>60) s.log.pop(); }
+let TOAST_ON=true;
+function toast(msg){ const box=document.getElementById('toastBox'); if(!box) return;
+  const d=document.createElement('div'); d.className='toast'; d.textContent=msg; box.appendChild(d);
+  while(box.children.length>3) box.removeChild(box.firstChild);
+  setTimeout(()=>{ if(d.parentNode) d.parentNode.removeChild(d); }, 4200); }
+function pushLog(msg){ if(suppressLog) return; if(TOAST_ON) toast(msg); s.log.unshift(`Д${s.day}: ${msg}`); if(s.log.length>60) s.log.pop(); }
 
 function sparkline(el, data, colorUp, colorDown){
   const w=280,h=56,pad=4;
@@ -1655,7 +1748,7 @@ function render(){
   document.getElementById('cash').className = s.cash<0?'bad':'';
 
   const inTransit = s.shipments.reduce((sum,sh)=>sum+sh.amount,0);
-  const grossAssets = s.cash + s.ore*s.orePrice + s.steel*s.steelPrice + s.parts*s.partsPrice + inTransit + s.bonds + portfolioValue() + reValue() + inboundValue() + colValue();
+  const grossAssets = s.cash + s.ore*s.orePrice + s.steel*s.steelPrice + s.parts*s.partsPrice + inTransit + s.bonds + portfolioValue() + reValue() + inboundValue() + colValue() + depValue();
   const netWorth = grossAssets - s.loanPrincipal;
   document.getElementById('netWorth').textContent = '₽'+fmt(grossAssets);
   document.getElementById('equityVal').textContent = '₽'+fmt(netWorth);
@@ -1893,7 +1986,7 @@ function render(){
       const maxKm = fleet.length ? Math.max(...fleet.map(v=>v.km)) : 0;
       const estDaily = Math.round(fleet.reduce((sum,v)=>{
         const K=VCLS[v.cls||0], eff = Math.max(0.4, 1-(v.km/K.life)*0.3);
-        return sum + b.revenuePerVehicle*K.r*eff*bizFactor(b.id) - b.upkeepPerVehicle*K.u*s.macro.costIndex;
+        return sum + b.revenuePerVehicle*K.r*eff*bizFactor(b.id)*satur(b.id,st.fleet.length) - b.upkeepPerVehicle*K.u*s.macro.costIndex*fuelK();
       },0));
       const vehicleCost = vehCost(b, fleet.length);
       return `<div class="card"><h2>${iconBox(b.id)}${b.name} <span class="h2-end">${fleet.length} ${b.vehicleName}(ы)</span></h2>
@@ -1923,7 +2016,8 @@ function render(){
           b.projectList.map(p=>{
             const matOk = !b.needsMaterials || (s.steel>=(p.steelNeeded||0) && s.concrete>=(p.concreteNeeded||0) && s.lumber>=(p.lumberNeeded||0));
             const canStart = s.cash>=projCash(p) && matOk;
-            const matText = b.needsMaterials ? ` + ${p.steelNeeded}т стали + ${p.concreteNeeded}т бетона + ${p.lumberNeeded}т леса` : '';
+            const miss=[]; if(b.needsMaterials){ if(s.steel<p.steelNeeded) miss.push(`${Math.ceil(p.steelNeeded-s.steel)}т стали`); if(s.concrete<p.concreteNeeded) miss.push(`${Math.ceil(p.concreteNeeded-s.concrete)}т бетона`); if(s.lumber<p.lumberNeeded) miss.push(`${Math.ceil(p.lumberNeeded-s.lumber)}т леса`); }
+            const matText = b.needsMaterials ? ` + ${p.steelNeeded}т стали + ${p.concreteNeeded}т бетона + ${p.lumberNeeded}т леса` + (miss.length?` <span class="bad">(не хватает: ${miss.join(', ')})</span>`:'') : '';
             const chanceText = p.successChance<1 ? ` · шанс успеха ${Math.round(p.successChance*100)}%` : '';
             return `<div class="row" style="margin-top:6px;flex-direction:column;align-items:flex-start;gap:4px">
               <div style="display:flex;justify-content:space-between;width:100%"><b style="color:var(--text)">${p.name}</b><span>${p.days} дн.${chanceText}</span></div>
@@ -1977,9 +2071,9 @@ function render(){
     };
   });
   bizListEl.querySelectorAll('[data-order]').forEach(btn=>btn.onclick=()=>{
-    const [id,k]=btn.dataset.order.split(':'), cls=parseInt(k), b=BUSINESSES.find(x=>x.id===id), n=usedSlots(id), c=vehClsCost(b,cls,n);
+    const [id,k]=btn.dataset.order.split(':'), cls=parseInt(k), b=BUSINESSES.find(x=>x.id===id), n=usedSlots(id), oc=orderCost(b,cls,n), c=oc.cash;
     if(s.garage[id].slots-n<=0||s.cash<c) return;
-    s.cash-=c; s.orders.push({id,cls,left:VCLS[cls].d});
+    s.cash-=c; s.parts-=oc.use; s.orders.push({id,cls,left:VCLS[cls].d});
     pushLog(`Расход: заказан ${VNAMES[id][cls].toLowerCase()} для «${b.name}», ₽${fmt(c)}, доставка ${VCLS[cls].d} дн.`); render();
   });
   bizListEl.querySelectorAll('[data-garage]').forEach(btn=>btn.onclick=()=>{
@@ -2123,7 +2217,6 @@ function render(){
 
   renderMacro();
   renderRE();
-  renderSupply();
   renderMarkets();
   renderPlants();
   renderStaff();
@@ -2133,6 +2226,9 @@ function render(){
   renderBizDev();
   renderOil();
   renderCol();
+  renderLedger();
+  renderAdvice();
+  renderDep();
   save();
 }
 
@@ -2146,11 +2242,11 @@ document.getElementById('buyOreBtn').onclick = () => {
   if(actualQty<=0){ pushLog('Склад руды заполнен — покупка невозможна.'); render(); return; }
   // цена растёт от объёма закупки за раз (эластичность спроса на сырьё), события усиливают эффект
   const buyImpact = combinedEventMods().buyImpact;
-  const impact = 1 + (actualQty/200)*buyImpact;
+  const impact = 1 + (actualQty/2000)*buyImpact;
   const avgPrice = s.orePrice * (1 + (impact-1)/2);
   const cost = avgPrice*actualQty;
   if(cost>s.cash){ pushLog('Недостаточно средств для закупки руды.'); render(); return; }
-  s.cash -= cost;
+  s.cash -= cost; L('Закупка руды',-cost);
   s.ore += actualQty;
   s.orePrice = Math.round(s.orePrice*impact);
   s.boughtToday += actualQty;
@@ -2194,7 +2290,7 @@ document.getElementById('withdrawBtn').onclick = () => {
 document.getElementById('borrowBtn').onclick = () => {
   const amt = clamp(parseInt(document.getElementById('loanQty').value)||0, 1000, 5000000);
   const netWorth = s.cash + s.ore*s.orePrice + s.steel*s.steelPrice + s.parts*s.partsPrice
-    + s.shipments.reduce((sum,sh)=>sum+sh.amount,0) + s.bonds + portfolioValue() + reValue() + inboundValue() + colValue() - s.loanPrincipal;
+    + s.shipments.reduce((sum,sh)=>sum+sh.amount,0) + s.bonds + portfolioValue() + reValue() + inboundValue() + colValue() + depValue() - s.loanPrincipal;
   const limit = Math.max(50000, netWorth*s.creditLimitFactor);
   const room = limit - s.loanPrincipal;
   if(room<=0){ pushLog('Кредитный лимит исчерпан.'); render(); return; }
@@ -2237,12 +2333,12 @@ document.getElementById('expandBtn').onclick = () => {
   render();
 };
 
-function advanceDay(silent){
+function advanceDayCore(silent){
   const cashBefore = s.cash;
   macroStep();
   staffStep();
-  supplyArrive();
   fleetStep();
+  depStep();
   incidentStep();
   extrasStep();
   megaStep();
@@ -2253,7 +2349,7 @@ function advanceDay(silent){
   // прибытие отгрузок по ж/д, отправленных ранее
   s.shipments = s.shipments.filter(sh => {
     if(sh.arriveDay <= s.day){
-      s.cash += sh.amount;
+      s.cash += sh.amount; L('Продажи (поезд/море)',sh.amount);
       pushLog(`Прибыла отгрузка: ${sh.label}, ₽${fmt(sh.amount)} зачислено.`);
       return false;
     }
@@ -2269,7 +2365,7 @@ function advanceDay(silent){
   if(produced>0) s.everProducedSteel = true;
 
   // цех №2: сталь → детали
-  const wantParts = Math.min(Math.floor(s.partsFactoryCapacity*staffMult()), Math.floor(s.steel/3));
+  const wantParts = Math.min(Math.floor(s.partsFactoryCapacity*staffMult()), Math.floor(Math.max(0,s.steel-(s.steelReserve||0))/3));
   const partsSpaceLeft = s.partsCap - s.parts;
   const producedParts = Math.max(0, Math.min(wantParts, partsSpaceLeft));
   s.steel -= producedParts*3;
@@ -2284,13 +2380,13 @@ function advanceDay(silent){
   const storageOverflow = Math.max(0, s.ore - s.oreCap*0.7) + Math.max(0, s.steel - s.steelCap*0.7) + Math.max(0, s.parts - s.partsCap*0.7);
   const storageCost = storageOverflow*4;
   const dailyCosts = (s.wagePerDay*s.staff.wage*(s.staff.benefits?1.2:1) + s.upkeepPerDay + storageCost + (s.mineOwned ? s.mineUpkeep : 0))*ci*(s.megaCost||1);
-  s.cash -= dailyCosts;
+  s.cash -= dailyCosts; L('Зарплаты и содержание',-dailyCosts);
 
   // рынок: цены дрейфуют к базовому уровню (искажённому событиями) + случайные колебания
   const mods = combinedEventMods();
-  const oreDrift = (120*PL.ore*mods.ore - s.orePrice)*0.04 + (Math.random()-0.5)*6;
-  const steelDrift = (520*PL.steel*mods.steel - s.steelPrice)*0.04 + (Math.random()-0.5)*18;
-  const partsDrift = (1800*PL.parts*mods.parts - s.partsPrice)*0.04 + (Math.random()-0.5)*40;
+  const oreDrift = (120*PL.ore*mods.ore - s.orePrice)*0.08 + (Math.random()-0.5)*6;
+  const steelDrift = (520*PL.steel*mods.steel - s.steelPrice)*0.08 + (Math.random()-0.5)*18;
+  const partsDrift = (1800*PL.parts*mods.parts - s.partsPrice)*0.08 + (Math.random()-0.5)*40;
   s.orePrice = Math.max(30, Math.round(s.orePrice + oreDrift));
   s.steelPrice = Math.max(80, Math.round(s.steelPrice + steelDrift));
   s.partsPrice = Math.max(300, Math.round(s.partsPrice + partsDrift));
@@ -2308,7 +2404,7 @@ function advanceDay(silent){
   marketsStep(PL, mods);
 
   const currentNetWorth = s.cash + s.ore*s.orePrice + s.steel*s.steelPrice + s.parts*s.partsPrice
-    + s.shipments.reduce((sum,sh)=>sum+sh.amount,0) + s.bonds + portfolioValue() + reValue() + inboundValue() + colValue() - s.loanPrincipal;
+    + s.shipments.reduce((sum,sh)=>sum+sh.amount,0) + s.bonds + portfolioValue() + reValue() + inboundValue() + colValue() + depValue() - s.loanPrincipal;
   if(!s.exportUnlocked && currentNetWorth>=150000){
     s.exportUnlocked = true;
     pushLog('Компания вышла на региональный уровень — открыт экспортный рынок в Германию.');
@@ -2366,7 +2462,7 @@ function advanceDay(silent){
       const owned = s.portfolio[st.id]||0;
       if(owned>0 && st.dividendRate>0){
         const payout = owned*s.stockPrices[st.id]*st.dividendRate;
-        s.cash += payout; totalDiv += payout;
+        s.cash += payout; totalDiv += payout; L('Дивиденды',payout);
       }
     });
     if(totalDiv>0) pushLog(`Дивиденды по акциям: +₽${fmt(totalDiv)}.`);
@@ -2377,7 +2473,7 @@ function advanceDay(silent){
   // обслуживание кредита
   if(s.loanPrincipal>0){
     const interest = s.loanPrincipal*effLoanRate() - Math.min(s.mortgage||0,s.loanPrincipal)*effLoanRate()*0.3;
-    s.cash -= interest;
+    s.cash -= interest; L('Проценты по кредиту',-interest);
   }
 
   // риск принудительного взыскания при затяжной глубокой просадке кассы
@@ -2406,11 +2502,11 @@ function advanceDay(silent){
     const compBuy = c.capacity*2;
     const compBuyCost = compBuy*s.orePrice*1.05;
     c.cash -= compBuyCost;
-    s.orePrice = Math.round(s.orePrice*(1 + compBuy/500));
+    s.orePrice = Math.round(s.orePrice*(1 + compBuy/6000));
     const compProduced = c.capacity;
     const compSellRevenue = compProduced*s.steelPrice*0.95;
     c.cash += compSellRevenue;
-    s.steelPrice = Math.max(80, Math.round(s.steelPrice*(1 - compProduced/450)));
+    s.steelPrice = Math.max(80, Math.round(s.steelPrice*(1 - compProduced/5000)));
     c.cash -= c.capacity*90; // зарплаты конкурента
 
     if(c.cash < -20000 && c.capacity > 4){
@@ -2443,6 +2539,7 @@ function advanceDay(silent){
   }
 
   // портфель бизнесов вне металлургии
+  const cbBiz = s.cash;
   BUSINESSES.forEach(b=>{
     const st = s.businesses[b.id];
     if(!st || !st.opened) return;
@@ -2452,15 +2549,15 @@ function advanceDay(silent){
         const K=VCLS[v.cls||0];
         v.km += b.kmMin + Math.random()*(b.kmMax-b.kmMin);
         const eff = Math.max(0.4, 1-(v.km/K.life)*0.3);
-        const rev = b.revenuePerVehicle*K.r*eff*(1 + (Math.random()*2-1)*b.volatility)*bizFactor(b.id);
-        dayRevenue += rev - b.upkeepPerVehicle*K.u*ci*bizCost(b.id);
+        const rev = b.revenuePerVehicle*K.r*eff*(1 + (Math.random()*2-1)*b.volatility)*bizFactor(b.id)*satur(b.id,st.fleet.length);
+        dayRevenue += rev - b.upkeepPerVehicle*K.u*ci*bizCost(b.id)*fuelK();
         if(v.km >= K.life){
           pushLog(`${b.name}: ${VNAMES[b.id][v.cls||0].toLowerCase()} списан при пробеге ${fmt(K.life)} км.`);
           return false;
         }
         return true;
       });
-      s.cash += dayRevenue;
+      s.cash += dayRevenue; L(BIZ_SHORT[b.id]||b.name, dayRevenue);
       return;
     }
     if(b.projects){
@@ -2470,7 +2567,7 @@ function advanceDay(silent){
         if(st.activeProject.daysLeft<=0){
           const chance = st.activeProject.successChance;
           if(chance>=1 || Math.random()<chance){
-            s.cash += st.activeProject.payout;
+            s.cash += st.activeProject.payout; L(BIZ_SHORT[b.id]||b.name, st.activeProject.payout);
             st.completedCount += 1;
             pushLog(`${b.name}: сдан проект «${st.activeProject.name}», выплата ₽${fmt(st.activeProject.payout)}.`);
           } else {
@@ -2488,7 +2585,7 @@ function advanceDay(silent){
       const season = 1 + 0.4*Math.sin((s.day/45)*Math.PI);
       rev *= season;
     }
-    s.cash += rev - b.upkeep*st.level*ci*bizCost(b.id);
+    { const net = rev - b.upkeep*st.level*ci*bizCost(b.id); s.cash += net; L(BIZ_SHORT[b.id]||b.name, net); }
     if(b.bonusChance && Math.random()<b.bonusChance){
       const bonus = b.bonusMult*st.level;
       s.cash += bonus;
@@ -2496,37 +2593,45 @@ function advanceDay(silent){
     }
   });
 
+  { const bn = s.cash - cbBiz; if(bn>0){ const tx = bn*0.07; s.cash -= tx; L('Налог на прибыль бизнесов', -tx); } }
+
   // эффективные менеджеры: автоматизация рутины
+  const fairOre=120*PL.ore, fairSteel=520*PL.steel, fairParts=1800*PL.parts;
   if(s.managers.procurement){
-    s.cash -= 400;
-    if(s.ore < s.oreCap*0.4){
-      const qty = Math.floor(s.oreCap*0.8 - s.ore);
-      const cost = qty*s.orePrice*1.1;
-      if(qty>0 && s.cash>=cost){
-        s.cash -= cost;
-        s.ore += qty;
-        s.orePrice = Math.round(s.orePrice*(1+qty/220));
-        pushLog(`Менеджер по закупкам докупил ${qty}т руды за ₽${fmt(cost)}.`);
+    s.cash -= 400; L('Зарплата менеджеров',-400);
+    if(s.ore < s.oreCap*0.4 && s.orePrice <= fairOre*1.3){
+      let qty = Math.floor(s.oreCap*0.7 - s.ore);
+      qty = Math.min(qty, Math.floor(Math.max(0,s.cash)*0.35/(s.orePrice*1.05)));
+      if(qty>=5){
+        const cost = qty*s.orePrice*(1+qty/4000);
+        s.cash -= cost; s.ore += qty; L('Закупка руды (менеджер)',-cost);
+        pushLog(`Менеджер по закупкам: куплено ${qty}т руды по ₽${fmt(cost/qty)}/т (норма ₽${fmt(fairOre)}).`);
+        s.orePrice = Math.round(s.orePrice*(1+qty/2000));
       }
     }
   }
   if(s.managers.sales){
-    s.cash -= 450;
-    if(s.steel > s.steelCap*0.7){
-      const qty = Math.floor(s.steel - s.steelCap*0.3);
-      const gross = qty*s.steelPrice*0.97;
-      const fee = gross*0.08*s.transportFeeMultiplier;
-      s.steel -= qty; s.cash += gross-fee;
-      s.steelPrice = Math.max(50, Math.round(s.steelPrice*(1-qty/320)));
-      pushLog(`Менеджер по продажам сбыл ${qty}т стали за ₽${fmt(gross-fee)}.`);
+    s.cash -= 450; L('Зарплата менеджеров',-450);
+    const tn = k => s.tenders.active.filter(c=>c.kind===k).reduce((a,c)=>a+c.left,0);
+    const steelKeep = Math.max(s.steelCap*0.3, s.steelReserve||0, tn('steel') + s.partsFactoryCapacity*9);
+    const partsKeep = Math.max(s.partsCap*0.2, tn('parts'));
+    if(s.steel > s.steelCap*0.7 && s.steelPrice >= fairSteel*0.9){
+      const qty = Math.floor(s.steel - steelKeep);
+      if(qty>=5){
+        const gross = qty*s.steelPrice*(1-qty/6000), fee = gross*0.08*s.transportFeeMultiplier;
+        s.steel -= qty; s.cash += gross-fee; L('Продажи (менеджер)',gross-fee);
+        s.steelPrice = Math.max(50, Math.round(s.steelPrice*(1-qty/3000)));
+        pushLog(`Менеджер по продажам: ${qty}т стали на внутреннем рынке грузовиком по ₽${fmt(gross/qty)}/т, комиссия ₽${fmt(fee)}. В резерве осталось ${fmt(s.steel)}т (госзаказы и цех).`);
+      }
     }
-    if(s.parts > s.partsCap*0.7){
-      const qty = Math.floor(s.parts - s.partsCap*0.3);
-      const gross = qty*s.partsPrice*0.97;
-      const fee = gross*0.10*s.transportFeeMultiplier;
-      s.parts -= qty; s.cash += gross-fee;
-      s.partsPrice = Math.max(300, Math.round(s.partsPrice*(1-qty/70)));
-      pushLog(`Менеджер по продажам сбыл ${qty} деталей за ₽${fmt(gross-fee)}.`);
+    if(s.parts > s.partsCap*0.7 && s.partsPrice >= fairParts*0.9){
+      const qty = Math.floor(s.parts - partsKeep);
+      if(qty>=2){
+        const gross = qty*s.partsPrice*(1-qty/1200), fee = gross*0.10*s.transportFeeMultiplier;
+        s.parts -= qty; s.cash += gross-fee; L('Продажи (менеджер)',gross-fee);
+        s.partsPrice = Math.max(300, Math.round(s.partsPrice*(1-qty/600)));
+        pushLog(`Менеджер по продажам: ${qty} деталей на внутреннем рынке грузовиком по ₽${fmt(gross/qty)}, комиссия ₽${fmt(fee)}. В резерве ${fmt(s.parts)} шт.`);
+      }
     }
   }
   if(s.managers.fleet){
@@ -2536,9 +2641,9 @@ function advanceDay(silent){
       const st = s.businesses[id];
       const target = s.fleetTargets[id]||0;
       if(st && st.opened && usedSlots(id) < Math.min(target, s.garage[id].slots)){
-        const cost = vehClsCost(b, 0, usedSlots(id));
+        const oc0 = orderCost(b, 0, usedSlots(id)), cost = oc0.cash;
         if(s.cash>=cost){
-          s.cash -= cost;
+          s.cash -= cost; s.parts -= oc0.use;
           s.orders.push({id, cls:0, left:VCLS[0].d});
           pushLog(`Менеджер автопарка купил ${b.vehicleName} для «${b.name}».`);
         }
@@ -2546,9 +2651,11 @@ function advanceDay(silent){
     });
   }
 
+  if(s.sweep>0){ const pr=s.cash-cashBefore; if(pr>0){ const m=Math.min(pr*s.sweep, Math.max(0,s.cash)); if(m>0){ s.cash-=m; s.bonds+=m; } } }
+  s.ledLast = s.led; s.led = {};
   const profit = s.cash - cashBefore;
   const curAssets = s.cash + s.ore*s.orePrice + s.steel*s.steelPrice + s.parts*s.partsPrice
-    + s.shipments.reduce((sum,sh)=>sum+sh.amount,0) + s.bonds + portfolioValue() + reValue() + inboundValue() + colValue();
+    + s.shipments.reduce((sum,sh)=>sum+sh.amount,0) + s.bonds + portfolioValue() + reValue() + inboundValue() + colValue() + depValue();
   s.profitHistory.push(profit); if(s.profitHistory.length>20) s.profitHistory.shift();
   s.assetsHistory.push(curAssets); if(s.assetsHistory.length>20) s.assetsHistory.shift();
   s.equityHistory.push(curAssets-s.loanPrincipal); if(s.equityHistory.length>20) s.equityHistory.shift();
