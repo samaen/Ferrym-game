@@ -419,14 +419,15 @@ button.danger{border-color:var(--bad);color:var(--bad)}
     <div class="controls"><button id="tutorialBtn">Показать обучение снова</button></div>
 
     <div class="set-title">Сохранение</div>
-    <div class="help" style="margin-top:0">Прогресс хранится в браузере. Перед сменой устройства или очисткой данных сделайте экспорт и сохраните код в заметки.</div>
-    <div class="controls">
-      <button id="exportBtn" class="primary">Экспорт (скопировать код)</button>
-      <button id="downloadBtn">Скачать файлом</button>
-    </div>
-    <textarea id="saveBox" rows="4" placeholder="Здесь появится код сейва. Для загрузки вставьте сюда код и нажмите «Импорт»." style="width:100%;margin-top:10px;background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:10px;font-family:var(--mono);font-size:11px"></textarea>
-    <div class="controls"><button id="importBtn">Импорт из кода</button></div>
+    <div class="help" style="margin-top:0">Игра сама сохраняется в браузере и делает резервные копии. Файл нужен для переноса на другое устройство и страховки от очистки данных.</div>
+    <div class="controls"><button id="expFileBtn" class="primary">Сохранить в файл</button><button id="impFileBtn">Загрузить из файла</button></div>
+    <input type="file" id="impFileInput" accept=".txt,.json,text/plain,application/json" style="display:none">
+    <div class="controls"><button id="expCodeBtn">Скопировать код</button><button id="impCodeBtn">Вставить код</button></div>
+    <div id="codeArea" style="display:none"><textarea id="saveBox" rows="4" placeholder="Вставьте код сюда" style="width:100%;margin-top:10px;background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:10px;font-family:var(--mono);font-size:11px" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false"></textarea>
+    <div class="controls"><button id="importBtn" class="primary">Загрузить сейв из кода</button></div></div>
     <div class="help" id="saveMsg"></div>
+    <div class="eff-title">Резервные копии (автоматически)</div>
+    <div id="bakList"></div>
 
     <div class="set-title">Опасная зона</div>
     <div class="controls" style="margin-top:0"><button id="resetBtn" class="danger">Сбросить игру</button></div>
@@ -2783,7 +2784,7 @@ setInterval(() => {
   const speed=document.getElementById('setSpeed'), off=document.getElementById('setOffline'), cmp=document.getElementById('setCompact');
   document.getElementById('gearBtn').onclick=()=>{
     speed.value=String(s.settings.tickSec); off.value=s.settings.offline?'1':'0'; cmp.value=s.settings.compact?'1':'0'; document.getElementById('setMacro').value=String(s.settings.macroK===undefined?1:s.settings.macroK);
-    ov.style.display='flex';
+    ov.style.display='flex'; if(window.renderBackups) window.renderBackups();
   };
   const close=()=>{ ov.style.display='none'; };
   document.getElementById('settingsCloseBtn').onclick=close;
@@ -2796,42 +2797,77 @@ setInterval(() => {
   document.getElementById('resetBtn').onclick=()=>{
     if(!confirm('Полностью сбросить игру? Весь прогресс будет удалён.')) return;
     if(!confirm('Точно сбросить? Это необратимо.')) return;
-    s.running=false; clearInterval(timer);
+    autoBackup(); s.running=false; clearInterval(timer);
     localStorage.removeItem(KEY);
     location.reload();
   };
 })();
 
-// ===== экспорт / импорт сохранения =====
+// ===== сохранения: файл, код, резервные копии =====
+const BAK_KEY = KEY + '_bak';
+function readBackups(){ try{ return JSON.parse(localStorage.getItem(BAK_KEY)||'[]'); }catch(e){ return []; } }
+function autoBackup(){
+  try{
+    save(); let arr=readBackups(); arr.unshift({t:Date.now(), day:s.day, cash:Math.round(s.cash), data:JSON.stringify(s)});
+    arr=arr.slice(0,3);
+    for(;;){ try{ localStorage.setItem(BAK_KEY, JSON.stringify(arr)); break; }catch(e){ if(arr.length<=1) break; arr.pop(); } }
+  }catch(e){}
+}
+setInterval(autoBackup, 20*60*1000);
+if(readBackups().length===0) setTimeout(autoBackup, 60*1000);
 (function(){
-  const box=document.getElementById('saveBox'), msg=document.getElementById('saveMsg');
+  const box=document.getElementById('saveBox'), msg=document.getElementById('saveMsg'), area=document.getElementById('codeArea');
   const say=t=>{ msg.textContent=t; };
-  const encode=()=>{ save(); return 'FERRUM1:'+btoa(unescape(encodeURIComponent(JSON.stringify(s)))); };
-  document.getElementById('exportBtn').onclick=()=>{
-    const code=encode(); box.value=code;
-    if(navigator.clipboard&&navigator.clipboard.writeText){
-      navigator.clipboard.writeText(code).then(()=>say('Код скопирован. Вставь его в заметки.'),()=>{ box.select(); say('Автокопирование не сработало: код в поле выше, выдели и скопируй вручную.'); });
-    } else { box.select(); say('Код в поле выше — выдели и скопируй вручную.'); }
-  };
-  document.getElementById('downloadBtn').onclick=()=>{
+  const b64=buf=>{ let s2='', u=new Uint8Array(buf); for(let i=0;i<u.length;i+=8192) s2+=String.fromCharCode.apply(null,u.subarray(i,i+8192)); return btoa(s2); };
+  const unb64=t=>{ const bin=atob(t), u=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) u[i]=bin.charCodeAt(i); return u; };
+  async function pack(){
+    save(); const json=JSON.stringify(s);
+    if(typeof CompressionStream!=='undefined'){
+      try{ const st=new Blob([json]).stream().pipeThrough(new CompressionStream('gzip')); return 'FERRUM2:'+b64(await new Response(st).arrayBuffer()); }catch(e){}
+    }
+    return 'FERRUM1:'+btoa(unescape(encodeURIComponent(json)));
+  }
+  async function unpack(text){
+    let t=String(text||'').replace(/\s+/g,'');
+    if(t[0]==='{') return JSON.parse(t);
+    const m=/^ferrum([12]):/i.exec(t); let ver=m?m[1]:'1'; if(m) t=t.slice(m[0].length);
+    if(ver==='2'){
+      const st=new Blob([unb64(t)]).stream().pipeThrough(new DecompressionStream('gzip'));
+      return JSON.parse(await new Response(st).text());
+    }
+    return JSON.parse(decodeURIComponent(escape(atob(t))));
+  }
+  function applyData(data, label){
+    if(!data||typeof data.day!=='number'||typeof data.cash!=='number'){ say('В этих данных нет сохранения игры.'); return; }
+    if(!confirm((label||'Загрузить сейв')+': день '+data.day+', касса ₽'+fmt(data.cash)+'. Текущий прогресс будет заменён (перед этим сохранится резервная копия).')) return;
+    autoBackup(); s.running=false; clearInterval(timer);
+    localStorage.setItem(KEY, JSON.stringify(data)); location.reload();
+  }
+  async function tryImport(text){ try{ applyData(await unpack(text)); }catch(e){ say('Не удалось прочитать сейв: файл повреждён или скопирован не полностью.'); } }
+  document.getElementById('expFileBtn').onclick=async()=>{
     try{
-      const a=document.createElement('a');
-      a.href=URL.createObjectURL(new Blob([encode()],{type:'text/plain'}));
-      a.download='ferrum-save-day'+s.day+'.txt';
-      document.body.appendChild(a); a.click(); a.remove();
-      say('Файл сформирован. Если скачивание не началось, используй экспорт кодом.');
-    }catch(e){ say('Не удалось скачать файл, используй экспорт кодом.'); }
+      const code=await pack(), name='ferrum-день'+s.day+'.txt', file=new File([code],name,{type:'text/plain'});
+      if(navigator.canShare && navigator.canShare({files:[file]})){ try{ await navigator.share({files:[file],title:'Сейв игры'}); say('Готово: выберите «Сохранить в Файлы» или мессенджер.'); return; }catch(e){ if(e&&e.name==='AbortError') return; } }
+      const a=document.createElement('a'); a.href=URL.createObjectURL(file); a.download=name; document.body.appendChild(a); a.click(); a.remove();
+      say('Файл «'+name+'» скачан.');
+    }catch(e){ say('Не удалось создать файл, попробуйте «Скопировать код».'); }
   };
-  document.getElementById('importBtn').onclick=()=>{
-    const raw=box.value.trim();
-    if(!raw.startsWith('FERRUM1:')){ say('Это не код сейва (должен начинаться с FERRUM1:).'); return; }
-    let data;
-    try{ data=JSON.parse(decodeURIComponent(escape(atob(raw.slice(8))))); }catch(e){ say('Код повреждён или скопирован не полностью.'); return; }
-    if(!data||typeof data.day!=='number'||typeof data.cash!=='number'||!data.macro&&!data.ore&&data.ore!==0){ say('В коде нет данных игры.'); return; }
-    if(!confirm('Загрузить сейв (день '+data.day+', касса ₽'+fmt(data.cash)+')? Текущий прогресс будет заменён.')) return;
-    s.running=false; clearInterval(timer);
-    localStorage.setItem(KEY, JSON.stringify(data));
-    location.reload();
+  document.getElementById('impFileBtn').onclick=()=>document.getElementById('impFileInput').click();
+  document.getElementById('impFileInput').onchange=e=>{
+    const f=e.target.files&&e.target.files[0]; if(!f) return;
+    const r=new FileReader(); r.onload=()=>tryImport(r.result); r.onerror=()=>say('Не удалось открыть файл.'); r.readAsText(f); e.target.value='';
+  };
+  document.getElementById('expCodeBtn').onclick=async()=>{
+    const code=await pack(); area.style.display='block'; box.value=code;
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(code).then(()=>say('Код скопирован.'),()=>{ box.select(); say('Автокопирование не сработало, выделите и скопируйте вручную.'); }); }
+    else { box.select(); say('Выделите код и скопируйте вручную.'); }
+  };
+  document.getElementById('impCodeBtn').onclick=()=>{ area.style.display=area.style.display==='block'?'none':'block'; if(area.style.display==='block') box.focus(); };
+  document.getElementById('importBtn').onclick=()=>tryImport(box.value);
+  window.renderBackups=function(){
+    const el=document.getElementById('bakList'), arr=readBackups();
+    el.innerHTML = arr.length ? arr.map((b,i)=>`<div class="row"><span>День ${b.day}, касса ₽${fmt(b.cash)}<span style="color:var(--dim);font-size:11px"> · ${new Date(b.t).toLocaleString('ru-RU')}</span></span><button data-bak="${i}">Восстановить</button></div>`).join('') : '<div class="help" style="margin-top:0">Копий пока нет, первая появится через минуту игры.</div>';
+    el.querySelectorAll('[data-bak]').forEach(bt=>bt.onclick=()=>{ try{ applyData(JSON.parse(arr[parseInt(bt.dataset.bak)].data),'Восстановить копию'); }catch(e){ say('Копия повреждена.'); } });
   };
 })();
 
