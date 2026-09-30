@@ -249,6 +249,7 @@ button.danger{border-color:var(--bad);color:var(--bad)}
     <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8"/><rect x="13" y="3" width="8" height="8"/><rect x="3" y="13" width="8" height="8"/><rect x="13" y="13" width="8" height="8"/></svg></span>Бетонный завод</h2>
     <div id="concreteBody"></div>
   </div>
+  <div class="card" style="grid-column:1/-1"><h2>Рудники и лес</h2><div id="resBody"></div></div>
   <div class="card" style="grid-column:1/-1"><h2>Резерв стали</h2>
     <div class="help" style="margin-top:0">Цех деталей не трогает сталь ниже этого уровня, а менеджер по продажам её не продаёт. Держите резерв под стройку, госзаказы и продажи.</div>
     <div class="controls"><input type="number" id="steelReserve" min="0" step="10" style="width:90px"> <span style="align-self:center;color:var(--dim);font-size:12px">т стали</span></div></div>
@@ -316,7 +317,7 @@ button.danger{border-color:var(--bad);color:var(--bad)}
     <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>Конкурент</h2>
     <div id="competitorBody"></div>
   </div>
-  <div class="card" style="grid-column:1/-1"><h2>Госзаказы и тендеры</h2><div id="tenderBody"></div></div>
+  <div class="card" style="grid-column:1/-1"><h2>Заказы: государственные и международные</h2><div id="tenderBody"></div></div>
   <div class="card" style="grid-column:1/-1"><h2>Конкуренты и доля рынка</h2><div id="rivalBody"></div></div>
   <div class="card" style="grid-column:1/-1"><h2>Торговые хабы за рубежом</h2><div id="hubBody"></div></div>
 </div>
@@ -1242,23 +1243,24 @@ if(!s.rivals) s.rivals=[
   {id:'ore',name:'РудИнвест',strat:'скупает руду и поднимает её цену',cap:9,cash:40000}];
 function hubCost(id){ return Math.round((MARKETS[id].unlock*0.4+200000)*s.macro.costIndex); }
 function acceptTender(id){
-  const T=s.tenders, i=T.offers.findIndex(o=>o.id===id); if(i<0||T.active.length>=2) return;
+  const T=s.tenders, i=T.offers.findIndex(o=>o.id===id); if(i<0||T.active.length>=tenderSlots()) return;
   const o=T.offers.splice(i,1)[0];
-  T.active.push({id:o.id,kind:o.kind,qty:o.qty,left:o.qty,price:o.price,daysLeft:o.days});
+  T.active.push({id:o.id,kind:o.kind,qty:o.qty,left:o.qty,price:o.price,daysLeft:o.days,dest:o.dest});
   pushLog(`Принят госзаказ: ${o.qty}${o.kind==='steel'?'т стали':' деталей'} по ₽${fmt(o.price)} на ${o.days} дн.`);
 }
 function extrasStep(){
   const T=s.tenders;
   T.offers=T.offers.filter(o=>--o.expires>0);
-  if(T.offers.length<3 && Math.random()<0.15){
+  if(T.offers.length<offerCap() && Math.random()<0.15+Math.min(0.15,s.factoryCapacity/600)){
     const kind=Math.random()<0.65?'steel':'parts', sc=1+0.12*Math.min(T.done,10);
-    const qty=Math.round((kind==='steel'?60+Math.random()*140:20+Math.random()*60)*sc);
+    const cap=kind==='steel'?s.factoryCapacity:s.partsFactoryCapacity, intl=Math.random()<0.4, days=20+Math.floor(Math.random()*21)+(intl?10:0);
+    const qty=Math.max(kind==='steel'?40:10, Math.round(cap*days*(0.3+Math.random()*0.3)*sc*(intl?1.5:1)));
     const base=kind==='steel'?s.steelPrice:s.partsPrice;
-    T.offers.push({id:T.next++,kind,qty,price:Math.round(base*(1.12+Math.random()*0.2)*(1+0.02*prestigeRank())),days:20+Math.floor(Math.random()*21),expires:12});
+    T.offers.push({id:T.next++,kind,qty,dest:intl?['Германия','Турция','Китай','ОАЭ'][Math.floor(Math.random()*4)]:null,price:Math.round(base*(1.12+Math.random()*0.2)*(1+0.02*prestigeRank())*(intl?1.1:1)),days,expires:12});
   }
   if(T.auto) T.offers.slice().forEach(o=>{
     const have=o.kind==='steel'?s.steel:s.parts, cap=o.kind==='steel'?s.factoryCapacity:s.partsFactoryCapacity;
-    if(T.active.length<2 && o.qty<=have+cap*o.days*0.5) acceptTender(o.id);
+    if(T.active.length<tenderSlots() && o.qty<=have+cap*o.days*0.5) acceptTender(o.id);
   });
   T.active=T.active.filter(c=>{
     const q=Math.min(c.kind==='steel'?s.steel:s.parts, c.left);
@@ -1283,10 +1285,10 @@ function renderExtras(){
   const T=s.tenders, u=k=>k==='steel'?'т стали':' деталей';
   const tb=document.getElementById('tenderBody');
   tb.innerHTML=`<div class="row"><span>Выполнено / сорвано</span><b>${T.done} / ${T.failed}</b></div>
-    <div class="help" style="margin-top:0">Заказы по цене выше рынка. Активный заказ автоматически забирает товар со склада каждый день и платит сразу за поставленное. За недопоставку к сроку штраф 30%. До 2 заказов одновременно; с ростом числа выполненных заказы крупнее.</div>
+    <div class="help" style="margin-top:0">Заказы по цене выше рынка. Активный заказ автоматически забирает товар со склада каждый день и платит сразу за поставленное. За недопоставку к сроку штраф 30%. Одновременно можно вести ${tenderSlots()} заказов, число предложений и их объём растут с мощностью заводов, так что расширение производства открывает больше крупных заказов. Часть заказов международные: цена выше, срок дольше.</div>
     <div class="controls"><button id="tAuto" class="${T.auto?'primary':''}">Автопринятие: ${T.auto?'вкл':'выкл'}</button></div>`
-    + (T.active.length?`<div class="eff-title">В работе</div>`+T.active.map(c=>`<div class="row"><span>${c.qty}${u(c.kind)} по ₽${fmt(c.price)}, осталось ${fmt(c.left)}</span><b>${c.daysLeft} дн.</b></div>`).join(''):'')
-    + `<div class="eff-title">Предложения</div>` + (T.offers.length?T.offers.map(o=>`<div class="row" style="margin-top:6px"><span>${o.qty}${u(o.kind)} по ₽${fmt(o.price)} (рынок ₽${fmt(o.kind==='steel'?s.steelPrice:s.partsPrice)}), срок ${o.days} дн., истекает через ${o.expires}</span><button data-tacc="${o.id}" class="primary" ${T.active.length>=2?'disabled':''}>Принять</button></div>`).join(''):'<div class="help">Новых предложений пока нет.</div>');
+    + (T.active.length?`<div class="eff-title">В работе</div>`+T.active.map(c=>`<div class="row"><span>${c.dest?c.dest+': ':''}${c.qty}${u(c.kind)} по ₽${fmt(c.price)}, осталось ${fmt(c.left)}</span><b>${c.daysLeft} дн.</b></div>`).join(''):'')
+    + `<div class="eff-title">Предложения</div>` + (T.offers.length?T.offers.map(o=>`<div class="row" style="margin-top:6px"><span>${o.dest?o.dest+': ':'Гос: '}${o.qty}${u(o.kind)} по ₽${fmt(o.price)} (рынок ₽${fmt(o.kind==='steel'?s.steelPrice:s.partsPrice)}), срок ${o.days} дн., истекает через ${o.expires}</span><button data-tacc="${o.id}" class="primary" ${T.active.length>=tenderSlots()?'disabled':''}>Принять</button></div>`).join(''):'<div class="help">Новых предложений пока нет.</div>');
   document.getElementById('tAuto').onclick=()=>{ T.auto=!T.auto; render(); };
   tb.querySelectorAll('[data-tacc]').forEach(b=>b.onclick=()=>{ acceptTender(parseInt(b.dataset.tacc)); render(); });
   const tot=s.factoryCapacity+(s.competitorActive?s.competitor.capacity:0)+s.rivals.reduce((a,r)=>a+r.cap,0);
@@ -1626,6 +1628,38 @@ function renderDep(){
     if(a<1000||a>s.cash) return; s.cash-=a; s.deps.push({p:a,amt:a,rate:effBondRate()*t.k,left:t.d}); pushLog(`Открыт вклад ₽${fmt(a)} на ${t.d} дн.`); render(); });
   el.querySelectorAll('[data-depx]').forEach(b=>b.onclick=()=>{ const x=s.deps.splice(parseInt(b.dataset.depx),1)[0]; if(!x) return; s.cash+=x.p; pushLog(`Вклад закрыт досрочно: возвращено ₽${fmt(x.p)} без процентов.`); render(); });
   document.getElementById('sweepSel').onchange=e=>{ s.sweep=parseFloat(e.target.value); save(); };
+}
+
+// ===== РУДНИКИ И ЛЕС: ресурсы производства =====
+if(s.forest===undefined) s.forest=8000;
+if(!s.mines) s.mines=[];
+function tenderSlots(){ return Math.min(8, 2+Math.floor(s.factoryCapacity/40)); }
+function offerCap(){ return Math.min(10, 3+Math.floor((s.factoryCapacity+s.partsFactoryCapacity*3)/60)); }
+const MINES=[
+  {id:'ural', name:'Рудник на Урале', unlock:1e6, cost:6e5, ore:45, upkeep:700},
+  {id:'se', name:'Рудник в Швеции', unlock:5e6, cost:3e6, ore:150, upkeep:2200},
+  {id:'au', name:'Рудник в Австралии', unlock:2e7, cost:1.2e7, ore:500, upkeep:7000},
+  {id:'br', name:'Рудник в Бразилии', unlock:1e8, cost:6e7, ore:1800, upkeep:24000}
+];
+const FOREST=[
+  {id:'s', name:'Делянка', size:10000, cost:3e5},
+  {id:'m', name:'Лесной участок', size:50000, cost:1.3e6},
+  {id:'l', name:'Лесной массив', size:250000, cost:6e6},
+  {id:'xl', name:'Тайга', size:1500000, cost:3e7}
+];
+function renderRes(){
+  const el=document.getElementById('resBody'); if(!el) return; const eq=equityNow(), ci=s.macro.costIndex;
+  let h=`<div class="eff-title" style="margin-top:0">Рудники</div><div class="help" style="margin-top:0">Каждый даёт руду бесплатно на склад, но требует обслуживания. Руда сверх ёмкости склада пропадает, расширяйте склад вместе с добычей. Казахстанский рудник (первый) покупается в блоке выше.</div>`;
+  h+=MINES.map(m=>{ const own=s.mines.includes(m.id), c=Math.round(m.cost*ci);
+    return `<div class="row" style="margin-top:8px"><span>${m.name}: +${fmt(m.ore)} т/день, обслуживание ₽${fmt(m.upkeep*ci)}/день</span>`
+      +(own?'<span class="pill pill-good">куплен</span>':eq<m.unlock?`<span style="color:var(--dim);font-size:11px">с капитала ₽${fmtBig(m.unlock)}</span>`:`<button data-mine="${m.id}" class="primary" ${s.cash<c?'disabled':''}>₽${fmtBig(c)}</button>`)+'</div>'; }).join('');
+  h+=`<div class="eff-title">Лес</div><div class="row"><span>Запас древесины для вырубки</span><b class="${s.forest<1500?'bad':''}">${fmt(s.forest)} т</b></div><div class="help">Деревья не растут бесконечно: лесопилка использует запас, а когда он кончается, останавливается. Покупайте новые участки заранее.</div>`;
+  h+=FOREST.map(f=>{ const c=Math.round(f.cost*ci); return `<div class="row" style="margin-top:8px"><span>${f.name}: ${fmt(f.size)} т</span><button data-forest="${f.id}" class="primary" ${s.cash<c?'disabled':''}>₽${fmtBig(c)}</button></div>`; }).join('');
+  el.innerHTML=h;
+  el.querySelectorAll('[data-mine]').forEach(b=>b.onclick=()=>{ const m=MINES.find(x=>x.id===b.dataset.mine), c=Math.round(m.cost*s.macro.costIndex);
+    if(s.cash<c||s.mines.includes(m.id)) return; s.cash-=c; s.mines.push(m.id); pushLog(`Расход: куплен «${m.name}», ₽${fmt(c)}, +${m.ore} т руды в день.`); render(); });
+  el.querySelectorAll('[data-forest]').forEach(b=>b.onclick=()=>{ const f=FOREST.find(x=>x.id===b.dataset.forest), c=Math.round(f.cost*s.macro.costIndex);
+    if(s.cash<c) return; s.cash-=c; s.forest+=f.size; pushLog(`Расход: куплен участок «${f.name}» (${fmt(f.size)} т), ₽${fmt(c)}.`); render(); });
 }
 const TECHS = [
   {id:'smelting', name:'Улучшенная плавка', cost:40000, days:4,
@@ -2229,6 +2263,7 @@ function render(){
   renderLedger();
   renderAdvice();
   renderDep();
+  renderRes();
   save();
 }
 
@@ -2375,11 +2410,12 @@ function advanceDayCore(silent){
   if(s.mineOwned){
     s.ore = Math.min(s.oreCap, s.ore + s.mineDailyOre);
   }
+  s.mines.forEach(id=>{ s.ore = Math.min(s.oreCap, s.ore + MINES.find(m=>m.id===id).ore); });
 
   // расходы
   const storageOverflow = Math.max(0, s.ore - s.oreCap*0.7) + Math.max(0, s.steel - s.steelCap*0.7) + Math.max(0, s.parts - s.partsCap*0.7);
   const storageCost = storageOverflow*4;
-  const dailyCosts = (s.wagePerDay*s.staff.wage*(s.staff.benefits?1.2:1) + s.upkeepPerDay + storageCost + (s.mineOwned ? s.mineUpkeep : 0))*ci*(s.megaCost||1);
+  const dailyCosts = (s.wagePerDay*s.staff.wage*(s.staff.benefits?1.2:1) + s.upkeepPerDay + storageCost + (s.mineOwned ? s.mineUpkeep : 0) + s.mines.reduce((a,id)=>a+MINES.find(m=>m.id===id).upkeep,0))*ci*(s.megaCost||1);
   s.cash -= dailyCosts; L('Зарплаты и содержание',-dailyCosts);
 
   // рынок: цены дрейфуют к базовому уровню (искажённому событиями) + случайные колебания
@@ -2532,7 +2568,8 @@ function advanceDayCore(silent){
 
   // материалы для собственной стройки: лесопилка и бетонный завод
   if(s.businesses.construction && s.businesses.construction.opened){
-    const lumberProd = Math.min(s.lumberFactoryCapacity, s.lumberCap-s.lumber);
+    const lumberProd = Math.max(0, Math.min(s.lumberFactoryCapacity, s.lumberCap-s.lumber, s.forest));
+    s.forest -= lumberProd; if(s.forest<=0 && lumberProd>0) pushLog('Лесной участок вырублен полностью: лесопилка остановится, пока не купите новый.');
     s.lumber += lumberProd; s.cash -= lumberProd*s.lumberCostPerUnit*ci;
     const concreteProd = Math.min(s.concreteFactoryCapacity, s.concreteCap-s.concrete);
     s.concrete += concreteProd; s.cash -= concreteProd*s.concreteCostPerUnit*ci;
