@@ -589,6 +589,8 @@ if(s.businesses.it && s.businesses.it.opened && s.businesses.it.activeProject===
 }
 if(!s.managers) s.managers = {procurement:false, sales:false, fleet:false};
 if(!s.fleetTargets) s.fleetTargets = {taxi:0, logistics_biz:0};
+if(!s.mgrCfg) s.mgrCfg = {};
+{ const C=s.mgrCfg; if(C.salesMin===undefined) C.salesMin=1.0; if(C.salesKeep===undefined) C.salesKeep=0.5; if(!C.fleetCls) C.fleetCls={taxi:'auto', logistics_biz:'auto'}; if(C.procMin===undefined) C.procMin=0.5; }
 if(!s.profitHistory){ s.profitHistory=[0,0,0,0,0,0,0,0,0,0]; s.assetsHistory=Array(10).fill(s.cash); s.equityHistory=Array(10).fill(s.cash); }
 if(!s.achievements){ s.achievements=[]; s.everProducedSteel=false; s.hadLoan=false; s.everAcquiredCompetitor=false; }
 if(s.bonds===undefined){ s.bonds=0; s.bondRate=0.0015; }
@@ -699,12 +701,23 @@ BUSINESSES.find(b=>b.id==='construction').projectList = CONSTRUCTION_PROJECTS;
 BUSINESSES.find(b=>b.id==='it').projectList = IT_PROJECTS;
 const MANAGERS = [
   {id:'procurement', name:'Менеджер по закупкам', hireCost:80000, salary:400,
-   desc:'Докупает руду, когда склад меньше 40%, только по цене не выше 130% нормы и не тратя больше 35% кассы за раз.'},
+   desc:'Следит за складами руды, леса и бетона (с учётом товара в пути). Когда остаток ниже порога, заказывает там, где выходит дешевле: у зарубежных поставщиков или на внутреннем рынке. Цена не выше 130% нормы, не больше 35% кассы за раз. Руду не трогает, пока её хватает рудникам.'},
   {id:'sales', name:'Менеджер по продажам', hireCost:90000, salary:450,
-   desc:'Продаёт излишки стали и деталей на внутреннем рынке грузовиком, только по цене не ниже 90% нормы и не трогая резерв под госзаказы и производство деталей.'},
+   desc:'Продаёт излишки стали и деталей грузовиком по внутреннему рынку. Настраиваются минимальная цена и сколько держать на складе. За день уходит не больше 35% излишка, чтобы не обваливать цену. Резерв под госзаказы и цех не трогает.'},
   {id:'fleet', name:'Менеджер автопарка', hireCost:70000, salary:350,
-   desc:'Поддерживает заданный размер автопарка в такси и логистике — докупает машины вместо списанных и до цели.'},
+   desc:'Поддерживает заданный размер автопарка в такси и логистике: докупает машины вместо списанных и до цели, до 3 в день. Класс покупки выбираете сами или оставляете «Авто» (лучший, который по карману с запасом кассы).'},
 ];
+function mgrSettings(id){
+  const C=s.mgrCfg, st='style="max-width:100%"';
+  const opt=(arr,cur)=>arr.map(([v,l])=>`<option value="${v}" ${String(v)===String(cur)?'selected':''}>${l}</option>`).join('');
+  const row=(label,sel)=>`<div style="display:flex;justify-content:space-between;align-items:center;width:100%;gap:8px;margin-top:4px"><span style="font-size:12px;color:var(--dim)">${label}</span>${sel}</div>`;
+  if(id==='procurement') return row('Заказывать, когда остаток ниже',`<select data-cfg="procMin" ${st}>${opt([[0.3,'30% склада'],[0.5,'50% склада'],[0.7,'70% склада']],C.procMin)}</select>`);
+  if(id==='sales') return row('Минимальная цена',`<select data-cfg="salesMin" ${st}>${opt([[0.9,'90% нормы'],[1.0,'100% нормы'],[1.1,'110% нормы'],[1.2,'120% нормы']],C.salesMin)}</select>`)
+    + row('Держать на складе',`<select data-cfg="salesKeep" ${st}>${opt([[0.3,'30% ёмкости'],[0.5,'50% ёмкости'],[0.7,'70% ёмкости'],[0.9,'90% ёмкости']],C.salesKeep)}</select>`);
+  if(id==='fleet') return ['taxi','logistics_biz'].map(bid=>{ const b=BUSINESSES.find(x=>x.id===bid); if(!b||!s.businesses[bid]||!s.businesses[bid].opened) return '';
+    return row('Класс: '+(BIZ_SHORT[bid]||b.name),`<select data-cfg="fleetCls:${bid}" ${st}>${opt([['auto','Авто']].concat(VNAMES[bid].map((n,i)=>[i,n])),C.fleetCls[bid])}</select>`); }).join('');
+  return '';
+}
 const SUBSIDIARIES = [
   {id:'metall', name:'Феррум Металл', cost:2000000,
    desc:'+8 мощности завода стали и +5 мощности цеха обработки.',
@@ -1388,6 +1401,9 @@ function renderBizDev(){
 
 // ===== НЕФТЕГАЗ: разведка, скважины, трубопровод, контракты =====
 if(!s.oil) s.oil={open:false, fields:[], pipe:1, po:600, pg:250, contracts:[], next:1, total:0, last:null};
+const OIL_TERMS=[[30,0],[60,0.01],[90,0.02],[180,0.04],[365,0.07]];
+function oilTermBonus(term){ const x=OIL_TERMS.find(y=>y[0]===term); return x?x[1]:0; }
+function oilNewPrice(kind,term){ const O=s.oil; return Math.round((kind==='oil'?O.po:O.pg)*(0.95+Math.random()*0.13)*(1+oilTermBonus(term))*(1+0.02*prestigeRank())); }
 const OIL={licence:20e6, unlock:10e6, explore:3e6, well:2e6, wellMax:10, rate:{oil:100,gas:140}, base:{oil:600,gas:250}, opex:8000, pipeUnit:300};
 function oilPipeCost(){ return Math.round(8e6*(1+s.oil.pipe)*s.macro.costIndex); }
 function oilStep(){
@@ -1410,7 +1426,11 @@ function oilStep(){
   O.contracts=O.contracts.filter(c=>{
     const d=Math.min(prod[c.kind],c.vol,capLeft); prod[c.kind]-=d; capLeft-=d; rev+=d*c.price;
     const sh=c.vol-d; if(sh>0) rev-=sh*c.price*0.2;
-    c.days-=1; if(c.days<=0) pushLog(`Контракт на ${c.kind==='oil'?'нефть':'газ'} завершён.`); return c.days>0;
+    c.days-=1;
+    if(c.days<=0){
+      if(c.auto){ const term=c.term||30; c.price=oilNewPrice(c.kind,term); c.days=term; pushLog(`Контракт на ${c.kind==='oil'?'нефть':'газ'} продлён автоматически на ${term} дн. по ₽${fmt(c.price)}.`); return true; }
+      pushLog(`Контракт на ${c.kind==='oil'?'нефть':'газ'} завершён.`); }
+    return c.days>0;
   });
   ['oil','gas'].forEach(k=>{ const d=Math.min(prod[k],capLeft); capLeft-=d; rev+=d*(k==='oil'?O.po:O.pg); lost+=prod[k]-d; });
   s.cash+=rev-cost; O.total+=rev-cost; L('Нефтегаз',rev-cost); O.last={rev,cost,lost};
@@ -1442,9 +1462,9 @@ function renderOil(){
       ${f.blow>0?`<div class="help bad">Авария: добыча остановлена ещё ${f.blow} дн.</div>`:''}${f.left<=0?'<div class="help">Месторождение истощено.</div>':''}
       ${f.left>0&&f.wells<OIL.wellMax?`<div class="controls"><button data-well="${f.id}" class="primary" ${s.cash<wc?'disabled':''}>Пробурить скважину (₽${fmt(wc)})</button></div>`:''}</div>`;
   });
-  html+=`<div class="card" style="grid-column:1/-1"><h2>Контракты на поставку</h2><div class="help" style="margin-top:0">Фиксированная цена на 30 дней (случайно −5…+8% к рынку). Продукт сначала идёт по контракту; за недопоставку штраф 20% цены. До 3 контрактов.</div>`
-    + O.contracts.map(c=>`<div class="row"><span>${c.kind==='oil'?'Нефть':'Газ'}: ${fmt(c.vol)} ед./день по ₽${fmt(c.price)}</span><b>${c.days} дн.</b></div>`).join('')
-    + (O.contracts.length<3?`<div class="controls"><select id="cKind"><option value="oil">Нефть</option><option value="gas">Газ</option></select><input type="number" id="cVol" min="10" value="100" style="width:80px"><button id="cSign" class="primary">Подписать</button></div>`:'')+'</div>';
+  html+=`<div class="card" style="grid-column:1/-1"><h2>Контракты на поставку</h2><div class="help" style="margin-top:0">Фиксированная цена на выбранный срок (случайно −5…+8% к рынку, плюс надбавка за длинный срок). Продукт сначала идёт по контракту; за недопоставку штраф 20% цены. Если рынок вырастет, вы продаёте дешевле рынка. Досрочное расторжение: неустойка 10% оставшейся выручки (до 60 дней). С автопродлением контракт сам перезаключается по цене рынка. До 3 контрактов.</div>`
+    + O.contracts.map((c,i)=>`<div class="row" style="flex-wrap:wrap;gap:6px"><span>${c.kind==='oil'?'Нефть':'Газ'}: ${fmt(c.vol)} ед./день по ₽${fmt(c.price)}</span><b>${c.days} дн.</b><span style="width:100%;display:flex;gap:8px;align-items:center;flex-wrap:wrap"><label style="font-size:12px;color:var(--dim)"><input type="checkbox" data-cauto="${i}" ${c.auto?'checked':''}> автопродление (${c.term||30} дн.)</label><button data-ccancel="${i}">Расторгнуть (₽${fmt(Math.round(c.vol*c.price*Math.min(c.days,60)*0.1))})</button></span></div>`).join('')
+    + (O.contracts.length<3?`<div class="controls"><select id="cKind"><option value="oil">Нефть</option><option value="gas">Газ</option></select><input type="number" id="cVol" min="10" value="100" style="width:80px"><select id="cTerm">${OIL_TERMS.map(x=>`<option value="${x[0]}">${x[0]} дн.${x[1]?' (+'+Math.round(x[1]*100)+'% к цене)':''}</option>`).join('')}</select><label style="font-size:12px;color:var(--dim);align-self:center"><input type="checkbox" id="cAuto"> автопродление</label><button id="cSign" class="primary">Подписать</button></div>`:'')+'</div>';
   el.innerHTML=html;
   const explore=type=>{ if(s.cash<expl) return; s.cash-=expl;
     if(Math.random()<0.7){ const reserve=Math.round((type==='oil'?300000:400000)*(0.5+Math.random()*2.5));
@@ -1456,10 +1476,14 @@ function renderOil(){
   document.getElementById('oPipe').onclick=()=>{ const c=oilPipeCost(); if(s.cash<c) return; s.cash-=c; O.pipe+=1; pushLog(`Расход: трубопровод расширен до уровня ${O.pipe}, ₽${fmt(c)}.`); render(); };
   el.querySelectorAll('[data-well]').forEach(b=>b.onclick=()=>{ const f=O.fields.find(x=>x.id===parseInt(b.dataset.well)), c=Math.round(OIL.well*s.macro.costIndex);
     if(!f||s.cash<c||f.wells>=OIL.wellMax) return; s.cash-=c; f.wells+=1; pushLog(`Расход: скважина на «${f.name}», ₽${fmt(c)}.`); render(); });
+  el.querySelectorAll('[data-cauto]').forEach(c=>c.onchange=()=>{ const k=O.contracts[parseInt(c.dataset.cauto)]; if(k){ k.auto=c.checked; if(!k.term) k.term=30; save(); } });
+  el.querySelectorAll('[data-ccancel]').forEach(b=>b.onclick=()=>{ const i=parseInt(b.dataset.ccancel), k=O.contracts[i]; if(!k) return;
+    const pen=Math.round(k.vol*k.price*Math.min(k.days,60)*0.1); if(s.cash<pen) return; s.cash-=pen; O.contracts.splice(i,1);
+    pushLog(`Расход: неустойка за расторжение контракта на ${k.kind==='oil'?'нефть':'газ'}, ₽${fmt(pen)}.`); render(); });
   const sg=document.getElementById('cSign');
-  if(sg) sg.onclick=()=>{ const kind=document.getElementById('cKind').value, vol=Math.max(10,Math.floor(parseFloat(document.getElementById('cVol').value)||10));
-    const price=Math.round((kind==='oil'?O.po:O.pg)*(0.95+Math.random()*0.13)*(1+0.02*prestigeRank()));
-    O.contracts.push({kind,vol,price,days:30}); pushLog(`Подписан контракт: ${fmt(vol)} ед./день ${kind==='oil'?'нефти':'газа'} по ₽${fmt(price)} на 30 дн.`); render(); };
+  if(sg) sg.onclick=()=>{ const kind=document.getElementById('cKind').value, vol=Math.max(10,Math.floor(parseFloat(document.getElementById('cVol').value)||10)),
+      term=parseInt(document.getElementById('cTerm').value)||30, auto=document.getElementById('cAuto').checked, price=oilNewPrice(kind,term);
+    O.contracts.push({kind,vol,price,days:term,term,auto}); pushLog(`Подписан контракт: ${fmt(vol)} ед./день ${kind==='oil'?'нефти':'газа'} по ₽${fmt(price)} на ${term} дн.${auto?' (автопродление)':''}`); render(); };
 }
 
 // ===== АВТОПАРК: классы машин, гараж, время на доставку и стройку =====
@@ -1776,9 +1800,12 @@ function render(){
     return `<div class="row" style="margin-top:8px;flex-direction:column;align-items:flex-start;gap:4px">
       <div style="display:flex;justify-content:space-between;width:100%"><b style="color:var(--text)">${m.name}</b><span>${hired?'нанят · ₽'+fmt(m.salary)+'/день':'₽'+fmt(m.hireCost)+' + ₽'+fmt(m.salary)+'/день'}</span></div>
       <div style="color:var(--dim)">${m.desc}</div>
+      ${hired?mgrSettings(m.id):''}
       <button data-mgr="${m.id}" class="mgrBtn" ${(!hired && s.cash<m.hireCost)?'disabled':''}>${hired?'Уволить':'Нанять'}</button>
     </div>`;
   }).join('');
+  mgrEl.querySelectorAll('[data-cfg]').forEach(sel=>{ sel.onchange=()=>{ const [k,sub]=sel.dataset.cfg.split(':'), v=sel.value, num=parseFloat(v);
+    if(sub) s.mgrCfg[k][sub]=(v==='auto'?'auto':parseInt(v)); else s.mgrCfg[k]=num; save(); }; });
   mgrEl.querySelectorAll('.mgrBtn').forEach(btn=>{
     btn.onclick = () => {
       const m = MANAGERS.find(x=>x.id===btn.dataset.mgr);
@@ -2657,38 +2684,61 @@ function advanceDayCore(silent){
   const fairOre=120*PL.ore, fairSteel=520*PL.steel, fairParts=1800*PL.parts;
   if(s.managers.procurement){
     s.cash -= 400; L('Зарплата менеджеров',-400);
-    if(s.ore < s.oreCap*0.4 && s.orePrice <= fairOre*1.3){
-      let qty = Math.floor(s.oreCap*0.7 - s.ore);
-      qty = Math.min(qty, Math.floor(Math.max(0,s.cash)*0.35/(s.orePrice*1.05)));
-      if(qty>=5){
-        const cost = qty*s.orePrice*(1+qty/4000);
-        s.cash -= cost; s.ore += qty; L('Закупка руды (менеджер)',-cost);
-        pushLog(`Менеджер по закупкам: куплено ${qty}т руды по ₽${fmt(cost/qty)}/т (норма ₽${fmt(fairOre)}).`);
-        s.orePrice = Math.round(s.orePrice*(1+qty/2000));
+    const eqNow=equityNow();
+    Object.keys(SUPPLY).forEach(r=>{
+      const R=SUPPLY[r]; if(R.req && !R.req()) return;
+      const have=R.stock()+inboundQty(r);
+      if(have >= R.cap()*s.mgrCfg.procMin) return;
+      const room=R.cap()-have, want=Math.floor(Math.min(room, R.cap()*0.85-have));
+      if(want<5) return;
+      const fair=R.base*(r==='ore'?PL.ore:s.macro.costIndex);
+      const budget=Math.max(0,s.cash)*0.35;
+      // лучший зарубежный источник по цене с доставкой
+      let best=null;
+      R.sources.forEach(x=>{ if(eqNow<x.unlock) return; const lp=landed(x,s.sup[r][x.id]); if(!best||lp<best.lp) best={x,lp}; });
+      const localP=R.localPrice(), useLocal = r==='ore' && (!best || localP <= best.lp*1.05);
+      if(useLocal){
+        if(localP>fair*1.3) return;
+        const qty=Math.min(want, Math.floor(budget/(localP*1.05)));
+        if(qty<5) return;
+        const cost=qty*localP*(1+qty/4000);
+        s.cash-=cost; R.add(qty); L('Закупка руды (менеджер)',-cost);
+        pushLog(`Менеджер по закупкам: куплено ${qty}т руды на внутреннем рынке по ₽${fmt(cost/qty)}/т (норма ₽${fmt(fair)}).`);
+        s.orePrice=Math.round(s.orePrice*(1+qty/2000));
+      } else if(best){
+        if(best.lp>fair*1.3 && r==='ore') return;
+        const x=best.x, qty0=Math.min(want,1000), impact0=qty0/x.div, p=s.sup[r][x.id];
+        const qty=Math.min(qty0, Math.floor(budget/landed(x,p*(1+impact0/2))));
+        if(qty<5) return;
+        const m=combinedEventMods(), impact=qty/x.div*m.buyImpact, cost=landed(x,p*(1+impact/2))*qty;
+        if(cost>s.cash) return;
+        s.cash-=cost; L('Закупка сырья (менеджер)',-cost); s.sup[r][x.id]=Math.round(p*(1+impact));
+        s.inbound.push({res:r,src:x.name,qty,arriveDay:s.day+x.delay});
+        pushLog(`Менеджер по закупкам: заказано ${qty}${R.unit} (${R.label.toLowerCase()}, ${x.name}) по ₽${fmt(cost/qty)}, придёт через ${x.delay} дн.`);
       }
-    }
+    });
   }
   if(s.managers.sales){
     s.cash -= 450; L('Зарплата менеджеров',-450);
-    const tn = k => s.tenders.active.filter(c=>c.kind===k).reduce((a,c)=>a+c.left,0);
-    const steelKeep = Math.max(s.steelCap*0.3, s.steelReserve||0, tn('steel') + s.partsFactoryCapacity*9);
-    const partsKeep = Math.max(s.partsCap*0.2, tn('parts'));
-    if(s.steel > s.steelCap*0.7 && s.steelPrice >= fairSteel*0.9){
-      const qty = Math.floor(s.steel - steelKeep);
+    const C=s.mgrCfg, tn = k => s.tenders.active.filter(c=>c.kind===k).reduce((a,c)=>a+c.left,0);
+    const steelKeep = Math.max(s.steelCap*C.salesKeep, s.steelReserve||0, tn('steel') + s.partsFactoryCapacity*9);
+    const partsKeep = Math.max(s.partsCap*C.salesKeep*0.7, tn('parts'));
+    if(s.steel > steelKeep && s.steelPrice >= fairSteel*C.salesMin){
+      const qty = Math.floor((s.steel - steelKeep)*0.35);
       if(qty>=5){
         const gross = qty*s.steelPrice*(1-qty/6000), fee = gross*0.08*s.transportFeeMultiplier;
         s.steel -= qty; s.cash += gross-fee; L('Продажи (менеджер)',gross-fee);
         s.steelPrice = Math.max(50, Math.round(s.steelPrice*(1-qty/3000)));
-        pushLog(`Менеджер по продажам: ${qty}т стали на внутреннем рынке грузовиком по ₽${fmt(gross/qty)}/т, комиссия ₽${fmt(fee)}. В резерве осталось ${fmt(s.steel)}т (госзаказы и цех).`);
+        pushLog(`Менеджер по продажам: ${qty}т стали на внутреннем рынке грузовиком по ₽${fmt(gross/qty)}/т, комиссия ₽${fmt(fee)}. На складе осталось ${fmt(s.steel)}т.`);
       }
     }
-    if(s.parts > s.partsCap*0.7 && s.partsPrice >= fairParts*0.9){
-      const qty = Math.floor(s.parts - partsKeep);
+    if(s.parts > partsKeep && s.partsPrice >= fairParts*C.salesMin){
+      const qty = Math.floor((s.parts - partsKeep)*0.35);
       if(qty>=2){
         const gross = qty*s.partsPrice*(1-qty/1200), fee = gross*0.10*s.transportFeeMultiplier;
         s.parts -= qty; s.cash += gross-fee; L('Продажи (менеджер)',gross-fee);
         s.partsPrice = Math.max(300, Math.round(s.partsPrice*(1-qty/600)));
-        pushLog(`Менеджер по продажам: ${qty} деталей на внутреннем рынке грузовиком по ₽${fmt(gross/qty)}, комиссия ₽${fmt(fee)}. В резерве ${fmt(s.parts)} шт.`);
+        pushLog(`Менеджер по продажам: ${qty} деталей на внутреннем рынке грузовиком по ₽${fmt(gross/qty)}, комиссия ₽${fmt(fee)}. На складе ${fmt(s.parts)} шт.`);
       }
     }
   }
@@ -2698,13 +2748,18 @@ function advanceDayCore(silent){
       const b = BUSINESSES.find(x=>x.id===id);
       const st = s.businesses[id];
       const target = s.fleetTargets[id]||0;
-      if(st && st.opened && usedSlots(id) < Math.min(target, s.garage[id].slots)){
-        const oc0 = orderCost(b, 0, usedSlots(id)), cost = oc0.cash;
-        if(s.cash>=cost){
-          s.cash -= cost; s.parts -= oc0.use;
-          s.orders.push({id, cls:0, left:VCLS[0].d});
-          pushLog(`Менеджер автопарка купил ${b.vehicleName} для «${b.name}».`);
-        }
+      if(!(st && st.opened)) return;
+      for(let k=0;k<3;k++){
+        if(!(usedSlots(id) < Math.min(target, s.garage[id].slots))) break;
+        const want = s.mgrCfg.fleetCls[id];
+        let cls = 0;
+        if(want==='auto'){ for(let i=VCLS.length-1;i>=0;i--){ if(orderCost(b,i,usedSlots(id)).cash*2.5 <= s.cash){ cls=i; break; } } }
+        else cls = Math.min(parseInt(want)||0, VCLS.length-1);
+        const oc = orderCost(b, cls, usedSlots(id));
+        if(s.cash < oc.cash) break;
+        s.cash -= oc.cash; s.parts -= oc.use;
+        s.orders.push({id, cls, left:VCLS[cls].d});
+        pushLog(`Менеджер автопарка заказал ${VNAMES[id][cls].toLowerCase()} для «${b.name}».`);
       }
     });
   }
