@@ -379,7 +379,8 @@ button.danger{border-color:var(--bad);color:var(--bad)}
   <div class="card" style="grid-column:1/-1">
     <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="4" height="10"/><rect x="10" y="4" width="4" height="16"/><rect x="16" y="8" width="4" height="12"/></svg></span>Мой портфель</h2>
     <div class="row"><span>Стоимость акций</span><b id="portfolioVal">₽0</b></div>
-    <div class="help">Цены симулируются, это не онлайн-котировки. Дивиденды — каждые 20 дней по числу акций. Крипта — без дивидендов, зато с крупными трендами: ловите просадки и продавайте на росте (комиссия сделки 0,4%). Полный выкуп компании стоит на 25% дороже рынка — у гигантов это почти недостижимая цель.</div>
+    <div id="portfolioStats"></div>
+    <div class="help">Цены симулируются, это не онлайн-котировки. Дивиденды — каждые 20 дней по числу акций. Если владеть 50% и больше компании (контроль), она платит не менее 1% за 20 дней, при полном выкупе 1,5%. Крипта — без дивидендов, зато с крупными трендами: ловите просадки и продавайте на росте (комиссия сделки 0,4%). Полный выкуп компании стоит на 25% дороже рынка — у гигантов это почти недостижимая цель.</div>
   </div>
   <div id="stocksList" style="display:contents"></div>
 </div>
@@ -1662,6 +1663,35 @@ function renderRes(){
   el.querySelectorAll('[data-forest]').forEach(b=>b.onclick=()=>{ const f=FOREST.find(x=>x.id===b.dataset.forest), c=Math.round(f.cost*s.macro.costIndex);
     if(s.cash<c) return; s.cash-=c; s.forest+=f.size; pushLog(`Расход: куплен участок «${f.name}» (${fmt(f.size)} т), ₽${fmt(c)}.`); render(); });
 }
+
+// ===== АКЦИИ: прибыль контролируемых компаний и статистика =====
+if(s.divTotal===undefined) s.divTotal=0;
+function effDivRate(st){
+  if(st.kind==='crypto') return 0;
+  const f=(s.portfolio[st.id]||0)/st.shares;
+  return f>=0.5 ? Math.max(st.dividendRate, 0.01+(f>=1?0.005:0)) : st.dividendRate;
+}
+function divText(st){
+  const f=(s.portfolio[st.id]||0)/st.shares, r=effDivRate(st);
+  if(r>0) return (r*100).toFixed(r<0.01?2:1)+'% каждые 20 дн.'+(f>=0.5?' (контроль)':'');
+  return st.kind==='crypto' ? 'не платит' : 'не платит; владение 50%+ даёт прибыль';
+}
+function portfolioStats(){
+  let basis=0, val=0, exp=0;
+  STOCKS.forEach(st=>{ const n=s.portfolio[st.id]||0; if(n>0){ basis+=s.costBasis[st.id]||0; val+=n*s.stockPrices[st.id]; exp+=n*s.stockPrices[st.id]*effDivRate(st); } });
+  return {basis,val,exp};
+}
+function renderPortfolioStats(){
+  const el=document.getElementById('portfolioStats'); if(!el) return; const p=portfolioStats(), pl=p.val-p.basis;
+  el.innerHTML=`<div class="row"><span>Вложено в акции</span><b>₽${fmt(p.basis)}</b></div>
+    <div class="row"><span>Результат по ценам (не зафиксирован)</span><b class="${pl>=0?'good':'bad'}">${pl>=0?'+':'−'}₽${fmt(Math.abs(pl))}${p.basis>0?` (${(pl/p.basis*100).toFixed(1)}%)`:''}</b></div>
+    <div class="row"><span>Дивиденды и прибыль получены всего</span><b class="good">₽${fmt(s.divTotal)}</b></div>
+    <div class="row"><span>Ожидается за ближайшие 20 дней</span><b class="${p.exp>0?'good':''}">₽${fmt(p.exp)}${p.basis>0?` (${(p.exp/p.basis*100).toFixed(2)}% от вложенного)`:''}</b></div>
+    <div class="row"><span>Итого с учётом дивидендов</span><b class="${pl+s.divTotal>=0?'good':'bad'}">${pl+s.divTotal>=0?'+':'−'}₽${fmt(Math.abs(pl+s.divTotal))}</b></div>`;
+}
+// ===== СТРОЙКА И IT: несколько проектов одновременно =====
+BUSINESSES.forEach(b=>{ if(b.projects){ const st=s.businesses[b.id]; if(st&&st.opened&&!st.active){ st.active=st.activeProject?[st.activeProject]:[]; st.activeProject=null; } } });
+function projSlots(b){ const st=s.businesses[b.id]; return Math.min(30, 1+Math.floor((st.completedCount||0)/2)+2*(s.bizUp[b.id]||[]).length); }
 const TECHS = [
   {id:'smelting', name:'Улучшенная плавка', cost:40000, days:4,
    desc:'Расход руды на тонну стали: 2,0 → 1,6т.',
@@ -1925,7 +1955,7 @@ function render(){
       <svg class="stock-spark" id="spark_${st.id}"></svg>
       <div class="row"><span>Диапазон ${hist.length} дн.${zone}</span><b>₽${fmt(lo)} – ₽${fmt(hi)}</b></div>
       <div class="row"><span>Капитализация</span><b>₽${fmtBig(mcap)}</b></div>
-      ${isCrypto?'':`<div class="row"><span>Дивиденд</span><b>${st.dividendRate>0?(st.dividendRate*100).toFixed(st.dividendRate<0.01?2:1)+'% каждые 20 дн.':'не платит'}</b></div>`}
+      ${isCrypto?'':`<div class="row"><span>Дивиденд</span><b>${divText(st)}</b></div>`}
       <div class="row"><span>${isCrypto?'В портфеле':'Ваша доля'}</span><b>${fmtQty(owned,dec)}${isCrypto?' '+st.ticker:' шт. ('+pctTxt+'%)'}${fullyOwned?' · <span class="pill pill-good">100%</span>':''}</b></div>
       ${owned>0?`<div class="row"><span>Результат позиции</span><b class="${posPnl>=0?'good':'bad'}">${posPnl>=0?'+':'−'}₽${fmt(Math.abs(posPnl))}</b></div>`:''}
       <div class="controls">
@@ -2037,30 +2067,24 @@ function render(){
       </div>`;
     }
     if(b.projects){
-      const proj = st.activeProject;
-      let body;
-      if(proj){
-        const p = b.projectList.find(x=>x.id===proj.id);
-        const pct = clamp((p.days-proj.daysLeft)/p.days*100,0,100);
-        body = `<div class="row"><span>В работе: ${proj.name}</span><b>${proj.daysLeft} дн. осталось</b></div>
-          <div class="bar"><i style="width:${pct}%"></i></div>
-          <div class="help">${p.successChance<1?`Шанс успеха ${Math.round(p.successChance*100)}% · при удаче ₽${fmt(proj.payout)}, при провале — частичный возврат.`:`По завершении: ₽${fmt(proj.payout)} одной суммой.`}</div>`;
-      } else {
-        const stockLine = b.needsMaterials ? ` Склад: сталь ${fmt(s.steel)}т, бетон ${fmt(s.concrete)}т, лес ${fmt(s.lumber)}т.` : '';
-        body = `<div class="help">${b.desc} Выполнено проектов: ${st.completedCount}.${stockLine}</div>` +
-          b.projectList.map(p=>{
-            const matOk = !b.needsMaterials || (s.steel>=(p.steelNeeded||0) && s.concrete>=(p.concreteNeeded||0) && s.lumber>=(p.lumberNeeded||0));
-            const canStart = s.cash>=projCash(p) && matOk;
-            const miss=[]; if(b.needsMaterials){ if(s.steel<p.steelNeeded) miss.push(`${Math.ceil(p.steelNeeded-s.steel)}т стали`); if(s.concrete<p.concreteNeeded) miss.push(`${Math.ceil(p.concreteNeeded-s.concrete)}т бетона`); if(s.lumber<p.lumberNeeded) miss.push(`${Math.ceil(p.lumberNeeded-s.lumber)}т леса`); }
-            const matText = b.needsMaterials ? ` + ${p.steelNeeded}т стали + ${p.concreteNeeded}т бетона + ${p.lumberNeeded}т леса` + (miss.length?` <span class="bad">(не хватает: ${miss.join(', ')})</span>`:'') : '';
-            const chanceText = p.successChance<1 ? ` · шанс успеха ${Math.round(p.successChance*100)}%` : '';
-            return `<div class="row" style="margin-top:6px;flex-direction:column;align-items:flex-start;gap:4px">
-              <div style="display:flex;justify-content:space-between;width:100%"><b style="color:var(--text)">${p.name}</b><span>${p.days} дн.${chanceText}</span></div>
-              <div style="color:var(--dim)">₽${fmt(projCash(p))}${matText} → выплата ₽${fmt(projPay(b,p))}</div>
-              <button data-project="${p.id}" data-bizid="${b.id}" class="primary startProjectBtn" ${canStart?'':'disabled'}>Взять проект</button>
-            </div>`;
-          }).join('');
+      const slots=projSlots(b), act=st.active||[], free=slots-act.length;
+      const stockLine = b.needsMaterials ? ` Склад: сталь ${fmt(s.steel)}т, бетон ${fmt(s.concrete)}т, лес ${fmt(s.lumber)}т.` : '';
+      let body = `<div class="row"><span>Проектов одновременно</span><b>${act.length} из ${slots}</b></div>
+        <div class="help" style="margin-top:0">${b.desc} Выполнено проектов: ${st.completedCount}.${stockLine} Новые «строительные площадки» открываются с опытом (каждые 2 сданных проекта) и с улучшениями бизнеса.</div>`;
+      if(act.length){
+        body += act.map((proj,i)=>{ const p=b.projectList.find(x=>x.id===proj.id), pct=clamp((p.days-proj.daysLeft)/p.days*100,0,100);
+          return `<div class="row" style="margin-top:6px"><span>${proj.name}${p.successChance<1?` (шанс ${Math.round(p.successChance*100)}%)`:''}</span><b>${proj.daysLeft} дн. → ₽${fmtBig(proj.payout)}</b></div><div class="bar"><i style="width:${pct}%"></i></div>`; }).join('');
       }
+      body += `<div class="eff-title">Взять проект</div>` + b.projectList.map(p=>{
+        const matOk = !b.needsMaterials || (s.steel>=(p.steelNeeded||0) && s.concrete>=(p.concreteNeeded||0) && s.lumber>=(p.lumberNeeded||0));
+        const canStart = free>0 && s.cash>=projCash(p) && matOk;
+        const miss=[]; if(b.needsMaterials){ if(s.steel<p.steelNeeded) miss.push(`${Math.ceil(p.steelNeeded-s.steel)}т стали`); if(s.concrete<p.concreteNeeded) miss.push(`${Math.ceil(p.concreteNeeded-s.concrete)}т бетона`); if(s.lumber<p.lumberNeeded) miss.push(`${Math.ceil(p.lumberNeeded-s.lumber)}т леса`); }
+        const matText = b.needsMaterials ? ` + ${p.steelNeeded}т стали + ${p.concreteNeeded}т бетона + ${p.lumberNeeded}т леса` + (miss.length?` <span class="bad">(не хватает: ${miss.join(', ')})</span>`:'') : '';
+        const chanceText = p.successChance<1 ? ` · шанс успеха ${Math.round(p.successChance*100)}%` : '';
+        return `<div class="row" style="margin-top:6px;flex-direction:column;align-items:flex-start;gap:4px">
+          <div style="display:flex;justify-content:space-between;width:100%"><b style="color:var(--text)">${p.name}</b><span>${p.days} дн.${chanceText}</span></div>
+          <div style="color:var(--dim)">₽${fmt(projCash(p))}${matText} → выплата ₽${fmt(projPay(b,p))}</div>
+          <button data-project="${p.id}" data-bizid="${b.id}" class="primary startProjectBtn" ${canStart?'':'disabled'}>${free>0?'Взять проект':'Нет свободных площадок'}</button></div>`; }).join('');
       return `<div class="card"><h2>${iconBox(b.id)}${b.name}</h2>${body}${cycleLine(b.id)}</div>`;
     }
     const upgradeCost = Math.round(b.cost*(0.7+st.level*0.55)*s.macro.costIndex);
@@ -2075,7 +2099,7 @@ function render(){
       const b = BUSINESSES.find(x=>x.id===btn.dataset.open);
       if(s.cash<b.cost || (s.businesses[b.id]&&s.businesses[b.id].opened)) return;
       s.cash -= b.cost;
-      s.businesses[b.id] = b.fleet ? {opened:true, fleet:[]} : (b.projects ? {opened:true, activeProject:null, completedCount:0} : {opened:true, level:1});
+      s.businesses[b.id] = b.fleet ? {opened:true, fleet:[]} : (b.projects ? {opened:true, active:[], activeProject:null, completedCount:0} : {opened:true, level:1});
       if(b.onOpen) b.onOpen(s);
       pushLog(`Открыт новый бизнес: ${b.name}.`);
       render();
@@ -2122,12 +2146,12 @@ function render(){
       const p = b.projectList.find(x=>x.id===btn.dataset.project);
       const st = s.businesses[b.id];
       const matOk = !b.needsMaterials || (s.steel>=(p.steelNeeded||0) && s.concrete>=(p.concreteNeeded||0) && s.lumber>=(p.lumberNeeded||0));
-      if(st.activeProject || s.cash<projCash(p) || !matOk) return;
+      if((st.active||[]).length>=projSlots(b) || s.cash<projCash(p) || !matOk) return;
       s.cash -= projCash(p);
       if(b.needsMaterials){
         s.steel -= p.steelNeeded||0; s.concrete -= p.concreteNeeded||0; s.lumber -= p.lumberNeeded||0;
       }
-      st.activeProject = {id:p.id, name:p.name, daysLeft:p.days, payout:projPay(b,p), successChance:p.successChance!==undefined?p.successChance:1};
+      (st.active=st.active||[]).push({id:p.id, name:p.name, daysLeft:p.days, payout:projPay(b,p), successChance:p.successChance!==undefined?p.successChance:1});
       pushLog(`${b.name}: взят проект «${p.name}» (${p.days} дн.).`);
       render();
     };
@@ -2265,6 +2289,7 @@ function render(){
   renderAdvice();
   renderDep();
   renderRes();
+  renderPortfolioStats();
   save();
 }
 
@@ -2497,9 +2522,9 @@ function advanceDayCore(silent){
     let totalDiv = 0;
     STOCKS.forEach(st=>{
       const owned = s.portfolio[st.id]||0;
-      if(owned>0 && st.dividendRate>0){
-        const payout = owned*s.stockPrices[st.id]*st.dividendRate;
-        s.cash += payout; totalDiv += payout; L('Дивиденды',payout);
+      if(owned>0 && effDivRate(st)>0){
+        const payout = owned*s.stockPrices[st.id]*effDivRate(st);
+        s.cash += payout; totalDiv += payout; s.divTotal += payout; L('Дивиденды',payout);
       }
     });
     if(totalDiv>0) pushLog(`Дивиденды по акциям: +₽${fmt(totalDiv)}.`);
@@ -2600,22 +2625,17 @@ function advanceDayCore(silent){
     }
     if(b.projects){
       s.cash -= b.idleUpkeep*ci;
-      if(st.activeProject){
-        st.activeProject.daysLeft -= 1;
-        if(st.activeProject.daysLeft<=0){
-          const chance = st.activeProject.successChance;
-          if(chance>=1 || Math.random()<chance){
-            s.cash += st.activeProject.payout; L(BIZ_SHORT[b.id]||b.name, st.activeProject.payout);
-            st.completedCount += 1;
-            pushLog(`${b.name}: сдан проект «${st.activeProject.name}», выплата ₽${fmt(st.activeProject.payout)}.`);
-          } else {
-            const refund = Math.round(st.activeProject.payout*0.12);
-            s.cash += refund;
-            pushLog(`${b.name}: проект «${st.activeProject.name}» провалился. Частичный возврат ₽${fmt(refund)}.`);
-          }
-          st.activeProject = null;
+      st.active = (st.active||[]).filter(pr=>{
+        pr.daysLeft -= 1; if(pr.daysLeft>0) return true;
+        if(pr.successChance>=1 || Math.random()<pr.successChance){
+          s.cash += pr.payout; L(BIZ_SHORT[b.id]||b.name, pr.payout); st.completedCount += 1;
+          pushLog(`${b.name}: сдан проект «${pr.name}», выплата ₽${fmt(pr.payout)}.`);
+        } else {
+          const refund = Math.round(pr.payout*0.12); s.cash += refund;
+          pushLog(`${b.name}: проект «${pr.name}» провалился. Частичный возврат ₽${fmt(refund)}.`);
         }
-      }
+        return false;
+      });
       return;
     }
     let rev = b.baseRevenue*st.level*(1 + (Math.random()*2-1)*b.volatility)*bizFactor(b.id);
