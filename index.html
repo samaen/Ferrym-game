@@ -135,6 +135,47 @@ button.danger{border-color:var(--bad);color:var(--bad)}
 .eff-row .eff-bar::after{content:'';position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--dim);opacity:.5}
 .eff-row b{width:54px;text-align:right;font-family:var(--mono);font-weight:600}
 .eff-title{font-size:11px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;margin:14px 0 2px}
+
+/* ===== ОБНОВЛЁННЫЙ ВИД ===== */
+:root{ --r:22px; --card-bg:linear-gradient(160deg,#243049,#1b2336); --glow:0 8px 28px rgba(34,211,238,.10); }
+body{background:radial-gradient(1000px 500px at 85% -10%,rgba(34,211,238,.12),transparent 60%),radial-gradient(800px 500px at -10% 10%,rgba(99,102,241,.12),transparent 60%),#121826}
+.card,.stat-card,.stage-card{background:var(--card-bg);border:1px solid rgba(120,140,190,.18);border-radius:var(--r);box-shadow:0 10px 30px rgba(0,0,0,.28)}
+.card h2{font-size:15px;position:relative;padding-left:12px}
+.card h2::before{content:"";position:absolute;left:0;top:3px;bottom:3px;width:4px;border-radius:4px;background:linear-gradient(180deg,var(--accent),#6366f1)}
+.hero-cash{font-size:44px;background:linear-gradient(90deg,#fff,#7dd3fc 60%,#34d399);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stage-card{background:linear-gradient(135deg,#1f3a52,#1d2a45 55%,#2a2650);border-color:rgba(34,211,238,.25)}
+.stage-icon{background:rgba(34,211,238,.15);border-radius:16px}
+.lvl-chip{align-self:flex-start;background:linear-gradient(135deg,#22d3ee,#6366f1);color:#04141c;font-weight:800;font-size:12px;border-radius:12px;padding:5px 10px;white-space:nowrap}
+.bar{height:8px;background:rgba(255,255,255,.08)}
+.bar i{box-shadow:0 0 12px rgba(34,211,238,.45)}
+button{border-radius:16px;background:rgba(255,255,255,.06);border-color:rgba(120,140,190,.25)}
+button.primary{background:linear-gradient(135deg,#22d3ee,#38bdf8);box-shadow:0 6px 18px rgba(34,211,238,.28)}
+.bottom-nav{left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));padding:8px 6px;border-radius:26px;border:1px solid rgba(120,140,190,.25);background:rgba(20,27,42,.88);box-shadow:0 12px 36px rgba(0,0,0,.45)}
+.tab-btn{position:relative;border-radius:18px;transition:background .2s,color .2s}
+.tab-btn.active{background:rgba(34,211,238,.14);color:var(--accent)}
+.tab-btn.dot::after{content:"";position:absolute;top:4px;right:calc(50% - 18px);width:9px;height:9px;border-radius:50%;background:#f43f5e;box-shadow:0 0 0 2px #141b2a}
+.subnav{position:sticky;top:0;z-index:15;padding:8px 0;background:linear-gradient(180deg,#121826 70%,transparent);margin-bottom:6px}
+.subnav button{border-radius:22px;background:rgba(255,255,255,.05)}
+.subnav button.active{background:linear-gradient(135deg,rgba(34,211,238,.25),rgba(99,102,241,.25));color:#fff;border-color:rgba(34,211,238,.6)}
+.quick{grid-column:1/-1;display:flex;gap:12px;overflow-x:auto;padding:2px 2px 6px;scrollbar-width:none}
+.quick::-webkit-scrollbar{display:none}
+.qcard{position:relative;flex:0 0 auto;min-width:156px;max-width:190px;border-radius:var(--r);padding:14px;background:var(--card-bg);border:1px solid rgba(120,140,190,.2);cursor:pointer;box-shadow:var(--glow);transition:transform .15s,border-color .15s}
+.qcard:hover{transform:translateY(-2px);border-color:rgba(34,211,238,.55)}
+.qic{width:38px;height:38px;border-radius:13px;background:rgba(34,211,238,.14);color:var(--accent);display:flex;align-items:center;justify-content:center;margin-bottom:10px}
+.qic svg{width:20px;height:20px}
+.qt{font-size:11.5px;color:var(--dim)} .qv{font-size:15px;font-weight:800;margin-top:2px;font-family:var(--mono)} .qs{font-size:11px;color:var(--dim);margin-top:2px}
+.qcard.alert{border-color:rgba(244,63,94,.6)} .qcard.alert .qic{background:rgba(244,63,94,.16);color:#fb7185}
+.qcard.alert::after{content:"!";position:absolute;top:10px;right:12px;width:18px;height:18px;border-radius:50%;background:#f43f5e;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center}
+
+.chain{display:flex;align-items:stretch;gap:6px;overflow-x:auto;padding-bottom:6px}
+.cnode{flex:1 0 132px;border-radius:18px;padding:12px;background:rgba(255,255,255,.04);border:1px solid rgba(120,140,190,.22)}
+.cnode .ct{font-size:11.5px;color:var(--dim)} .cnode .cv{font-size:15px;font-weight:800;font-family:var(--mono);margin:2px 0 6px}
+.cnode .cs{font-size:11px;margin-top:6px;padding:3px 8px;border-radius:10px;display:inline-block}
+.cnode.ok .cs{background:rgba(34,197,94,.16);color:#4ade80} .cnode.warn .cs{background:rgba(245,158,11,.18);color:#fbbf24} .cnode.bad{border-color:rgba(244,63,94,.55)} .cnode.bad .cs{background:rgba(244,63,94,.18);color:#fb7185}
+.carrow{flex:0 0 auto;align-self:center;text-align:center;font-size:11px;color:var(--dim);min-width:58px;font-family:var(--mono)}
+.carrow b{display:block;color:var(--accent);font-size:16px;line-height:1}
+.chain-note{margin-top:8px;padding:10px 12px;border-radius:14px;font-size:12.5px;background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.25)}
+.chain-note.bad{background:rgba(244,63,94,.1);border-color:rgba(244,63,94,.4)}
 </style>
 </head>
 <body>
@@ -170,6 +211,7 @@ button.danger{border-color:var(--bad);color:var(--bad)}
   <button class="tab-btn active" data-group="overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Обзор</button>
   <button class="tab-btn" data-group="production"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 3h22l-3 5H4z"/><path d="M21 8v13H3V8"/><line x1="9" y1="13" x2="9" y2="17"/><line x1="15" y1="13" x2="15" y2="17"/></svg>Производство</button>
   <button class="tab-btn" data-group="trade"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>Торговля</button>
+  <button class="tab-btn" data-group="biz"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>Бизнес</button>
   <button class="tab-btn" data-group="empire"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>Империя</button>
   <button class="tab-btn" data-group="finance"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>Финансы</button>
 </div>
@@ -177,6 +219,7 @@ button.danger{border-color:var(--bad);color:var(--bad)}
 <div id="subnav" class="subnav" style="display:none"></div>
 
 <div class="tab-panel active" data-panel="overview">
+  <div class="quick" id="quickRow"></div>
   <div class="card" style="margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
   <div>
     <div style="font-size:13px;font-weight:600" id="autoStatus">Автоматический режим включён — день сменяется каждые 60 секунд</div>
@@ -204,6 +247,7 @@ button.danger{border-color:var(--bad);color:var(--bad)}
 </div>
 
 <div class="tab-panel grid" data-panel="production">
+  <div class="card" style="grid-column:1/-1"><h2>Производственная цепочка</h2><div id="chainBody"></div></div>
   <div class="card">
     <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l9-5 9 5v13H3z"/><line x1="12" y1="8" x2="12" y2="21"/><path d="M3 8l9 5 9-5"/></svg></span>Склад</h2>
     <div class="row"><span>Руда</span><b id="oreStockTxt">0 / 0 т</b></div>
@@ -358,6 +402,25 @@ button.danger{border-color:var(--bad);color:var(--bad)}
   </div>
 </div>
 
+<div class="tab-panel grid" data-panel="world">
+  <div class="card" style="grid-column:1/-1"><h2>Мировая экспансия</h2><div id="worldBody"></div></div>
+</div>
+<div class="tab-panel grid" data-panel="tech">
+  <div class="card" style="grid-column:1/-1"><h2>Техно-корпорация и космос</h2><div id="techBody"></div></div>
+</div>
+<div class="tab-panel grid" data-panel="strategy">
+  <div class="card" style="grid-column:1/-1"><h2>Стратегия</h2><div id="stratBody"></div></div>
+</div>
+<div class="tab-panel grid" data-panel="analytics">
+  <div class="card" style="grid-column:1/-1"><h2>Аналитика прибыли</h2><div id="anBody"></div></div>
+</div>
+</div>
+<div class="tab-panel grid" data-panel="legacy">
+  <div class="card" style="grid-column:1/-1"><h2>Наследие</h2><div id="legBody"></div></div>
+</div>
+<div class="tab-panel grid" data-panel="lore">
+  <div class="card" style="grid-column:1/-1"><h2>Летопись компании</h2><div id="loreBody"></div></div>
+</div>
 <div class="tab-panel grid" data-panel="holding">
   <div class="card">
     <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>Дочерние компании</h2>
@@ -421,7 +484,7 @@ button.danger{border-color:var(--bad);color:var(--bad)}
 
     <div class="set-title">Сохранение</div>
     <div class="help" style="margin-top:0">Игра сама сохраняется в браузере и делает резервные копии. Файл нужен для переноса на другое устройство и страховки от очистки данных.</div>
-    <div class="controls"><button id="expFileBtn" class="primary">Сохранить в файл</button><button id="impFileBtn">Загрузить из файла</button></div>
+    <div class="controls"><button id="expFileBtn" class="primary">Сохранить в файл</button><button id="expDlBtn">Скачать файл напрямую</button><button id="impFileBtn">Загрузить из файла</button></div>
     <input type="file" id="impFileInput" accept=".txt,.json,text/plain,application/json" style="display:none">
     <div class="controls"><button id="expCodeBtn">Скопировать код</button><button id="impCodeBtn">Вставить код</button></div>
     <div id="codeArea" style="display:none"><textarea id="saveBox" rows="4" placeholder="Вставьте код сюда" style="width:100%;margin-top:10px;background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:10px;font-family:var(--mono);font-size:11px" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false"></textarea>
@@ -461,11 +524,12 @@ button.danger{border-color:var(--bad);color:var(--bad)}
 
 <script>
 const GROUPS=[
-  {id:'overview', panels:[['overview','Обзор']]},
-  {id:'production', panels:[['production','Заводы'],['staff','Персонал'],['research','Наука']]},
-  {id:'trade', panels:[['markets','Рынки']]},
-  {id:'empire', panels:[['business','Бизнесы'],['oil','Нефтегаз'],['holding','Холдинг'],['realty','Недвижимость'],['collect','Коллекции']]},
-  {id:'finance', panels:[['finance','Кредиты'],['stocks','Биржа'],['macro','Экономика']]}
+  {id:'overview', name:'Обзор', panels:[['overview','Обзор'],['lore','Летопись'],['analytics','Аналитика']]},
+  {id:'production', name:'Завод', panels:[['production','Заводы'],['staff','Персонал'],['research','Наука'],['strategy','Стратегия']]},
+  {id:'trade', name:'Торговля', panels:[['markets','Рынки']]},
+  {id:'biz', name:'Бизнес', panels:[['business','Бизнесы'],['oil','Нефтегаз'],['realty','Недвижимость'],['collect','Коллекции']]},
+  {id:'empire', name:'Империя', panels:[['holding','Холдинг'],['world','Мир'],['tech','Техно и космос'],['legacy','Наследие']]},
+  {id:'finance', name:'Финансы', panels:[['finance','Кредиты'],['stocks','Биржа'],['macro','Экономика']]}
 ];
 const lastSub={};
 function showPanel(id){
@@ -482,6 +546,7 @@ function showPanel(id){
 document.querySelectorAll('.tab-btn').forEach(btn=>{
   btn.onclick = () => { const g=GROUPS.find(x=>x.id===btn.dataset.group); showPanel(lastSub[g.id]||g.panels[0][0]); };
 });
+document.querySelectorAll('.tab-btn').forEach(b=>{ const g=GROUPS.find(x=>x.id===b.dataset.group); if(g) b.lastChild.textContent=g.name; });
 showPanel('overview');
 
 const BIZ_ICON_PATHS = {
@@ -553,6 +618,24 @@ let s = load() || {
   log:['Компания «Феррум Холдинг» зарегистрирована. Стартовый капитал: ₽50 000.']
 };
 if(!s.settings) s.settings = {tickSec:60, offline:true, compact:false};
+
+// ===== НАСЛЕДИЕ: престиж и «новая игра+» =====
+const LEG_KEY='ferrum_holding_v1_legacy';
+let LG=null; try{ LG=JSON.parse(localStorage.getItem(LEG_KEY)||'null'); }catch(e){}
+if(!LG) LG={pts:0,spent:{cash:0,rep:0,cap:0,know:0},runs:0,ach:[],best:0,settings:null};
+if(!LG.spent) LG.spent={cash:0,rep:0,cap:0,know:0};
+if(!s.lgApplied){
+  s.lgApplied=true;
+  if(LG.runs>0){
+    const P=LG.spent;
+    s.cash=50000+150000*(P.cash||0);
+    s.loanRate*=Math.pow(0.92,P.rep||0); s.creditLimitFactor+=0.03*(P.rep||0);
+    s.factoryCapacity+=4*(P.cap||0); s.partsFactoryCapacity+=(P.cap||0); s.oreCap+=80*(P.cap||0); s.steelCap+=40*(P.cap||0);
+    s.assetsHistory=Array(10).fill(s.cash); s.equityHistory=Array(10).fill(s.cash);
+    s.achievements=(LG.ach||[]).slice(); s.onboardingSeen=true; if(LG.settings) s.settings=LG.settings;
+    s.log=[`Новая эпоха №${LG.runs+1}: «Феррум Холдинг» возрождён. Наследие даёт преимущество, но соперники теперь сильнее.`];
+  }
+}
 let TICK_MS = s.settings.tickSec*1000;
 let timer = null;
 let nextTickAt = Date.now() + TICK_MS;
@@ -574,6 +657,7 @@ if(s.lumber===undefined){
   s.concrete=0; s.concreteCap=200; s.concreteFactoryCapacity=20; s.concreteCostPerUnit=70; s.concreteExpandLevel=0;
 }
 if(!s.activeEvents) s.activeEvents = [];
+s.activeEvents=s.activeEvents.filter(e=>!String(e.id).startsWith('cw_'));
 if(s.mineOwned===undefined){ s.mineOwned=false; s.mineDailyOre=15; s.mineUpkeep=250; }
 if(!s.subsidiaries){ s.subsidiaries=[]; s.creditLimitFactor=0.5; s.marketReach=1; }
 if(!s.businesses) s.businesses = {};
@@ -1203,11 +1287,12 @@ function renderSupply(){
 // ===== АВАРИИ И СТРАХОВАНИЕ =====
 if(s.ins===undefined){ s.ins=0; s.safety=0; s.downDays=0; s.incidents=0; }
 const INS=[{n:'Без страховки',r:0,c:0},{n:'Базовая (возмещает 60%)',r:0.0004,c:0.6},{n:'Полная (возмещает 100%)',r:0.0009,c:1}];
+function insBase(){ return Math.max(0, equityNow() - s.bonds - depValue() - portfolioValue() - colValue()); }
 function incidentChance(){ return 0.025*clamp(1+(50-s.staff.morale)/100,0.5,1.6)*Math.pow(0.85,s.safety); }
 function safetyCost(){ return Math.round(40000*(1+s.safety)*s.macro.costIndex); }
 function incidentStep(){
   if(s.downDays>0) s.downDays-=1;
-  if(INS[s.ins].r>0){ const pr=Math.max(0,equityNow())*INS[s.ins].r; s.cash-=pr; L('Страховка',-pr); }
+  if(INS[s.ins].r>0){ const pr=insBase()*INS[s.ins].r; s.cash-=pr; L('Страховка',-pr); }
   if(Math.random()>=incidentChance()) return;
   const cov=INS[s.ins].c; s.incidents+=1;
   const pick=a=>a[Math.floor(Math.random()*a.length)];
@@ -1235,7 +1320,7 @@ function incidentStep(){
   pushLog(`${text}. ${cov>0?`Страховка вернула ₽${fmt(comp)} из ₽${fmt(loss)}.`:`Убыток ≈ ₽${fmt(loss)}.`}`);
 }
 function renderRisk(){
-  const el=document.getElementById('riskBody'), prem=Math.max(0,equityNow())*INS[s.ins].r;
+  const el=document.getElementById('riskBody'), prem=insBase()*INS[s.ins].r;
   el.innerHTML=`<div class="card" style="grid-column:1/-1"><h2>Безопасность и страхование</h2>
     <div class="row"><span>Шанс аварии в день</span><b>${(incidentChance()*100).toFixed(2)}%</b></div>
     <div class="row"><span>Аварий за игру</span><b>${s.incidents}</b></div>
@@ -1752,7 +1837,412 @@ function stageFor(netWorth){
   for(let i=0;i<STAGES.length;i++){ if(netWorth>=STAGES[i].min) idx=i; }
   return {current:STAGES[idx], next:STAGES[idx+1]||null, idx};
 }
-function save(){ s.lastSeen = Date.now(); localStorage.setItem(KEY, JSON.stringify(s)); }
+
+// ===== МИРОВАЯ ЭКСПАНСИЯ: война за регионы с корпорациями-соперниками =====
+const WREG=[
+ {id:'ee',name:'Восточная Европа',b:3e7,y:1.0,risk:0.5,perk:'Экспортные пошлины −10%.',fx:s=>{s.tariffMultiplier*=0.9;}},
+ {id:'me',name:'Ближний Восток',b:1e8,y:1.15,risk:0.8,perk:'Ставка по кредитам −10%.',fx:s=>{s.loanRate*=0.9;}},
+ {id:'in',name:'Индия',b:3e8,y:1.1,risk:0.7,perk:'Зарплаты и обслуживание −8%.',fx:s=>{s.wagePerDay=Math.round(s.wagePerDay*0.92);s.upkeepPerDay=Math.round(s.upkeepPerDay*0.92);}},
+ {id:'cn',name:'Китай',b:8e8,y:1.2,risk:0.9,perk:'Глубина рынков +20%.',fx:s=>{s.marketReach*=1.2;}},
+ {id:'la',name:'Латинская Америка',b:2e9,y:1.3,risk:1.2,perk:'Доходность облигаций +15%.',fx:s=>{s.bondRate*=1.15;}},
+ {id:'af',name:'Африка',b:5e9,y:1.6,risk:1.6,perk:'+40 т стали/день, склад руды +600.',fx:s=>{s.factoryCapacity+=40;s.oreCap+=600;}},
+ {id:'na',name:'Северная Америка',b:1.2e10,y:1.0,risk:0.3,perk:'Стоимость мегапроектов −6%.',fx:s=>{s.megaCost*=0.94;}},
+ {id:'ar',name:'Арктический шельф',b:3e10,y:1.4,risk:1.0,perk:'+60 т стали/день, склады +800 руды / +400 стали.',fx:s=>{s.factoryCapacity+=60;s.oreCap+=800;s.steelCap+=400;}}
+];
+const WLV=['—','Представительство','Филиал','Завод','Логистический хаб','Доминирование'];
+const WST={grow:['Экспансия',1,0.003,0],def:['Оборона',0.55,0.02,0],lob:['Лоббизм',0.4,0.008,0.012]};
+if(!s.world) s.world={reg:{},rivals:[{n:'Кронос Групп',p:1},{n:'Вектор Капитал',p:1},{n:'Атлас Индастри',p:1}],perks:[]};
+WREG.forEach(r=>{ if(!s.world.reg[r.id]) s.world.reg[r.id]={lvl:0,heat:0,lob:0,st:'grow',frz:0}; });
+function wCost(r,lvl){ return Math.round(r.b*Math.pow(3,lvl)*s.macro.costIndex); }
+function wGross(r){ const g=s.world.reg[r.id]; if(!g.lvl||g.frz>0) return 0; const M=s.macro;
+  return r.b*Math.pow(3,g.lvl-1)*0.004*r.y*clamp(1-g.heat,0.25,1)*WST[g.st][1]*(1+(M.demand-1)*1.2); }
+function wIncome(){ return WREG.reduce((a,r)=>a+wGross(r)*0.7,0); }
+function worldStep(){
+  const W=s.world, eq=equityNow(), pw=1+0.35*Math.log10(Math.max(1,eq/1e7));
+  W.rivals.forEach(v=>{ v.p=clamp(v.p*0.97+pw*(1+0.1*LG.runs)*0.03*(0.7+Math.random()*0.6),1,9+LG.runs); });
+  const tp=W.rivals.reduce((a,v)=>a+v.p,0);
+  WREG.forEach(r=>{ const g=W.reg[r.id]; if(!g.lvl) return;
+    const gr=wGross(r), net=gr*0.7; if(net){ s.cash+=net; L('Мировая экспансия',net); }
+    const st=WST[g.st];
+    g.heat=clamp(g.heat+tp*0.0012*(0.4+0.2*g.lvl)*(0.5+Math.random())-(st[2]+(g.st==='def'?0.004*g.lvl:0)),0,1);
+    g.lob=clamp(g.lob+st[3]-(g.st==='lob'?0:0.002),0,1);
+    if(g.frz>0){ g.frz--; if(g.frz===0) pushLog(`${r.name}: санкции сняты, доходы возобновлены.`); return; }
+    if(Math.random()<0.0035*r.risk*(1-0.85*g.lob)){
+      if(g.lvl<5 && g.lob<0.5 && Math.random()<0.4){ g.lvl--; pushLog(`Национализация в регионе «${r.name}»: потерян уровень присутствия.`); }
+      else { g.frz=12+Math.floor(Math.random()*9); pushLog(`Санкции в регионе «${r.name}»: доходы заморожены на ${g.frz} дн.`); }
+    }
+    if(g.lvl>=5 && !W.perks.includes(r.id)){ W.perks.push(r.id); r.fx(s); pushLog(`Доминирование в регионе «${r.name}»! ${r.perk}`); }
+  });
+}
+function renderWorld(){
+  const el=document.getElementById('worldBody'); if(!el) return;
+  const W=s.world, eq=equityNow(), M=s.macro;
+  let h=`<div class="help" style="margin-top:0">Захват регионов даёт доход каждый день, но за мир борются корпорации-соперники: они давят на ваши регионы («давление»), и доля рынка падает. У каждого региона три режима: <b>Экспансия</b> — полный доход; <b>Оборона</b> — доход ×0,55, давление спадает быстро; <b>Лоббизм</b> — доход ×0,4, растёт защита от национализации и санкций. Полное «Доминирование» даёт постоянный бонус. Соперники растут вместе с вашим капиталом.</div>
+  <div class="row"><span>Доход со всех регионов (чистыми)</span><b>₽${fmt(wIncome())}/день</b></div>
+  <div class="row"><span>Соперники</span><span>${W.rivals.map(v=>v.n+' ×'+v.p.toFixed(1)).join(' · ')}</span></div>`;
+  WREG.forEach(r=>{ const g=W.reg[r.id], open=eq>=r.b, cost=g.lvl<5?wCost(r,g.lvl):0;
+    h+=`<div class="row" style="margin-top:12px;flex-direction:column;align-items:flex-start;gap:4px"><div style="display:flex;justify-content:space-between;width:100%"><b style="color:var(--text)">${r.name}</b><span>${WLV[g.lvl]} · ${g.lvl}/5</span></div>
+    <div class="bar" style="width:100%"><i style="width:${g.lvl*20}%"></i></div>
+    <div class="help" style="margin-top:0">Бонус доминирования: ${r.perk} Риск: ${'●'.repeat(Math.ceil(r.risk*2))}</div>`;
+    if(g.lvl>0){ h+=`<div class="help ${g.frz?'bad':''}" style="margin-top:0">${g.frz?'САНКЦИИ: доходы заморожены ещё '+g.frz+' дн. ':''}Доход ₽${fmt(wGross(r)*0.7)}/день · доля рынка ${Math.round(clamp(1-g.heat,0.25,1)*100)}% · давление ${Math.round(g.heat*100)}% · защита ${Math.round(g.lob*100)}%</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">${Object.keys(WST).map(k=>`<button data-wst="${r.id}:${k}" class="${g.st===k?'primary':''}">${WST[k][0]}</button>`).join('')}</div>`; }
+    if(g.lvl<5){ h+= open? `<button data-wup="${r.id}" class="primary" ${s.cash<cost?'disabled':''}>${g.lvl?'Усилить':'Войти в регион'}: ${WLV[g.lvl+1]} — ₽${fmtBig(cost)}</button>` : `<div class="help">Откроется при капитале от ₽${fmtBig(r.b)}.</div>`; }
+    else h+=`<span class="pill pill-good">доминирование</span>`;
+    h+='</div>'; });
+  el.innerHTML=worldMapSvg()+h;
+  el.querySelectorAll('[data-wst]').forEach(b=>b.onclick=()=>{ const [id,k]=b.dataset.wst.split(':'); s.world.reg[id].st=k; render(); });
+  el.querySelectorAll('[data-wup]').forEach(b=>b.onclick=()=>{ const r=WREG.find(x=>x.id===b.dataset.wup), g=s.world.reg[r.id];
+    if(g.lvl>=5||equityNow()<r.b) return; const c=wCost(r,g.lvl); if(s.cash<c) return;
+    s.cash-=c; L('Мировая экспансия (вложения)',-c); g.lvl++; g.heat=Math.max(0,g.heat-0.1); pushLog(`Расход: «${r.name}» — ${WLV[g.lvl]}, ₽${fmt(c)}.`); render(); });
+}
+ACHIEVEMENTS.push(
+ {id:'world_first', name:'Выход на мировой рынок', desc:'Войти в первый регион', reward:50000000, check:(s,eq)=>WREG.some(r=>s.world.reg[r.id].lvl>0)},
+ {id:'world_power', name:'Хозяин мира', desc:'Добиться доминирования во всех регионах', reward:500000000000, check:(s,eq)=>WREG.every(r=>s.world.reg[r.id].lvl>=5)}
+);
+
+
+// ===== ТЕХНО-КОРПОРАЦИЯ → КОСМОС → ПЛАНЕТЫ =====
+if(!s.tx) s.tx={lines:{},mg:{},mt:{},spInc:0,ships:0,pl:{},perks:[]};
+const TLINES=[
+ {id:'phone',name:'Смартфоны «Феррум Фон»',b:3e8,cost:2e8,base:2.4e6,pn:8},
+ {id:'pc',name:'Компьютеры «Феррум Book»',b:1e9,cost:6e8,base:7e6,pn:20},
+ {id:'chips',name:'Фабрика микросхем',b:3e9,cost:2e9,base:2.2e7,pn:40},
+ {id:'ai',name:'ИИ-платформа «Разум»',b:1e10,cost:6e9,base:7e7,pn:80}
+];
+TLINES.forEach(l=>{ if(!s.tx.lines[l.id]) s.tx.lines[l.id]={on:false,gen:1,rd:null,mk:0}; if(!s.tx.mg[l.id]){ s.tx.mg[l.id]=1; s.tx.mt[l.id]=30; } });
+const TPL=[
+ {id:'luna',name:'Луна',b:2e11,y:1.0,risk:0.4,perk:'+120 т стали/день.',fx:s=>{s.factoryCapacity+=120;}},
+ {id:'mars',name:'Марс',b:6e11,y:1.15,risk:0.7,perk:'+120 деталей/день.',fx:s=>{s.partsFactoryCapacity+=120;}},
+ {id:'venus',name:'Венера',b:2e12,y:1.3,risk:1.0,perk:'Ставка по кредитам −15%.',fx:s=>{s.loanRate*=0.85;}},
+ {id:'belt',name:'Пояс астероидов',b:6e12,y:1.5,risk:1.1,perk:'Склад руды +3000, рудники +60 т/день.',fx:s=>{s.oreCap+=3000;s.mineDailyOre+=60;}},
+ {id:'europa',name:'Европа (спутник Юпитера)',b:2e13,y:1.4,risk:1.3,perk:'Глубина рынков +30%.',fx:s=>{s.marketReach*=1.3;}},
+ {id:'titan',name:'Титан',b:6e13,y:1.7,risk:1.5,perk:'Стоимость мегапроектов −10%.',fx:s=>{s.megaCost*=0.9;}}
+];
+const TPLV=['—','Колония','Рудники','Космопорт','Торговая империя'];
+TPL.forEach(p=>{ if(!s.tx.pl[p.id]) s.tx.pl[p.id]={lvl:0,frz:0}; });
+MEGA.push(
+ {id:'rocket',name:'Космодром и ракета-носитель',unlock:2.5e10,cost:1.5e10,days:150,mats:{steel:15000,parts:4000,concrete:5000},perk:'Коммерческие запуски: +₽45 млн в день.',fx:s=>{s.tx.spInc+=4.5e7;}},
+ {id:'station',name:'Орбитальная станция',unlock:6e10,cost:4e10,days:200,mats:{steel:30000,parts:9000,concrete:8000},perk:'Орбитальные услуги: +₽120 млн в день.',fx:s=>{s.tx.spInc+=1.2e8;}},
+ {id:'moonbase',name:'Лунная база',unlock:1.5e11,cost:1e11,days:240,mats:{steel:60000,parts:20000,concrete:15000},perk:'+₽300 млн в день. Открывает колонизацию планет.',fx:s=>{s.tx.spInc+=3e8;}}
+);
+STAGES.push({name:'Космическая держава',min:1e12},{name:'Торговый владыка планет',min:1e14});
+function tShare(l){ const g=s.tx.lines[l.id]; return clamp(0.5+0.2*(g.gen-s.tx.mg[l.id])+0.07*g.mk,0.05,0.95); }
+function tGross(l){ const g=s.tx.lines[l.id]; return g.on? l.base*tShare(l)*(1+(s.macro.demand-1)): 0; }
+function rdCost(l){ const g=s.tx.lines[l.id]; return Math.round(l.cost*0.25*Math.pow(2,g.gen-1)*s.macro.costIndex); }
+function mkCost(l){ const g=s.tx.lines[l.id]; return Math.round(l.cost*0.1*(g.mk+1)*s.macro.costIndex); }
+function plGross(p){ const g=s.tx.pl[p.id]; if(!g.lvl||g.frz>0) return 0; const o=TPL.filter(q=>q.id!==p.id&&s.tx.pl[q.id].lvl>=3).length;
+  return p.b*Math.pow(3.5,g.lvl-1)*0.004*p.y*(0.6+0.4*plProt())*(1+0.08*o); }
+function plOwned(){ return TPL.filter(p=>s.tx.pl[p.id].lvl>0).length; }
+function plProt(){ return clamp(s.tx.ships/(1+2*plOwned()),0,1); }
+function shipCost(){ return Math.round(1e10*(1+0.15*s.tx.ships)*s.macro.costIndex); }
+function techIncome(){ return TLINES.reduce((a,l)=>a+tGross(l)*0.75,0)+s.tx.spInc+TPL.reduce((a,p)=>a+plGross(p)*0.7,0); }
+function techStep(){
+  const X=s.tx;
+  TLINES.forEach(l=>{ const g=X.lines[l.id]; if(!g.on) return;
+    if(--X.mt[l.id]<=0){ X.mg[l.id]++; X.mt[l.id]=(l.id==='chips'||l.id==='ai'?22:30)+Math.floor(Math.random()*20); pushLog(`Рынок: конкуренты выпустили поколение ${X.mg[l.id]} в линейке «${l.name}».`); }
+    let m=0.75; if(s.parts>=l.pn){ s.parts-=l.pn; m=0.85; }
+    const net=tGross(l)*m; s.cash+=net; L('Техно-корпорация',net);
+    if(g.rd){ g.rd.left--; if(g.rd.left<=0){ g.gen++; g.rd=null; pushLog(`Разработка завершена: «${l.name}» — поколение ${g.gen}.`); } } });
+  if(X.spInc){ s.cash+=X.spInc; L('Космические услуги',X.spInc); }
+  TPL.forEach(p=>{ const g=X.pl[p.id]; if(!g.lvl) return;
+    const n=plGross(p)*0.7; if(n){ s.cash+=n; L('Планетарная торговля',n); }
+    if(g.frz>0){ g.frz--; return; }
+    if(Math.random()<0.004*p.risk*(1-0.8*plProt())){ g.frz=10+Math.floor(Math.random()*11); pushLog(`${p.name}: авария/мятеж, доходы заморожены на ${g.frz} дн. Больше кораблей — меньше риск.`); }
+    if(g.lvl>=4 && !X.perks.includes(p.id)){ X.perks.push(p.id); p.fx(s); pushLog(`Торговая империя на «${p.name}»! ${p.perk}`); } });
+}
+function renderTech(){
+  const el=document.getElementById('techBody'); if(!el) return; const X=s.tx, eq=equityNow();
+  let h=`<div class="help" style="margin-top:0"><b>Эра 1 — электроника.</b> Линейки продукции приносят доход по доле рынка. Конкуренты периодически выпускают новое поколение: отстанете — доля упадёт, значит нужно вкладываться в разработки и маркетинг. Детали со склада повышают маржу. <b>Эра 2 — космос</b> строится во вкладке «Холдинг → Мегапроекты». <b>Эра 3 — планеты:</b> колонии, флот защиты и торговые пути между мирами.</div>
+  <div class="row"><span>Доход техно + космос + планеты (чистыми)</span><b>₽${fmt(techIncome())}/день</b></div>`;
+  TLINES.forEach(l=>{ const g=X.lines[l.id];
+    h+=`<div class="row" style="margin-top:12px;flex-direction:column;align-items:flex-start;gap:4px"><div style="display:flex;justify-content:space-between;width:100%"><b style="color:var(--text)">${l.name}</b><span>${g.on?'поколение '+g.gen+' · рынок: '+X.mg[l.id]:''}</span></div>`;
+    if(!g.on){ h+= eq>=l.b?`<button data-tl="${l.id}" class="primary" ${s.cash<l.cost*s.macro.costIndex?'disabled':''}>Запустить — ₽${fmtBig(Math.round(l.cost*s.macro.costIndex))}</button>`:`<div class="help">Откроется при капитале от ₽${fmtBig(l.b)}.</div>`; }
+    else { h+=`<div class="help" style="margin-top:0">Доля рынка ${Math.round(tShare(l)*100)}% · доход ₽${fmt(tGross(l)*0.75)}/день · маркетинг ${g.mk}/5</div><div style="display:flex;gap:6px;flex-wrap:wrap">
+      ${g.rd?`<span class="pill">разработка: ещё ${g.rd.left} дн.</span>`:`<button data-rd="${l.id}" ${s.cash<rdCost(l)?'disabled':''}>Новое поколение — ₽${fmtBig(rdCost(l))}</button>`}
+      ${g.mk<5?`<button data-mk="${l.id}" ${s.cash<mkCost(l)?'disabled':''}>Маркетинг — ₽${fmtBig(mkCost(l))}</button>`:''}</div>`; }
+    h+='</div>'; });
+  const moon=s.mega.done.includes('moonbase');
+  h+=`<div class="eff-title" style="margin-top:16px">Эра 3 — планеты</div>`;
+  if(!moon) h+=`<div class="help">Откроется после постройки Лунной базы (мегапроект).</div>`;
+  else { h+=`<div class="row"><span>Флот защиты: ${X.ships} кораблей · защита ${Math.round(plProt()*100)}%</span><button data-ship="1" ${s.cash<shipCost()?'disabled':''}>Купить корабль — ₽${fmtBig(shipCost())}</button></div>`;
+    TPL.forEach(p=>{ const g=X.pl[p.id], cost=Math.round(p.b*Math.pow(3.5,g.lvl)*s.macro.costIndex);
+      h+=`<div class="row" style="margin-top:12px;flex-direction:column;align-items:flex-start;gap:4px"><div style="display:flex;justify-content:space-between;width:100%"><b style="color:var(--text)">${p.name}</b><span>${TPLV[g.lvl]} · ${g.lvl}/4</span></div><div class="bar" style="width:100%"><i style="width:${g.lvl*25}%"></i></div>
+      <div class="help" style="margin-top:0">Бонус торговой империи: ${p.perk} Связи: +8% дохода за каждый другой мир с космопортом.${g.lvl?` Доход ₽${fmt(plGross(p)*0.7)}/день${g.frz?' · ЗАМОРОЖЕН '+g.frz+' дн.':''}`:''}</div>
+      ${g.lvl>=4?'<span class="pill pill-good">торговая империя</span>':(eq>=p.b?`<button data-pl="${p.id}" class="primary" ${s.cash<cost?'disabled':''}>${g.lvl?'Развить':'Колонизировать'}: ${TPLV[g.lvl+1]} — ₽${fmtBig(cost)}</button>`:`<div class="help">Откроется при капитале от ₽${fmtBig(p.b)}.</div>`)}</div>`; }); }
+  el.innerHTML=h;
+  const pay=(c,m)=>{ s.cash-=c; L(m,-c); };
+  el.querySelectorAll('[data-tl]').forEach(b=>b.onclick=()=>{ const l=TLINES.find(x=>x.id===b.dataset.tl),c=Math.round(l.cost*s.macro.costIndex); if(s.cash<c||equityNow()<l.b) return; pay(c,'Техно-корпорация (запуск)'); X.lines[l.id].on=true; pushLog(`Запущена линейка «${l.name}».`); render(); });
+  el.querySelectorAll('[data-rd]').forEach(b=>b.onclick=()=>{ const l=TLINES.find(x=>x.id===b.dataset.rd),g=X.lines[l.id],c=rdCost(l); if(s.cash<c||g.rd) return; pay(c,'Разработки'); g.rd={left:12+4*g.gen}; render(); });
+  el.querySelectorAll('[data-mk]').forEach(b=>b.onclick=()=>{ const l=TLINES.find(x=>x.id===b.dataset.mk),g=X.lines[l.id],c=mkCost(l); if(s.cash<c||g.mk>=5) return; pay(c,'Маркетинг'); g.mk++; render(); });
+  el.querySelectorAll('[data-ship]').forEach(b=>b.onclick=()=>{ const c=shipCost(); if(s.cash<c) return; pay(c,'Космофлот'); X.ships++; render(); });
+  el.querySelectorAll('[data-pl]').forEach(b=>b.onclick=()=>{ const p=TPL.find(x=>x.id===b.dataset.pl),g=X.pl[p.id],c=Math.round(p.b*Math.pow(3.5,g.lvl)*s.macro.costIndex); if(g.lvl>=4||s.cash<c||equityNow()<p.b) return; pay(c,'Колонизация'); g.lvl++; pushLog(`Расход: «${p.name}» — ${TPLV[g.lvl]}, ₽${fmt(c)}.`); render(); });
+}
+ACHIEVEMENTS.push(
+ {id:'tech_first', name:'Гик-корпорация', desc:'Запустить линейку электроники', reward:20000000, check:(s,eq)=>TLINES.some(l=>s.tx.lines[l.id].on)},
+ {id:'space_age', name:'Космическая эра', desc:'Построить Лунную базу', reward:5000000000, check:(s,eq)=>s.mega.done.includes('moonbase')},
+ {id:'trade_lord', name:'Торговый владыка', desc:'Торговая империя на всех планетах', reward:1e15, check:(s,eq)=>TPL.every(p=>s.tx.pl[p.id].lvl>=4)}
+);
+
+
+// ===== СТРАТЕГИЯ: доктрины (развилки без отката) и совет директоров =====
+if(!s.tt) s.tt={ch:{},active:null};
+if(!s.board) s.board={cur:null,next:10,done:0};
+const DOCT=[
+ {eq:5e6,days:8,o:[
+  {id:'lean',n:'Бережливое производство',d:'Зарплаты −15%, но мощность завода −10%.',fx:s=>{s.wagePerDay=Math.round(s.wagePerDay*0.85);s.factoryCapacity=Math.round(s.factoryCapacity*0.9);}},
+  {id:'scale',n:'Масштаб',d:'+25 т стали/день, но зарплаты +10%.',fx:s=>{s.factoryCapacity+=25;s.wagePerDay=Math.round(s.wagePerDay*1.1);}},
+  {id:'exp1',n:'Экспортный курс',d:'Пошлины −20%, но рынки сбыта уже на 10%.',fx:s=>{s.tariffMultiplier*=0.8;s.marketReach*=0.9;}}]},
+ {eq:5e7,days:14,o:[
+  {id:'fin',n:'Финансовая инженерия',d:'Ставка по кредитам −25%, доходность облигаций −10%.',fx:s=>{s.loanRate*=0.75;s.bondRate*=0.9;}},
+  {id:'cons',n:'Консервативный капитал',d:'Доходность облигаций +20%, но кредиты дороже на 15%.',fx:s=>{s.bondRate*=1.2;s.loanRate*=1.15;}},
+  {id:'net',n:'Логистическая сеть',d:'Комиссии доставки −25%, но обслуживание +15%.',fx:s=>{s.transportFeeMultiplier*=0.75;s.upkeepPerDay=Math.round(s.upkeepPerDay*1.15);}}]},
+ {eq:5e8,days:24,o:[
+  {id:'auto',n:'Тотальная автоматизация',d:'Зарплаты −20%, склад руды −10%.',fx:s=>{s.wagePerDay=Math.round(s.wagePerDay*0.8);s.oreCap=Math.round(s.oreCap*0.9);}},
+  {id:'i4',n:'Индустрия 4.0',d:'+30 деталей/день, но мегапроекты дороже на 10%.',fx:s=>{s.partsFactoryCapacity+=30;s.megaCost*=1.1;}},
+  {id:'sup',n:'Свои поставщики',d:'+400 склад руды, +200 склад стали, зарплаты +5%.',fx:s=>{s.oreCap+=400;s.steelCap+=200;s.wagePerDay=Math.round(s.wagePerDay*1.05);}}]},
+ {eq:1e10,days:40,o:[
+  {id:'glob',n:'Глобальный охват',d:'Рынки сбыта +30%, но пошлины +15%.',fx:s=>{s.marketReach*=1.3;s.tariffMultiplier*=1.15;}},
+  {id:'aut',n:'Автаркия',d:'Пошлины −30%, но рынки сбыта уже на 15%.',fx:s=>{s.tariffMultiplier*=0.7;s.marketReach*=0.85;}},
+  {id:'res',n:'Стратегические запасы',d:'Склад руды +2000, стали +1000, зарплаты +5%.',fx:s=>{s.oreCap+=2000;s.steelCap+=1000;s.wagePerDay=Math.round(s.wagePerDay*1.05);}}]},
+ {eq:2e11,days:60,o:[
+  {id:'cosm',n:'Космическая программа',d:'Мегапроекты −15%, кредиты дороже на 10%.',fx:s=>{s.megaCost*=0.85;s.loanRate*=1.1;}},
+  {id:'mono',n:'Монополия',d:'+200 т стали/день, зарплаты +20%.',fx:s=>{s.factoryCapacity+=200;s.wagePerDay=Math.round(s.wagePerDay*1.2);}},
+  {id:'haven',n:'Тихая гавань',d:'Кредиты −20%, облигации +20%, мощность завода −5%.',fx:s=>{s.loanRate*=0.8;s.bondRate*=1.2;s.factoryCapacity=Math.round(s.factoryCapacity*0.95);}}]}
+];
+function dCost(i){ return Math.round(DOCT[i].eq*0.03*s.macro.costIndex); }
+function dStep(){ const A=s.tt.active; if(!A) return; if(--A.left<=0){ const o=DOCT[A.t].o.find(x=>x.id===A.id); o.fx(s); s.tt.ch[A.t]=A.id; s.tt.active=null; pushLog(`Доктрина принята: «${o.n}». ${o.d}`); } }
+const BQ=()=>Math.max(2e4,equityNow()*0.015);
+const BOARD=[
+ {t:'Профсоюз требует повышения',d:'Коллектив ждёт прибавки к зарплатам.',o:[
+  {l:'Повысить зарплаты (+8%), мораль +12',c:0,f:(s,q)=>{s.wagePerDay=Math.round(s.wagePerDay*1.08);s.staff.morale=Math.min(100,s.staff.morale+12);return 'Зарплаты выросли, коллектив доволен.';}},
+  {l:'Отказать (риск)',c:0,f:(s,q)=>{s.staff.morale=Math.max(0,s.staff.morale-15);if(Math.random()<0.35){s.cash=Math.max(0,s.cash-q*3);return 'Работа встала на день: убыток ₽'+fmt(q*3)+'.';}return 'Обошлось, но мораль упала.';}}]},
+ {t:'Инвестор зовёт в проект',d:'Предлагают долю в рискованном проекте.',o:[
+  {l:'Вложить ₽×6 (шанс 55% удвоить и больше)',c:6,f:(s,q)=>{if(Math.random()<0.55){s.cash+=q*14;return 'Проект выстрелил: +₽'+fmt(q*14)+'.';}return 'Проект провалился: вложения потеряны.';}},
+  {l:'Отказаться',c:0,f:()=>'Вы остались в стороне.'}]},
+ {t:'У конкурента проблемы',d:'Соперник распродаёт оборудование.',o:[
+  {l:'Скупить (мощность завода +5%)',c:4,f:(s,q)=>{s.factoryCapacity+=Math.max(2,Math.round(s.factoryCapacity*0.05));return 'Оборудование установлено в ваших цехах.';}},
+  {l:'Не вмешиваться',c:0,f:()=>'Соперник выкрутился сам.'}]},
+ {t:'Налоговая проверка',d:'Инспекторы нашли «вопросы».',o:[
+  {l:'Оплатить аудит и закрыть вопрос',c:2,f:()=>'Вопросы закрыты.'},
+  {l:'Оспорить в суде (50/50)',c:0,f:(s,q)=>{if(Math.random()<0.5)return 'Суд на вашей стороне.';s.cash=Math.max(0,s.cash-q*7);return 'Суд проигран: штраф ₽'+fmt(q*7)+'.';}}]},
+ {t:'Рекламный подряд',d:'Агентство предлагает кампанию.',o:[
+  {l:'Масштабная кампания (рынки +5%)',c:3,f:s=>{s.marketReach*=1.05;return 'Бренд узнаваем, рынки шире.';}},
+  {l:'Скромная кампания (шанс +2%)',c:1,f:s=>{if(Math.random()<0.5){s.marketReach*=1.02;return 'Эффект есть: рынки +2%.';}return 'Эффекта почти нет.';}}]},
+ {t:'Модернизация цехов',d:'Инженеры предлагают апгрейд.',o:[
+  {l:'Завод: мощность +8%',c:5,f:s=>{s.factoryCapacity+=Math.max(3,Math.round(s.factoryCapacity*0.08));return 'Завод стал мощнее.';}},
+  {l:'Цех деталей: +8%',c:2,f:s=>{s.partsFactoryCapacity+=Math.max(2,Math.round(s.partsFactoryCapacity*0.08));return 'Цех деталей мощнее.';}}]},
+ {t:'Перебои с поставками',d:'Поставщики срывают сроки.',o:[
+  {l:'Заплатить премию за приоритет',c:3,f:()=>'Поставки восстановлены.'},
+  {l:'Ждать (риск потерять 20% руды)',c:0,f:s=>{if(Math.random()<0.5){s.ore*=0.8;return 'Часть руды пропала.';}return 'Само рассосалось.';}}]},
+ {t:'Рискованный экспорт',d:'Партнёр ищет партию в сложный регион.',o:[
+  {l:'Отправить (45%: +₽×12, иначе −₽×4 ещё)',c:4,f:(s,q)=>{if(Math.random()<0.45){s.cash+=q*12;return 'Сделка прошла: +₽'+fmt(q*12)+'.';}s.cash=Math.max(0,s.cash-q*4);return 'Груз застрял: доп. потери ₽'+fmt(q*4)+'.';}},
+  {l:'Пропустить',c:0,f:()=>'Вы выбрали спокойствие.'}]},
+ {t:'Продажа лицензии',d:'Покупатель хочет вашу технологию.',o:[
+  {l:'Продать (+₽×5, пошлины +3%)',c:0,f:(s,q)=>{s.cash+=q*5;s.tariffMultiplier*=1.03;return 'Лицензия продана: +₽'+fmt(q*5)+'.';}},
+  {l:'Оставить себе',c:0,f:()=>'Технология осталась у вас.'}]}
+];
+function boardStep(){ const B=s.board;
+  if(B.cur){ if(--B.cur.left<=0){ pushLog(`Совет директоров: вопрос «${BOARD[B.cur.i].t}» снят с повестки без решения.`); B.cur=null; B.next=8+Math.floor(Math.random()*8); } return; }
+  if(--B.next<=0){ B.cur={i:Math.floor(Math.random()*BOARD.length),left:10}; pushLog('Совет директоров: новый вопрос на повестке (вкладка «Стратегия»).'); } }
+function renderStrategy(){
+  const el=document.getElementById('stratBody'); if(!el) return; const eq=equityNow(), B=s.board, T=s.tt;
+  let h=`<div class="eff-title" style="margin-top:0">Совет директоров</div>`;
+  if(B.cur){ const e=BOARD[B.cur.i], q=BQ();
+    h+=`<div class="row" style="flex-direction:column;align-items:flex-start;gap:6px"><b style="color:var(--text)">${e.t}</b><div class="help" style="margin-top:0">${e.d} Осталось дней на решение: ${B.cur.left}.</div>
+    ${e.o.map((o,k)=>`<button data-bd="${k}" ${s.cash<o.c*q?'disabled':''}>${o.l}${o.c?' — ₽'+fmt(o.c*q):''}</button>`).join('')}</div>`;
+  } else h+=`<div class="help" style="margin-top:0">Повестка пуста. Следующий вопрос появится через ${B.next} дн. Решений принято: ${B.done}.</div>`;
+  h+=`<div class="eff-title" style="margin-top:18px">Доктрины</div><div class="help" style="margin-top:0">В каждом ярусе можно принять только одну доктрину, и решение окончательно: у каждой есть цена. Следующий ярус открывается после предыдущего. Изучается по одной доктрине за раз.</div>`;
+  if(T.active){ const o=DOCT[T.active.t].o.find(x=>x.id===T.active.id); h+=`<div class="row"><span>Изучается: ${o.n}</span><b>ещё ${T.active.left} дн.</b></div>`; }
+  DOCT.forEach((tier,i)=>{ const prev=i===0||T.ch[i-1], open=eq>=tier.eq&&prev, got=T.ch[i];
+    h+=`<div class="row" style="margin-top:12px;flex-direction:column;align-items:flex-start;gap:6px"><b style="color:var(--text)">Ярус ${i+1}${got?'':(eq<tier.eq?' · откроется при капитале ₽'+fmtBig(tier.eq):(!prev?' · сначала предыдущий ярус':''))}</b>`;
+    tier.o.forEach(o=>{ const mine=got===o.id;
+      h+=`<div style="width:100%;opacity:${got&&!mine?0.4:1}"><b>${o.n}</b>${mine?' <span class="pill pill-good">принята</span>':''}<div class="help" style="margin-top:2px">${o.d}</div>${!got&&open?`<button data-dc="${i}:${o.id}" ${T.active||s.cash<dCost(i)?'disabled':''}>Изучить — ₽${fmtBig(dCost(i))}, ${tier.days} дн.</button>`:''}</div>`; });
+    h+='</div>'; });
+  el.innerHTML=h;
+  el.querySelectorAll('[data-bd]').forEach(b=>b.onclick=()=>{ const B=s.board; if(!B.cur) return; const e=BOARD[B.cur.i], o=e.o[+b.dataset.bd], q=BQ(), c=o.c*q; if(s.cash<c) return;
+    s.cash-=c; if(c) L('Совет директоров',-c); const msg=o.f(s,q); s.board.done++; pushLog('Совет директоров: '+e.t+' — '+msg); B.cur=null; B.next=10+Math.floor(Math.random()*8); render(); });
+  el.querySelectorAll('[data-dc]').forEach(b=>b.onclick=()=>{ const [i,id]=b.dataset.dc.split(':'), c=dCost(+i); if(s.tt.active||s.cash<c||s.tt.ch[i]) return; s.cash-=c; L('Доктрины',-c); s.tt.active={t:+i,id,left:Math.max(2,Math.round(DOCT[+i].days*(1-0.12*(LG.spent.know||0))))}; render(); });
+}
+ACHIEVEMENTS.push({id:'doctrine_full',name:'Стратег',desc:'Принять доктрины во всех пяти ярусах',reward:100000000,check:(s,eq)=>DOCT.every((d,i)=>s.tt.ch[i])});
+
+
+// ===== АНАЛИТИКА: прибыль по направлениям за 7/30/60 дней =====
+if(!s.an) s.an={h:[],per:30};
+const AGRP=[['Заводы и торговля',/Продаж|Закупк|Госзаказ|Зарплаты и содерж/],['Менеджеры',/менеджер/i],['Финансы и страховка',/Проценты|Дивиденд|Страховк/],['Налоги',/Налог/],['Недвижимость',/Аренда/],['Нефтегаз',/Нефтегаз/],['Мир, техно и космос',/Мировая|Планетарн|Космическ|Техно-|Колониз|Космофлот|Разработк|Маркетинг/],['Стратегия',/Совет|Доктрин/]];
+function anGroup(n){ const g=AGRP.find(x=>x[1].test(n)); return g?g[0]:'Прочее'; }
+function anPush(led,profit){
+  const d={p:profit,g:{},a:{}}; let sum=0;
+  Object.entries(led).forEach(([k,v])=>{ sum+=v; const g=anGroup(k); d.g[g]=(d.g[g]||0)+v; d.a[k]=(d.a[k]||0)+v; });
+  const rest=profit-sum; if(Math.abs(rest)>=1){ d.g['Выручка бизнесов и остальное']=rest; d.a['Выручка бизнесов и остальное']=rest; }
+  s.an.h.push(d); if(s.an.h.length>60) s.an.h.shift();
+}
+function renderAnalytics(){
+  const el=document.getElementById('anBody'); if(!el) return; const A=s.an, n=A.per, H=A.h.slice(-n);
+  if(!H.length){ el.innerHTML='<div class="help" style="margin-top:0">Данные появятся после первого игрового дня.</div>'; return; }
+  const prev=A.h.slice(-2*n,-n), sum=a=>a.reduce((x,d)=>x+d.p,0), tot=sum(H), avg=tot/H.length;
+  const grp={}, art={}; H.forEach(d=>{ for(const k in d.g) grp[k]=(grp[k]||0)+d.g[k]; for(const k in d.a) art[k]=(art[k]||0)+d.a[k]; });
+  const gl=Object.entries(grp).filter(x=>Math.abs(x[1])>=1).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1])), mx=Math.max(1,...gl.map(x=>Math.abs(x[1])));
+  const mxd=Math.max(1,...H.map(d=>Math.abs(d.p))), W=300, hh=70, bw=W/H.length;
+  const bars=H.map((d,i)=>{ const v=Math.abs(d.p)/mxd*(hh/2-2); return `<rect x="${(i*bw).toFixed(1)}" y="${d.p>=0?hh/2-v:hh/2}" width="${Math.max(1,bw-1).toFixed(1)}" height="${Math.max(0.5,v).toFixed(1)}" fill="${d.p>=0?'#3ecf8e':'#ef6461'}"/>`; }).join('');
+  const trend = prev.length>=Math.min(n,5) ? (()=>{ const pa=sum(prev)/prev.length, dl=pa? (avg-pa)/Math.abs(pa)*100:0; return `<div class="row"><span>К предыдущему периоду</span><b class="${dl>=0?'good':'bad'}">${dl>=0?'+':'−'}${Math.abs(dl).toFixed(0)}%</b></div>`; })() : '';
+  const cl=Object.entries(art).filter(x=>Math.abs(x[1])>=1).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1])).slice(0,6);
+  el.innerHTML=`<div style="display:flex;gap:6px;margin-bottom:8px">${[7,30,60].map(p=>`<button data-anp="${p}" class="${n===p?'primary':''}">${p} дн.</button>`).join('')}</div>
+  <div class="row"><span>Прибыль за ${H.length} дн.</span><b class="${tot>=0?'good':'bad'}">${tot>=0?'+':'−'}₽${fmt(Math.abs(tot))}</b></div>
+  <div class="row"><span>В среднем за день</span><b class="${avg>=0?'good':'bad'}">${avg>=0?'+':'−'}₽${fmt(Math.abs(avg))}</b></div>${trend}
+  <svg viewBox="0 0 ${W} ${hh}" style="width:100%;height:${hh}px;margin:8px 0"><line x1="0" x2="${W}" y1="${hh/2}" y2="${hh/2}" stroke="#555" stroke-width="0.5"/>${bars}</svg>
+  <div class="eff-title">По направлениям</div>${gl.map(([k,v])=>`<div style="margin-top:6px"><div class="row"><span>${k}</span><b class="${v>=0?'good':'bad'}">${v>=0?'+':'−'}₽${fmt(Math.abs(v))}</b></div><div class="bar"><i style="width:${Math.abs(v)/mx*100}%;background:${v>=0?'#3ecf8e':'#ef6461'}"></i></div></div>`).join('')}
+  <div class="eff-title" style="margin-top:14px">Крупнейшие статьи</div>${cl.map(([k,v])=>`<div class="row"><span>${k}</span><b class="${v>=0?'good':'bad'}">${v>=0?'+':'−'}₽${fmt(Math.abs(v))}</b></div>`).join('')}
+  <div class="help">Прибыль считается как изменение кассы за день: выручка бизнесов не всегда видна по статьям, поэтому она в строке «Выручка бизнесов и остальное». Покупки активов тоже уменьшают кассу, это инвестиции, а не убыток.</div>`;
+  el.querySelectorAll('[data-anp]').forEach(b=>b.onclick=()=>{ s.an.per=+b.dataset.anp; renderAnalytics(); });
+}
+
+
+
+
+const LPERK=[
+ ['cash','Стартовый капитал','+₽150 000 к стартовым деньгам за уровень'],
+ ['rep','Деловая репутация','Ставка по кредитам −8% и лимит +3% за уровень'],
+ ['cap','Заводское наследие','+4 т стали, +1 деталь/день и больше складов за уровень'],
+ ['know','Наставники','Изучение доктрин быстрее на 12% за уровень']];
+const LREQ=2e10;
+function lgCost(k){ return 6+4*(LG.spent[k]||0); }
+function lgPoints(){ const eq=equityNow(); if(eq<LREQ) return 0;
+  const pl=TPL.filter(p=>s.tx.pl[p.id].lvl>=4).length, dc=DOCT.filter((d,i)=>s.tt.ch[i]).length;
+  return Math.max(5,Math.floor(10*Math.log10(eq/2e9))+3*s.mega.done.length+4*pl+2*dc+(s.achievements.includes('trade_lord')?20:0)); }
+function doRebirth(){
+  const pts=lgPoints(); if(pts<=0) return;
+  if(!confirm(`Начать новую эпоху? Вся прогрессия сбросится, вы получите ${pts} очков наследия. Ачивки сохранятся.`)) return;
+  LG.pts+=pts; LG.runs++; LG.ach=s.achievements.slice(); LG.best=Math.max(LG.best||0,equityNow()); LG.settings=s.settings;
+  window.__rb=true; localStorage.setItem(LEG_KEY,JSON.stringify(LG)); localStorage.removeItem(KEY); localStorage.removeItem(BAK_KEY);
+  try{ location.reload(); }catch(e){}
+}
+function renderLegacy(){
+  const el=document.getElementById('legBody'); if(!el) return; const eq=equityNow(), pts=lgPoints();
+  let h=`<div class="help" style="margin-top:0">Когда компания станет мировой державой, можно начать новую эпоху: всё сбрасывается, но вы получаете очки наследия. Они остаются навсегда и дают стартовые бонусы. Цена: с каждой эпохой соперники сильнее на 10%. Ачивки и их награды сохраняются, второй раз их не получить.</div>
+  <div class="row"><span>Очков наследия</span><b>${LG.pts}</b></div><div class="row"><span>Пройдено эпох</span><b>${LG.runs}</b></div>
+  <div class="eff-title">Бонусы на следующий старт</div>`
+  + LPERK.map(([k,n,d])=>{ const lv=LG.spent[k]||0, c=lgCost(k); return `<div class="row" style="margin-top:8px;flex-direction:column;align-items:flex-start;gap:4px"><div style="display:flex;justify-content:space-between;width:100%"><b style="color:var(--text)">${n}</b><span>${lv}/5</span></div><div class="help" style="margin-top:0">${d}</div>${lv<5?`<button data-lg="${k}" ${LG.pts<c?'disabled':''}>Улучшить — ${c} оч.</button>`:'<span class="pill pill-good">максимум</span>'}</div>`; }).join('')
+  + `<div class="eff-title" style="margin-top:16px">Новая эпоха</div>`
+  + (eq>=LREQ?`<div class="row"><span>Очков за перезапуск сейчас</span><b>${pts}</b></div><button id="lgReborn" class="primary">Начать новую эпоху</button>`:`<div class="help" style="margin-top:0">Откроется при капитале от ₽${fmtBig(LREQ)}. Очки зависят от капитала, мегапроектов, планет и доктрин.</div>`);
+  el.innerHTML=h;
+  el.querySelectorAll('[data-lg]').forEach(b=>b.onclick=()=>{ const k=b.dataset.lg, c=lgCost(k); if(LG.pts<c||(LG.spent[k]||0)>=5) return; LG.pts-=c; LG.spent[k]=(LG.spent[k]||0)+1; localStorage.setItem(LEG_KEY,JSON.stringify(LG)); renderLegacy(); });
+  const rb=document.getElementById('lgReborn'); if(rb) rb.onclick=doRebirth;
+}
+
+// ===== ГЛАВНЫЙ ЭКРАН: быстрые карточки, уровень, значки на навигации =====
+const QIC={
+ board:'<path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6"/>',
+ war:'<path d="M14.5 17.5L3 6V3h3l11.5 11.5"/><path d="M13 19l6-6"/><path d="M16 16l4 4"/>',
+ world:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+ tech:'<path d="M4.5 16.5c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.8.7-2.1-.1-2.9a2.2 2.2 0 0 0-2.9-.1z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.9A12.9 12.9 0 0 1 22 2c0 2.7-.8 7.5-6 11a22 22 0 0 1-4 2z"/>',
+ doc:'<path d="M12 2l3 7 7 .8-5.2 4.8 1.5 7L12 18l-6.3 3.6 1.5-7L2 9.8 9 9z"/>',
+ leg:'<path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/>',
+ an:'<path d="M18 20V10M12 20V4M6 20v-6"/>'};
+function renderQuick(){
+  const el=document.getElementById('quickRow'); if(!el) return;
+  const B=s.board, eq=equityNow();
+  const last7=s.an.h.slice(-7), avg=last7.length?last7.reduce((a,d)=>a+d.p,0)/last7.length:0;
+  const T=s.tt, nd=DOCT.filter((d,i)=>T.ch[i]).length;
+  const cards=[
+   ['strategy','board','Совет директоров',B.cur?'Ждёт решения':'Повестка пуста',B.cur?BOARD[B.cur.i].t:'Следующий вопрос через '+B.next+' дн.',!!B.cur],
+   ['lore','doc','Летопись',s.lore.seen.length+'/'+LORE.length+' глав','новая глава ждёт условий',false],
+   ['analytics','an','Прибыль/день','₽'+fmt(avg),'Среднее за 7 дней',false],
+   ['world','world','Мир','₽'+fmt(wIncome()),'доход регионов в день',false],
+   ['tech','tech','Техно и космос','₽'+fmt(techIncome()),'доход в день',false],
+   ['strategy','doc','Доктрины',nd+'/5 ярусов',T.active?'изучается, ещё '+T.active.left+' дн.':'можно изучать',false],
+   ['legacy','leg','Наследие',LG.pts+' оч.','Эпох: '+LG.runs,false]];
+  el.innerHTML=cards.map(c=>`<div class="qcard${c[6]?' alert':''}" data-qgo="${c[0]}"><div class="qic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${QIC[c[1]]}</svg></div><div class="qt">${c[2]}</div><div class="qv">${c[3]}</div><div class="qs">${c[4]}</div></div>`).join('');
+  el.querySelectorAll('[data-qgo]').forEach(d=>d.onclick=()=>showPanel(d.dataset.qgo));
+  const dots={production:!!B.cur};
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('dot',!!dots[b.dataset.group]));
+  const sc=document.querySelector('.stage-card');
+  if(sc){ let ch=document.getElementById('lvlChip'); if(!ch){ ch=document.createElement('div'); ch.id='lvlChip'; ch.className='lvl-chip'; sc.appendChild(ch); } ch.textContent='Ур. '+(stageFor(eq).idx+1)+(LG.runs?' · эпоха '+(LG.runs+1):''); }
+}
+
+// ===== ВИЗУАЛЬНАЯ ЦЕПОЧКА: руда → сталь → детали, с поиском узкого места =====
+function chainCalc(){
+  const sm=staffMult(), ratio=s.oreRatio;
+  const inflow=(s.mineOwned?s.mineDailyOre:0)+s.mines.reduce((a,id)=>a+MINES.find(m=>m.id===id).ore,0);
+  const capSteel=Math.floor(s.factoryCapacity*sm), oreOk=Math.floor(s.ore/ratio), spaceS=s.steelCap-s.steel;
+  const prodS=Math.max(0,Math.min(capSteel,oreOk,spaceS));
+  let rS='полная мощность', cS='ok';
+  if(sm===0){ rS='забастовка'; cS='bad'; }
+  else if(spaceS<=0){ rS='склад стали полон'; cS='warn'; }
+  else if(oreOk<capSteel){ rS=oreOk<=0?'нет руды':'не хватает руды'; cS=oreOk<=0?'bad':'warn'; }
+  else if(sm<0.95){ rS='медленно: мораль/навыки'; cS='warn'; }
+  const capP=Math.floor(s.partsFactoryCapacity*sm), availS=Math.floor(Math.max(0,s.steel+prodS-(s.steelReserve||0))/3), spaceP=s.partsCap-s.parts;
+  const prodP=Math.max(0,Math.min(capP,availS,spaceP));
+  let rP='полная мощность', cP='ok';
+  if(sm===0){ rP='забастовка'; cP='bad'; }
+  else if(spaceP<=0){ rP='склад деталей полон'; cP='warn'; }
+  else if(availS<capP){ rP=availS<=0?'нет стали (резерв '+(s.steelReserve||0)+')':'не хватает стали'; cP=availS<=0?'bad':'warn'; }
+  else if(sm<0.95){ rP='медленно: мораль/навыки'; cP='warn'; }
+  return {sm,ratio,inflow,capSteel,prodS,rS,cS,capP,prodP,rP,cP,need:capSteel*ratio};
+}
+function renderChain(){
+  const el=document.getElementById('chainBody'); if(!el) return; const c=chainCalc();
+  const node=(t,v,bar,st,cl)=>`<div class="cnode ${cl}"><div class="ct">${t}</div><div class="cv">${v}</div><div class="bar" style="margin:0"><i style="width:${clamp(bar,0,100)}%"></i></div><span class="cs">${st}</span></div>`;
+  const arr=(v,l)=>`<div class="carrow"><b>→</b>${v}<br>${l}</div>`;
+  const oreCl=s.ore<=0?'bad':(c.inflow<c.need?'warn':'ok');
+  el.innerHTML=`<div class="chain">
+   ${node('Руда',fmt(s.ore)+' / '+fmt(s.oreCap)+' т',s.ore/s.oreCap*100,'приток '+fmt(c.inflow)+' т/день',oreCl)}
+   ${arr(fmt(c.prodS*c.ratio),'т руды/день')}
+   ${node('Сталелитейный завод',fmt(c.prodS)+' / '+fmt(s.factoryCapacity)+' т',c.prodS/Math.max(1,s.factoryCapacity)*100,c.rS,c.cS)}
+   ${arr(fmt(c.prodS),'т стали/день')}
+   ${node('Склад стали',fmt(s.steel)+' / '+fmt(s.steelCap)+' т',s.steel/s.steelCap*100,'резерв '+fmt(s.steelReserve||0)+' т',s.steel>=s.steelCap?'warn':'ok')}
+   ${arr(fmt(c.prodP*3),'т стали/день')}
+   ${node('Цех деталей',fmt(c.prodP)+' / '+fmt(s.partsFactoryCapacity)+' шт',c.prodP/Math.max(1,s.partsFactoryCapacity)*100,c.rP,c.cP)}
+   ${arr(fmt(c.prodP),'шт/день')}
+   ${node('Склад деталей',fmt(s.parts)+' / '+fmt(s.partsCap)+' шт',s.parts/s.partsCap*100,s.parts>=s.partsCap?'склад полон':'идёт на продажу и заказы',s.parts>=s.partsCap?'warn':'ok')}
+  </div>`;
+  let note='', bad=false;
+  if(c.sm===0){ note='<b>Узкое место: забастовка.</b> Пока она идёт, производство стоит. Загляните во вкладку «Персонал».'; bad=true; }
+  else if(c.cS==='bad'||c.cS==='warn'&&/руд/.test(c.rS)){ const def=Math.max(0,c.need-c.inflow); note=`<b>Узкое место: руда.</b> Заводу нужно ${fmt(c.need)} т руды в день, приток ${fmt(c.inflow)} т. Дефицит ${fmt(def)} т/день: докупайте руду на рынке или стройте рудники.`; bad=c.cS==='bad'; }
+  else if(c.cS==='warn'&&/склад стали/.test(c.rS)){ note='<b>Узкое место: склад стали.</b> Завод упирается в хранилище. Увеличьте склад или направьте сталь в продажу/детали.'; }
+  else if(c.cP==='bad'||c.cP==='warn'&&/сталь/.test(c.rP)){ note='<b>Узкое место: сталь для деталей.</b> Цех деталей простаивает: сталь в резерве или её не хватает. Проверьте «резерв стали» и мощность завода.'; bad=c.cP==='bad'; }
+  else if(c.cP==='warn'&&/деталей полон/.test(c.rP)){ note='<b>Узкое место: склад деталей.</b> Детали некуда девать. Продавайте, берите заказы или расширьте склад.'; }
+  else if(c.prodS<s.factoryCapacity*0.95||c.prodP<s.partsFactoryCapacity*0.95){ note='Цепочка работает, но не на полную мощность из-за морали и навыков персонала.'; }
+  else note='<b>Цепочка работает на полную мощность.</b> Чтобы расти дальше, расширяйте мощности: следующим узким местом станет руда или склады.';
+  el.innerHTML+=`<div class="chain-note${bad?' bad':''}">${note}</div>`;
+}
+
+// ===== ЛЕТОПИСЬ КОМПАНИИ =====
+if(!s.lore) s.lore={seen:[]};
+const LORE=[
+ ['start','Ржавый цех','Старый цех на окраине. Крыша течёт, станок хрипит, на счёте пятьдесят тысяч. Но руда ещё есть, и руки тоже. С этого начинается любая империя.',s=>true,'с самого начала'],
+ ['mil','Первый миллион','Говорят, первый миллион самый трудный. Это неправда: трудно было прожить первые месяцы, а миллион просто пришёл следом. Поставщики теперь здороваются первыми.',(s,e)=>e>=1e6,'капитал от ₽1 млн'],
+ ['mine','Своя земля','Своя шахта меняет разговор с рынком. Теперь руду не выпрашивают, а берут из собственных недр. Рабочие впервые зовут завод «нашим».',s=>s.mineOwned,'купить собственный рудник'],
+ ['name','Имя на рынке','Про «Феррум» заговорили в отраслевых газетах. Конкуренты стали проверять ваши цены раньше, чем свои. Это и называется репутацией.',(s,e)=>e>=5e7,'капитал от ₽50 млн'],
+ ['bil','Миллиардный рубеж','Совет директоров заказал новую табличку на дверь. Бухгалтер впервые не уложил сумму в одну строку. Теперь вы обязаны быть осторожными.',(s,e)=>e>=1e9,'капитал от ₽1 млрд'],
+ ['abroad','За границу','Первый филиал за рубежом открыли без речей и ленточек: аренда, три человека, ящик документов. Но граница пройдена, и вернуться в тесные рамки уже нельзя.',s=>WREG.some(r=>s.world.reg[r.id].lvl>0),'войти в первый регион'],
+ ['silicon','Кремний и сталь','Тот же завод, но теперь он выпускает то, что люди носят в кармане. Инженеры спорят о поколениях чипов, как раньше спорили о марках стали.',s=>TLINES.some(l=>s.tx.lines[l.id].on),'запустить линейку электроники'],
+ ['course','Курс определён','Пятая доктрина принята. Любой выбор закрывает другие двери, и вы приняли его осознанно. Теперь компания знает, кто она.',s=>!!s.tt.ch[4],'принять доктрину пятого яруса'],
+ ['rocket','Огонь над заводом','Первую ракету провожали всем городом. Старики вспоминали шахту и цех, молодые снимали на телефоны. Дым ушёл вверх, а компания вместе с ним.',s=>s.mega.done.includes('rocket'),'построить космодром'],
+ ['moon','Луна','На Луне горит свет, зажжённый вашей станцией. Рабочая смена начинается в двух мирах сразу. «Феррум» больше не просто холдинг.',s=>s.mega.done.includes('moonbase'),'построить лунную базу'],
+ ['trade','Торговая империя','Грузы идут между мирами по расписанию. Порты, колонии, дежурные корабли: всё связано в одну сеть. Вы владеете не планетой, а дорогой между ними.',s=>TPL.some(p=>s.tx.pl[p.id].lvl>=4),'торговая империя на планете'],
+ ['era','Новая эпоха','Всё началось заново, но руки помнят. Старые схемы не пригодятся, новые решения лучше. Вы уже знаете, чего стоит каждая ошибка.',s=>LG.runs>0,'начать новую эпоху']
+];
+function loreStep(){ const eq=equityNow(); LORE.forEach(c=>{ if(!s.lore.seen.includes(c[0])&&c[3](s,eq)){ s.lore.seen.push(c[0]); if(c[0]!=='start') pushLog('Новая глава летописи: «'+c[1]+'».'); } }); }
+function renderLore(){
+  const el=document.getElementById('loreBody'); if(!el) return; const n=s.lore.seen.length;
+  el.innerHTML=`<div class="row"><span>Открыто глав</span><b>${n}/${LORE.length}</b></div>`+LORE.map(c=>s.lore.seen.includes(c[0])?
+   `<div class="row" style="margin-top:12px;flex-direction:column;align-items:flex-start;gap:4px"><b style="color:var(--text)">${c[1]}</b><div class="help" style="margin-top:0;font-size:13px;line-height:1.5">${c[2]}</div></div>`:
+   `<div class="row" style="margin-top:12px;opacity:.5"><span>Закрытая глава</span><span class="help" style="margin:0">${c[4]}</span></div>`).join('');
+}
+// ===== КАРТА МИРА =====
+const WPOS={ee:[205,58],me:[238,96],in:[277,102],cn:[308,66],la:[108,138],af:[200,128],na:[84,64],ar:[190,20]};
+function worldMapSvg(){
+  const eq=equityNow(), W=s.world;
+  const land='<ellipse cx="90" cy="70" rx="48" ry="34"/><ellipse cx="112" cy="138" rx="26" ry="32"/><ellipse cx="205" cy="70" rx="38" ry="26"/><ellipse cx="205" cy="130" rx="30" ry="34"/><ellipse cx="290" cy="85" rx="52" ry="34"/>';
+  const dots=WREG.map(r=>{ const g=W.reg[r.id], [x,y]=WPOS[r.id], open=eq>=r.b, rad=9+g.lvl*2.6;
+    const col=g.lvl? `hsl(${190-g.lvl*14},80%,${70-g.lvl*6}%)` : '#556';
+    const ring=g.heat>0.5&&g.lvl?`<circle cx="${x}" cy="${y}" r="${rad+4}" fill="none" stroke="#f43f5e" stroke-width="2" stroke-dasharray="${(g.heat*30).toFixed(0)} 6"/>`:'';
+    const frz=g.frz>0?`<circle cx="${x}" cy="${y}" r="${rad+2}" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="3 3"/>`:'';
+    return `<g opacity="${open||g.lvl?1:0.35}"><title>${r.name}: ${WLV[g.lvl]}${g.frz?', санкции':''}</title>${ring}${frz}<circle cx="${x}" cy="${y}" r="${rad}" fill="${col}" fill-opacity="${g.lvl?0.9:0.15}" stroke="${g.lvl?'#fff':'#889'}" stroke-width="1" ${g.lvl?'':'stroke-dasharray="3 3"'}/><text x="${x}" y="${y+3.5}" text-anchor="middle" font-size="10" font-weight="800" fill="${g.lvl?'#04141c':'#aab'}">${g.lvl||(open?'+':'•')}</text><text x="${x}" y="${y+rad+11}" text-anchor="middle" font-size="8" fill="#9fb0c8">${r.name.split(' ')[0]}</text></g>`; }).join('');
+  return `<svg viewBox="0 0 380 190" style="width:100%;border-radius:18px;background:rgba(255,255,255,.03);margin-bottom:10px"><g fill="rgba(120,140,190,.12)">${land}</g>${dots}</svg><div class="help" style="margin:0 0 8px">Размер и цвет круга: уровень присутствия. Красная дуга: давление соперников. Жёлтый пунктир: санкции.</div>`;
+}
+
+function save(){ if(window.__rb) return; s.lastSeen = Date.now(); localStorage.setItem(KEY, JSON.stringify(s)); }
 function load(){ try{ const r=localStorage.getItem(KEY); return r?JSON.parse(r):null; }catch(e){ return null; } }
 let suppressLog = false;
 let TOAST_ON=true;
@@ -2309,6 +2799,14 @@ function render(){
   renderRisk();
   renderExtras();
   renderMega();
+  renderWorld();
+  renderTech();
+  renderStrategy();
+  renderAnalytics();
+  renderLegacy();
+  renderLore();
+  renderQuick();
+  renderChain();
   renderBizDev();
   renderOil();
   renderCol();
@@ -2430,6 +2928,11 @@ function advanceDayCore(silent){
   incidentStep();
   extrasStep();
   megaStep();
+  worldStep();
+  techStep();
+  dStep();
+  boardStep();
+  loreStep();
   oilStep();
   colStep();
   const M = s.macro, ci = M.costIndex, PL = priceLevels();
@@ -2764,9 +3267,11 @@ function advanceDayCore(silent){
     });
   }
 
+  if(s.cash<0 && s.bonds>0){ const m=Math.min(s.bonds,-s.cash); s.bonds-=m; s.cash+=m; pushLog(`Касса ушла в минус: автоматически погашено из облигаций ₽${fmt(m)}.`); }
   if(s.sweep>0){ const pr=s.cash-cashBefore; if(pr>0){ const m=Math.min(pr*s.sweep, Math.max(0,s.cash)); if(m>0){ s.cash-=m; s.bonds+=m; } } }
   s.ledLast = s.led; s.led = {};
   const profit = s.cash - cashBefore;
+  anPush(s.ledLast, profit);
   const curAssets = s.cash + s.ore*s.orePrice + s.steel*s.steelPrice + s.parts*s.partsPrice
     + s.shipments.reduce((sum,sh)=>sum+sh.amount,0) + s.bonds + portfolioValue() + reValue() + inboundValue() + colValue() + depValue();
   s.profitHistory.push(profit); if(s.profitHistory.length>20) s.profitHistory.shift();
@@ -2881,7 +3386,7 @@ setInterval(() => {
 // ===== сохранения: файл, код, резервные копии =====
 const BAK_KEY = KEY + '_bak';
 function readBackups(){ try{ return JSON.parse(localStorage.getItem(BAK_KEY)||'[]'); }catch(e){ return []; } }
-function autoBackup(){
+function autoBackup(){ if(window.__rb) return;
   try{
     save(); let arr=readBackups(); arr.unshift({t:Date.now(), day:s.day, cash:Math.round(s.cash), data:JSON.stringify(s)});
     arr=arr.slice(0,3);
@@ -2919,14 +3424,24 @@ if(readBackups().length===0) setTimeout(autoBackup, 60*1000);
     localStorage.setItem(KEY, JSON.stringify(data)); location.reload();
   }
   async function tryImport(text){ try{ applyData(await unpack(text)); }catch(e){ say('Не удалось прочитать сейв: файл повреждён или скопирован не полностью.'); } }
-  document.getElementById('expFileBtn').onclick=async()=>{
+  const isMobile=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)||(navigator.maxTouchPoints>1&&/Mac/.test(navigator.platform));
+  function dlFile(file){
+    const url=URL.createObjectURL(file), a=document.createElement('a'); a.href=url; a.download=file.name; a.style.display='none';
+    document.body.appendChild(a); a.click(); setTimeout(()=>{ a.remove(); URL.revokeObjectURL(url); },1500);
+  }
+  async function exportFile(forceDownload){
     try{
-      const code=await pack(), name='ferrum-день'+s.day+'.txt', file=new File([code],name,{type:'text/plain'});
-      if(navigator.canShare && navigator.canShare({files:[file]})){ try{ await navigator.share({files:[file],title:'Сейв игры'}); say('Готово: выберите «Сохранить в Файлы» или мессенджер.'); return; }catch(e){ if(e&&e.name==='AbortError') return; } }
-      const a=document.createElement('a'); a.href=URL.createObjectURL(file); a.download=name; document.body.appendChild(a); a.click(); a.remove();
-      say('Файл «'+name+'» скачан.');
+      const code=await pack(), name='ferrum-save-day'+s.day+'.txt', file=new File([code],name,{type:'text/plain'});
+      // на компьютере системное меню «Поделиться» открывает Outlook, поэтому там всегда прямое скачивание
+      if(!forceDownload && isMobile && navigator.canShare && navigator.canShare({files:[file]})){
+        try{ await navigator.share({files:[file],title:'Сейв игры'}); say('Готово: выберите «Сохранить в Файлы» или мессенджер.'); return; }catch(e){ if(e&&e.name==='AbortError') return; }
+      }
+      dlFile(file);
+      say('Файл «'+name+'» скачан. Ищите его в папке «Загрузки» (Downloads).');
     }catch(e){ say('Не удалось создать файл, попробуйте «Скопировать код».'); }
-  };
+  }
+  document.getElementById('expFileBtn').onclick=()=>exportFile(false);
+  document.getElementById('expDlBtn').onclick=()=>exportFile(true);
   document.getElementById('impFileBtn').onclick=()=>document.getElementById('impFileInput').click();
   document.getElementById('impFileInput').onchange=e=>{
     const f=e.target.files&&e.target.files[0]; if(!f) return;
