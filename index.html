@@ -2262,6 +2262,25 @@ function worldMapSvg(){
   return `<svg viewBox="0 0 380 190" style="width:100%;border-radius:18px;background:rgba(255,255,255,.03);margin-bottom:10px"><g fill="rgba(120,140,190,.12)">${land}</g>${dots}</svg><div class="help" style="margin:0 0 8px">Размер и цвет круга: уровень присутствия. Красная дуга: давление соперников. Жёлтый пунктир: санкции.</div>`;
 }
 
+// ===== АВТО-ПРОВЕРКА ОБНОВЛЕНИЙ (обходит кеш Safari и иконки на экране) =====
+const BUILD='b-20261008-2';
+let _updShown=false,_updLast=0;
+async function checkUpdate(){
+  if(_updShown||Date.now()-_updLast<60000) return; _updLast=Date.now();
+  try{
+    const r=await fetch(location.pathname,{cache:'reload'}); if(!r.ok) return;
+    const m=(await r.text()).match(/const BUILD='([^']+)'/);
+    if(m&&m[1]!==BUILD){ _updShown=true;
+      const d=document.createElement('div'); d.id='updBar';
+      d.style.cssText='position:fixed;left:10px;right:10px;top:calc(8px + env(safe-area-inset-top,0px));z-index:9999;display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:18px;background:linear-gradient(135deg,#22d3ee,#6366f1);color:#04141c;font-weight:700;font-size:13px;box-shadow:0 8px 28px rgba(0,0,0,.5)';
+      d.innerHTML='<span>Вышла новая версия игры</span><button style="background:#04141c;color:#fff;border:0;border-radius:12px;padding:8px 14px;font-weight:700">Обновить</button>';
+      d.querySelector('button').onclick=()=>{ try{ save(); }catch(e){} location.reload(); };
+      document.body.appendChild(d); }
+  }catch(e){}
+}
+setTimeout(checkUpdate,3000);
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible') checkUpdate(); });
+
 function save(){ if(window.__rb) return; s.lastSeen = Date.now(); localStorage.setItem(KEY, JSON.stringify(s)); }
 function load(){ try{ const r=localStorage.getItem(KEY); return r?JSON.parse(r):null; }catch(e){ return null; } }
 let suppressLog = false;
