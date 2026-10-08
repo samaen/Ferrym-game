@@ -176,6 +176,26 @@ button.primary{background:linear-gradient(135deg,#22d3ee,#38bdf8);box-shadow:0 6
 .carrow b{display:block;color:var(--accent);font-size:16px;line-height:1}
 .chain-note{margin-top:8px;padding:10px 12px;border-radius:14px;font-size:12.5px;background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.25)}
 .chain-note.bad{background:rgba(244,63,94,.1);border-color:rgba(244,63,94,.4)}
+
+/* ===== ФИКС ПЕРЕПОЛНЕНИЯ НА ТЕЛЕФОНЕ ===== */
+.grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:760px){.grid{grid-template-columns:minmax(0,1fr)}}
+.tab-panel.active:not(.grid){grid-template-columns:minmax(0,1fr)}
+.tab-panel,.tab-panel>*,.card,.stage-card,.stat-card{min-width:0;max-width:100%;box-sizing:border-box}
+.wrap{min-width:0;overflow-x:clip}
+.help,.row,.card h2,.cnode,.qcard{overflow-wrap:anywhere;word-break:normal}
+.row b,.row span{min-width:0}
+.chain,.quick,.subnav{max-width:100%}
+@media (max-width:760px){
+ .chain{flex-direction:column;overflow-x:visible}
+ .cnode{flex:0 0 auto}
+ .carrow{display:flex;align-items:center;justify-content:center;gap:8px;min-width:0;padding:2px 0}
+ .carrow br{display:none}
+ .carrow b{transform:rotate(90deg)}
+}
+select,input{max-width:100%;min-width:0;box-sizing:border-box}
+.controls{flex-wrap:wrap}
+.stat-card .stat-val{font-size:clamp(14px,4.6vw,18px);overflow-wrap:anywhere}
 </style>
 </head>
 <body>
