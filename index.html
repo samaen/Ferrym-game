@@ -196,6 +196,7 @@ button.primary{background:linear-gradient(135deg,#22d3ee,#38bdf8);box-shadow:0 6
 select,input{max-width:100%;min-width:0;box-sizing:border-box}
 .controls{flex-wrap:wrap}
 .stat-card .stat-val{font-size:clamp(14px,4.6vw,18px);overflow-wrap:anywhere}
+.wrap{padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))}
 </style>
 </head>
 <body>
@@ -433,7 +434,6 @@ select,input{max-width:100%;min-width:0;box-sizing:border-box}
 </div>
 <div class="tab-panel grid" data-panel="analytics">
   <div class="card" style="grid-column:1/-1"><h2>Аналитика прибыли</h2><div id="anBody"></div></div>
-</div>
 </div>
 <div class="tab-panel grid" data-panel="legacy">
   <div class="card" style="grid-column:1/-1"><h2>Наследие</h2><div id="legBody"></div></div>
@@ -2263,7 +2263,7 @@ function worldMapSvg(){
 }
 
 // ===== АВТО-ПРОВЕРКА ОБНОВЛЕНИЙ (обходит кеш Safari и иконки на экране) =====
-const BUILD='b-20261008-2';
+const BUILD='b-20261008-3';
 let _updShown=false,_updLast=0;
 async function checkUpdate(){
   if(_updShown||Date.now()-_updLast<60000) return; _updLast=Date.now();
