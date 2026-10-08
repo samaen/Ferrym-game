@@ -197,6 +197,7 @@ select,input{max-width:100%;min-width:0;box-sizing:border-box}
 .controls{flex-wrap:wrap}
 .stat-card .stat-val{font-size:clamp(14px,4.6vw,18px);overflow-wrap:anywhere}
 .wrap{padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))}
+.pbtns button{padding:8px 14px;font-size:13px;min-height:0}
 </style>
 </head>
 <body>
@@ -803,6 +804,27 @@ BUSINESSES.push({id:'port', name:'Портовый терминал «Прича
 BIZ_ICON_PATHS.port = BIZ_ICON_PATHS.logistics_biz || BIZ_ICON_PATHS.taxi;
 BUSINESSES.find(b=>b.id==='construction').projectList = CONSTRUCTION_PROJECTS;
 BUSINESSES.find(b=>b.id==='it').projectList = IT_PROJECTS;
+
+CONSTRUCTION_PROJECTS.push(
+ {id:'shop',name:'Торговый павильон',days:9,steelNeeded:60,concreteNeeded:85,lumberNeeded:30,cashCost:150000,payout:380000,successChance:1,need:4},
+ {id:'warehouse',name:'Складской комплекс',days:24,steelNeeded:220,concreteNeeded:300,lumberNeeded:90,cashCost:600000,payout:1600000,successChance:1,need:10},
+ {id:'mall',name:'Торговый центр',days:55,steelNeeded:700,concreteNeeded:900,lumberNeeded:250,cashCost:2000000,payout:6200000,successChance:1,need:25},
+ {id:'bridge',name:'Мост',days:80,steelNeeded:1500,concreteNeeded:1800,lumberNeeded:100,cashCost:5000000,payout:16000000,successChance:1,need:50},
+ {id:'stadium',name:'Стадион',days:120,steelNeeded:3000,concreteNeeded:4000,lumberNeeded:600,cashCost:12000000,payout:40000000,successChance:1,need:90});
+IT_PROJECTS.push(
+ {id:'game',name:'Компьютерная игра',days:12,cashCost:140000,payout:400000,successChance:0.8,need:4},
+ {id:'bank',name:'Банковская система',days:28,cashCost:520000,payout:1500000,successChance:0.72,need:10},
+ {id:'cloud',name:'Облачная инфраструктура',days:50,cashCost:1800000,payout:5600000,successChance:0.68,need:25},
+ {id:'os',name:'Операционная система',days:80,cashCost:5000000,payout:17000000,successChance:0.62,need:50},
+ {id:'agi',name:'Сильный ИИ',days:120,cashCost:12000000,payout:42000000,successChance:0.55,need:90});
+function projFit(b,p,cap){ let n=cap; const c=projCash(p); if(c>0) n=Math.min(n,Math.floor(s.cash*0.9/c));
+  if(b.needsMaterials){ if(p.steelNeeded) n=Math.min(n,Math.floor(s.steel/p.steelNeeded)); if(p.concreteNeeded) n=Math.min(n,Math.floor(s.concrete/p.concreteNeeded)); if(p.lumberNeeded) n=Math.min(n,Math.floor(s.lumber/p.lumberNeeded)); } return Math.max(0,n); }
+function startProj(b,p,quiet){ const st=s.businesses[b.id];
+  const matOk=!b.needsMaterials||(s.steel>=(p.steelNeeded||0)&&s.concrete>=(p.concreteNeeded||0)&&s.lumber>=(p.lumberNeeded||0));
+  if((st.active||[]).length>=projSlots(b)||s.cash<projCash(p)||!matOk) return false;
+  s.cash-=projCash(p); if(b.needsMaterials){ s.steel-=p.steelNeeded||0; s.concrete-=p.concreteNeeded||0; s.lumber-=p.lumberNeeded||0; }
+  (st.active=st.active||[]).push({id:p.id,name:p.name,daysLeft:p.days,payout:projPay(b,p),successChance:p.successChance!==undefined?p.successChance:1});
+  if(!quiet) pushLog(`${b.name}: взят проект «${p.name}» (${p.days} дн.).`); return true; }
 const MANAGERS = [
   {id:'procurement', name:'Менеджер по закупкам', hireCost:80000, salary:400,
    desc:'Следит за складами руды, леса и бетона (с учётом товара в пути). Когда остаток ниже порога, заказывает там, где выходит дешевле: у зарубежных поставщиков или на внутреннем рынке. Цена не выше 130% нормы, не больше 35% кассы за раз. Руду не трогает, пока её хватает рудникам.'},
@@ -2263,7 +2285,7 @@ function worldMapSvg(){
 }
 
 // ===== АВТО-ПРОВЕРКА ОБНОВЛЕНИЙ (обходит кеш Safari и иконки на экране) =====
-const BUILD='b-20261008-3';
+const BUILD='b-20261008-4';
 let _updShown=false,_updLast=0;
 async function checkUpdate(){
   if(_updShown||Date.now()-_updLast<60000) return; _updLast=Date.now();
@@ -2628,19 +2650,24 @@ function render(){
       let body = `<div class="row"><span>Проектов одновременно</span><b>${act.length} из ${slots}</b></div>
         <div class="help" style="margin-top:0">${b.desc} Выполнено проектов: ${st.completedCount}.${stockLine} Новые «строительные площадки» открываются с опытом (каждые 2 сданных проекта) и с улучшениями бизнеса.</div>`;
       if(act.length){
-        body += act.map((proj,i)=>{ const p=b.projectList.find(x=>x.id===proj.id), pct=clamp((p.days-proj.daysLeft)/p.days*100,0,100);
-          return `<div class="row" style="margin-top:6px"><span>${proj.name}${p.successChance<1?` (шанс ${Math.round(p.successChance*100)}%)`:''}</span><b>${proj.daysLeft} дн. → ₽${fmtBig(proj.payout)}</b></div><div class="bar"><i style="width:${pct}%"></i></div>`; }).join('');
+        const G={}; act.forEach(pr=>{ const g=G[pr.id]||(G[pr.id]={name:pr.name,n:0,min:1e9,pay:0}); g.n++; g.min=Math.min(g.min,pr.daysLeft); g.pay+=pr.payout; });
+        body += Object.keys(G).map(id=>{ const g=G[id], p=b.projectList.find(x=>x.id===id), pct=clamp((p.days-g.min)/p.days*100,0,100);
+          return `<div class="row" style="margin-top:6px"><span>${g.name} ×${g.n}${p.successChance<1?` (шанс ${Math.round(p.successChance*100)}%)`:''}</span><b>ближайший ${g.min} дн. · ₽${fmtBig(g.pay)}</b></div><div class="bar"><i style="width:${pct}%"></i></div>`; }).join('');
       }
-      body += `<div class="eff-title">Взять проект</div>` + b.projectList.map(p=>{
+      const done=st.completedCount||0, avail=b.projectList.filter(p=>(p.need||0)<=done), nxt=b.projectList.find(p=>(p.need||0)>done);
+      body += `<div class="eff-title">Взять проект</div>` + avail.map(p=>{
         const matOk = !b.needsMaterials || (s.steel>=(p.steelNeeded||0) && s.concrete>=(p.concreteNeeded||0) && s.lumber>=(p.lumberNeeded||0));
-        const canStart = free>0 && s.cash>=projCash(p) && matOk;
+        const canStart = free>0 && s.cash>=projCash(p) && matOk, fillN=Math.min(free,projFit(b,p,free)), on=!!(st.auto&&st.auto[p.id]);
         const miss=[]; if(b.needsMaterials){ if(s.steel<p.steelNeeded) miss.push(`${Math.ceil(p.steelNeeded-s.steel)}т стали`); if(s.concrete<p.concreteNeeded) miss.push(`${Math.ceil(p.concreteNeeded-s.concrete)}т бетона`); if(s.lumber<p.lumberNeeded) miss.push(`${Math.ceil(p.lumberNeeded-s.lumber)}т леса`); }
         const matText = b.needsMaterials ? ` + ${p.steelNeeded}т стали + ${p.concreteNeeded}т бетона + ${p.lumberNeeded}т леса` + (miss.length?` <span class="bad">(не хватает: ${miss.join(', ')})</span>`:'') : '';
         const chanceText = p.successChance<1 ? ` · шанс успеха ${Math.round(p.successChance*100)}%` : '';
         return `<div class="row" style="margin-top:6px;flex-direction:column;align-items:flex-start;gap:4px">
           <div style="display:flex;justify-content:space-between;width:100%"><b style="color:var(--text)">${p.name}</b><span>${p.days} дн.${chanceText}</span></div>
           <div style="color:var(--dim)">₽${fmt(projCash(p))}${matText} → выплата ₽${fmt(projPay(b,p))}</div>
-          <button data-project="${p.id}" data-bizid="${b.id}" class="primary startProjectBtn" ${canStart?'':'disabled'}>${free>0?'Взять проект':'Нет свободных площадок'}</button></div>`; }).join('');
+          <div class="pbtns" style="display:flex;gap:6px;flex-wrap:wrap"><button data-project="${p.id}" data-bizid="${b.id}" class="primary startProjectBtn" ${canStart?'':'disabled'}>${free>0?'Взять':'Нет мест'}</button>
+          <button data-pfill="${p.id}" data-bizid="${b.id}" ${fillN<2?'disabled':''}>Все ×${fillN}</button>
+          <button data-pauto="${p.id}" data-bizid="${b.id}" class="${on?'primary':''}">Авто ${on?'✓':'✗'}</button></div></div>`; }).join('')
+        + (nxt?`<div class="help">Новые проекты откроются после ${nxt.need} сданных (сейчас ${done}). «Все ×N» заполняет свободные площадки, «Авто» сам берёт проект, когда площадка освобождается, и оставляет запас денег и материалов.</div>`:'<div class="help">Все проекты открыты. «Авто» сам берёт проект, когда освобождается площадка.</div>');
       return `<div class="card"><h2>${iconBox(b.id)}${b.name}</h2>${body}${cycleLine(b.id)}</div>`;
     }
     const upgradeCost = Math.round(b.cost*(0.7+st.level*0.55)*s.macro.costIndex);
@@ -2696,28 +2723,10 @@ function render(){
     const d=garageDays(id); s.cash-=c; s.builds[id]={kind:'garage',name:'гараж +10 мест',daysLeft:d,total:d};
     pushLog(`Расход: начато расширение гаража, ₽${fmt(c)}, ${d} дн.`); render();
   });
-  bizListEl.querySelectorAll('.startProjectBtn').forEach(btn=>{
-    btn.onclick = () => {
-      const b = BUSINESSES.find(x=>x.id===btn.dataset.bizid);
-      const p = b.projectList.find(x=>x.id===btn.dataset.project);
-      const st = s.businesses[b.id];
-      const matOk = !b.needsMaterials || (s.steel>=(p.steelNeeded||0) && s.concrete>=(p.concreteNeeded||0) && s.lumber>=(p.lumberNeeded||0));
-      if((st.active||[]).length>=projSlots(b) || s.cash<projCash(p) || !matOk) return;
-      s.cash -= projCash(p);
-      if(b.needsMaterials){
-        s.steel -= p.steelNeeded||0; s.concrete -= p.concreteNeeded||0; s.lumber -= p.lumberNeeded||0;
-      }
-      (st.active=st.active||[]).push({id:p.id, name:p.name, daysLeft:p.days, payout:projPay(b,p), successChance:p.successChance!==undefined?p.successChance:1});
-      pushLog(`${b.name}: взят проект «${p.name}» (${p.days} дн.).`);
-      render();
-    };
-  });
-  bizListEl.querySelectorAll('[data-target]').forEach(inp=>{
-    inp.onchange = () => {
-      s.fleetTargets[inp.dataset.target] = clamp(parseInt(inp.value)||0, 0, 200);
-      save();
-    };
-  });
+  const pj=btn=>{ const b=BUSINESSES.find(x=>x.id===btn.dataset.bizid); return [b,b.projectList.find(x=>x.id===(btn.dataset.project||btn.dataset.pfill||btn.dataset.pauto)),s.businesses[b.id]]; };
+  bizListEl.querySelectorAll('.startProjectBtn').forEach(btn=>{ btn.onclick=()=>{ const [b,p]=pj(btn); startProj(b,p); render(); }; });
+  bizListEl.querySelectorAll('[data-pfill]').forEach(btn=>{ btn.onclick=()=>{ const [b,p]=pj(btn); let n=0; while(n<40&&startProj(b,p,true)) n++; if(n) pushLog(`${b.name}: запущено проектов «${p.name}»: ${n}.`); render(); }; });
+  bizListEl.querySelectorAll('[data-pauto]').forEach(btn=>{ btn.onclick=()=>{ const [b,p,st]=pj(btn); st.auto=st.auto||{}; st.auto[p.id]=!st.auto[p.id]; render(); }; });
 
   const banner = document.getElementById('eventsBanner');
   banner.style.display = (s.activeEvents.length||s.staff.strike) ? 'flex' : 'none';
@@ -3205,6 +3214,9 @@ function advanceDayCore(silent){
         }
         return false;
       });
+      if(st.auto){ (b.projectList||[]).forEach(p=>{ if(!st.auto[p.id]||(p.need||0)>(st.completedCount||0)) return; let n=0;
+        while(n<10&&(st.active||[]).length<projSlots(b)&&s.cash>=projCash(p)*3&&(!b.needsMaterials||(s.steel>=(p.steelNeeded||0)+(s.steelReserve||0)&&s.concrete>=(p.concreteNeeded||0)&&s.lumber>=(p.lumberNeeded||0)))&&startProj(b,p,true)) n++;
+        if(n) pushLog(`${b.name}: авто-старт «${p.name}» ×${n}.`); }); }
       return;
     }
     let rev = b.baseRevenue*st.level*(1 + (Math.random()*2-1)*b.volatility)*bizFactor(b.id);
