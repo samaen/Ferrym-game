@@ -1519,14 +1519,16 @@ function renderBizDev(){
   BUSINESSES.forEach(b=>{
     const st=s.businesses[b.id]; if(!st||!st.opened||!BIZ_UPG[b.id]) return; any=true;
     const own=s.bizUp[b.id]||[];
-    html+=`<div class="eff-title">${BIZ_SHORT[b.id]||b.name} · выручка ×${bizRev(b.id).toFixed(2)}, расходы ×${bizCost(b.id).toFixed(2)}</div>`
+    html+=`<div class="eff-title">${BIZ_SHORT[b.id]||b.name} · улучшений ${own.length}/${BIZ_UPG[b.id].length} · выручка ×${bizRev(b.id).toFixed(2)}, расходы ×${bizCost(b.id).toFixed(2)}</div>`
       + (s.builds[b.id]?`<div class="row"><span>Идёт стройка: ${s.builds[b.id].name}</span><b>${s.builds[b.id].daysLeft} дн.</b></div><div class="bar"><i style="width:${(1-s.builds[b.id].daysLeft/s.builds[b.id].total)*100}%"></i></div>`:'');
     BIZ_UPG[b.id].forEach((u,i)=>{
+      if(own.includes(u[0])) return;
       const eff=[u[2]?`выручка +${Math.round(u[2]*100)}%`:'',u[3]?`расходы −${Math.round(u[3]*100)}%`:''].filter(Boolean).join(', ');
       const need=(u[4]||[]).filter(r=>!own.includes(r)), c=upgCost(b,i);
       html+=`<div class="row" style="margin-top:6px"><span>${u[1]} <span style="color:var(--dim)">(${eff})</span></span>`
-        + (own.includes(u[0])?'<span class="pill pill-good">есть</span>':need.length?`<span style="color:var(--dim);font-size:11px">нужно: ${need.map(r=>BIZ_UPG[b.id].find(x=>x[0]===r)[1]).join(', ')}</span>`:`<button data-bup="${b.id}:${u[0]}:${i}" class="primary" ${s.cash<c||s.builds[b.id]?'disabled':''}>₽${fmt(c)}</button>`)+'</div>';
+        + (need.length?`<span style="color:var(--dim);font-size:11px">нужно: ${need.map(r=>BIZ_UPG[b.id].find(x=>x[0]===r)[1]).join(', ')}</span>`:`<button data-bup="${b.id}:${u[0]}:${i}" class="primary" ${s.cash<c||s.builds[b.id]?'disabled':''}>₽${fmt(c)}</button>`)+'</div>';
     });
+    if(own.length>=BIZ_UPG[b.id].length) html+='<div class="help" style="margin:4px 0 0">Все улучшения куплены.</div>';
   });
   el.innerHTML = any ? html : '<div class="help" style="margin-top:0">Откройте бизнес, чтобы улучшать его здесь.</div>';
   el.querySelectorAll('[data-bup]').forEach(bt=>bt.onclick=()=>{
@@ -1876,6 +1878,39 @@ const TECHS = [
    desc:'Ставка по кредиту ниже на 30%.',
    effect:s=>{ s.loanRate *= 0.7; }},
 ];
+(function(){
+ const mn=(k,v)=>s=>{ s[k]=Math.min(s[k],v); };
+ TECHS.push(
+  {id:'smelting2',name:'Глубокая плавка',cost:400000,days:8,eq:2e5,req:['smelting'],desc:'Расход руды на тонну стали: до 1,35 т.',effect:mn('oreRatio',1.35)},
+  {id:'plant2',name:'Второй сталеплавильный цех',cost:600000,days:10,eq:3e5,req:['automation'],desc:'Мощность завода +10 т/день.',effect:s=>{s.factoryCapacity+=10;}},
+  {id:'parts2',name:'Роботизированная сборка',cost:500000,days:8,eq:3e5,req:['automation'],desc:'Мощность цеха деталей +10 шт/день.',effect:s=>{s.partsFactoryCapacity+=10;}},
+  {id:'warehouses',name:'Складская автоматика',cost:350000,days:6,eq:2e5,req:[],desc:'Склады: руда +150, сталь +100, детали +100.',effect:s=>{s.oreCap+=150;s.steelCap+=100;s.partsCap+=100;}},
+  {id:'energy2',name:'Собственная генерация',cost:900000,days:10,eq:4e5,req:['efficiency'],desc:'Зарплаты и обслуживание дешевле на 12%.',effect:s=>{s.wagePerDay=Math.round(s.wagePerDay*0.88);s.upkeepPerDay=Math.round(s.upkeepPerDay*0.88);}},
+  {id:'trade_net',name:'Торговая сеть',cost:700000,days:8,eq:3e5,req:['export_relations'],desc:'Рынки сбыта шире на 10%.',effect:s=>{s.marketReach*=1.1;}},
+  {id:'fin_eng',name:'Финансовая инженерия',cost:800000,days:8,eq:3e5,req:['credit_rating'],desc:'Кредиты дешевле на 15%, облигации +5%.',effect:s=>{s.loanRate*=0.85;s.bondRate*=1.05;}},
+
+  {id:'smelting3',name:'Бескоксовая металлургия',cost:6e6,days:14,eq:1e7,req:['smelting2'],desc:'Расход руды: до 1,15 т на тонну стали.',effect:mn('oreRatio',1.15)},
+  {id:'twin',name:'Цифровой двойник завода',cost:8e6,days:12,eq:1e7,req:['plant2','parts2'],desc:'Завод +25 т/день, цех деталей +15 шт/день.',effect:s=>{s.factoryCapacity+=25;s.partsFactoryCapacity+=15;}},
+  {id:'lean2',name:'Бережливое производство',cost:5e6,days:10,eq:8e6,req:['energy2'],desc:'Зарплаты дешевле на 10%.',effect:s=>{s.wagePerDay=Math.round(s.wagePerDay*0.9);}},
+  {id:'logi2',name:'Беспилотная логистика',cost:6e6,days:10,eq:8e6,req:['logistics'],desc:'Комиссии доставки дешевле на 30%.',effect:s=>{s.transportFeeMultiplier*=0.7;}},
+  {id:'free_zone',name:'Зоны свободной торговли',cost:9e6,days:12,eq:1e7,req:['trade_net'],desc:'Пошлины ниже на 20%.',effect:s=>{s.tariffMultiplier*=0.8;}},
+  {id:'mine_bot',name:'Горнодобывающие роботы',cost:7e6,days:12,eq:1e7,req:['warehouses'],desc:'Свои рудники дают +10 т/день, склад руды +300.',effect:s=>{s.mineDailyOre+=10;s.oreCap+=300;}},
+  {id:'credit_line',name:'Кредитная линия холдинга',cost:6e6,days:8,eq:8e6,req:['fin_eng'],desc:'Кредитный лимит выше на 10%.',effect:s=>{s.creditLimitFactor+=0.1;}},
+
+  {id:'mega_eng',name:'Мегастройка',cost:1.5e8,days:20,eq:3e8,req:['twin'],desc:'Мегапроекты дешевле на 8%.',effect:s=>{s.megaCost*=0.92;}},
+  {id:'smelting4',name:'Водородная сталь',cost:2e8,days:20,eq:3e8,req:['smelting3'],desc:'Расход руды: 1,0 т на тонну стали.',effect:mn('oreRatio',1.0)},
+  {id:'auto2',name:'Полная автоматизация',cost:3e8,days:24,eq:4e8,req:['twin','lean2'],desc:'Завод +60 т/день, цех деталей +40 шт/день, зарплаты −10%.',effect:s=>{s.factoryCapacity+=60;s.partsFactoryCapacity+=40;s.wagePerDay=Math.round(s.wagePerDay*0.9);}},
+  {id:'global_trade',name:'Глобальные цепочки поставок',cost:2.5e8,days:20,eq:3e8,req:['free_zone','logi2'],desc:'Пошлины −20%, рынки шире на 15%.',effect:s=>{s.tariffMultiplier*=0.8;s.marketReach*=1.15;}},
+  {id:'cap_market',name:'Рынок капитала',cost:2e8,days:18,eq:3e8,req:['credit_line'],desc:'Облигации +12%, кредиты −10%.',effect:s=>{s.bondRate*=1.12;s.loanRate*=0.9;}},
+  {id:'mega_store',name:'Автоматические склады',cost:1.5e8,days:16,eq:3e8,req:['mine_bot'],desc:'Склады: руда +2000, сталь +1500, детали +1500.',effect:s=>{s.oreCap+=2000;s.steelCap+=1500;s.partsCap+=1500;}},
+
+  {id:'quantum_log',name:'Квантовая логистика',cost:3e9,days:30,eq:1e10,req:['global_trade'],desc:'Комиссии доставки вдвое ниже.',effect:s=>{s.transportFeeMultiplier*=0.5;}},
+  {id:'ind5',name:'Индустрия 5.0',cost:5e9,days:36,eq:1.5e10,req:['auto2'],desc:'Завод +200 т/день, цех деталей +120 шт/день.',effect:s=>{s.factoryCapacity+=200;s.partsFactoryCapacity+=120;}},
+  {id:'orbit_ind',name:'Орбитальная индустрия',cost:8e9,days:40,eq:2e10,req:['mega_eng','mega_store'],desc:'Мегапроекты дешевле на 10%, склады +5000 руды/стали.',effect:s=>{s.megaCost*=0.9;s.oreCap+=5000;s.steelCap+=5000;}},
+  {id:'world_brand',name:'Мировой бренд',cost:6e9,days:36,eq:1.5e10,req:['global_trade','cap_market'],desc:'Рынки сбыта шире на 25%.',effect:s=>{s.marketReach*=1.25;}},
+  {id:'fusion',name:'Термоядерная энергия',cost:1e10,days:45,eq:3e10,req:['energy2','ind5'],desc:'Зарплаты −15%, обслуживание −20%.',effect:s=>{s.wagePerDay=Math.round(s.wagePerDay*0.85);s.upkeepPerDay=Math.round(s.upkeepPerDay*0.8);}}
+ );
+})();
 const STAGES = [
   {name:'Маленький бизнес', min:0},
   {name:'Региональная компания', min:150000},
@@ -2298,7 +2333,7 @@ function worldMapSvg(){
 }
 
 // ===== АВТО-ПРОВЕРКА ОБНОВЛЕНИЙ (обходит кеш Safari и иконки на экране) =====
-const BUILD='b-20261008-5';
+const BUILD='b-20261008-6';
 let _updShown=false,_updLast=0;
 async function checkUpdate(){
   if(_updShown||Date.now()-_updLast<60000) return; _updLast=Date.now();
@@ -2810,12 +2845,15 @@ function render(){
     researchActiveEl.innerHTML = '<div class="help">Сейчас ничего не исследуется.</div>';
   }
   const listEl = document.getElementById('researchList');
-  listEl.innerHTML = TECHS.filter(t=>!s.completedTechs.includes(t.id)).map(t=>`
+  const eqR=equityNow(), doneT=s.completedTechs, availT=TECHS.filter(t=>!doneT.includes(t.id)&&(t.eq||0)<=eqR&&(t.req||[]).every(r=>doneT.includes(r))).sort((x,y)=>x.cost-y.cost);
+  const lockedN=TECHS.length-doneT.length-availT.length;
+  listEl.innerHTML = availT.map(t=>`
     <div class="row" style="margin-top:8px;flex-direction:column;align-items:flex-start;gap:4px">
       <div style="display:flex;justify-content:space-between;width:100%"><b style="color:var(--text)">${t.name}</b><span>₽${fmt(t.cost)} · ${t.days} дн.</span></div>
       <div style="color:var(--dim)">${t.desc}</div>
       <button data-tech="${t.id}" class="startResearchBtn" ${s.research || s.cash<t.cost ? 'disabled':''}>Начать исследование</button>
-    </div>`).join('') || '<div class="help">Все доступные технологии изучены.</div>';
+    </div>`).join('') || '<div class="help">Сейчас доступных технологий нет.</div>';
+  listEl.innerHTML += `<div class="help">Изучено ${doneT.length} из ${TECHS.length}.${lockedN>0?` Закрыто пока: ${lockedN}. Они откроются с ростом капитала и после предыдущих технологий.`:' Все технологии изучены.'}</div>`;
   listEl.querySelectorAll('.startResearchBtn').forEach(btn=>{
     btn.onclick = () => {
       const tech = TECHS.find(t=>t.id===btn.dataset.tech);
