@@ -819,6 +819,19 @@ IT_PROJECTS.push(
  {id:'agi',name:'Сильный ИИ',days:120,cashCost:12000000,payout:42000000,successChance:0.55,need:90});
 function projFit(b,p,cap){ let n=cap; const c=projCash(p); if(c>0) n=Math.min(n,Math.floor(s.cash*0.9/c));
   if(b.needsMaterials){ if(p.steelNeeded) n=Math.min(n,Math.floor(s.steel/p.steelNeeded)); if(p.concreteNeeded) n=Math.min(n,Math.floor(s.concrete/p.concreteNeeded)); if(p.lumberNeeded) n=Math.min(n,Math.floor(s.lumber/p.lumberNeeded)); } return Math.max(0,n); }
+
+function projMiss(b,p){ const m=[]; if(b.needsMaterials){ if(s.steel<(p.steelNeeded||0)) m.push(Math.ceil(p.steelNeeded-s.steel)+' т стали'); if(s.concrete<(p.concreteNeeded||0)) m.push(Math.ceil(p.concreteNeeded-s.concrete)+' т бетона'); if(s.lumber<(p.lumberNeeded||0)) m.push(Math.ceil(p.lumberNeeded-s.lumber)+' т леса'); } return m; }
+function projAuto(b){ const st=s.businesses[b.id]; if(!st||!st.auto) return; st.why=st.why||{};
+  (b.projectList||[]).forEach(p=>{ if(!st.auto[p.id]) return; if((p.need||0)>(st.completedCount||0)){ st.why[p.id]='ещё закрыт'; return; }
+    let n=0, why='';
+    while(n<10){
+      if((st.active||[]).length>=projSlots(b)){ why='нет свободных площадок'; break; }
+      if(s.cash<projCash(p)*1.25){ why='ждёт денег (нужно ₽'+fmt(projCash(p)*1.25)+')'; break; }
+      const m=projMiss(b,p); if(m.length){ why='не хватает: '+m.join(', '); break; }
+      if(!startProj(b,p,true)) break; n++;
+    }
+    st.why[p.id]=why; if(n) pushLog(`${b.name}: авто-старт «${p.name}» ×${n}.`); });
+}
 function startProj(b,p,quiet){ const st=s.businesses[b.id];
   const matOk=!b.needsMaterials||(s.steel>=(p.steelNeeded||0)&&s.concrete>=(p.concreteNeeded||0)&&s.lumber>=(p.lumberNeeded||0));
   if((st.active||[]).length>=projSlots(b)||s.cash<projCash(p)||!matOk) return false;
@@ -2285,7 +2298,7 @@ function worldMapSvg(){
 }
 
 // ===== АВТО-ПРОВЕРКА ОБНОВЛЕНИЙ (обходит кеш Safari и иконки на экране) =====
-const BUILD='b-20261008-4';
+const BUILD='b-20261008-5';
 let _updShown=false,_updLast=0;
 async function checkUpdate(){
   if(_updShown||Date.now()-_updLast<60000) return; _updLast=Date.now();
@@ -2666,8 +2679,8 @@ function render(){
           <div style="color:var(--dim)">₽${fmt(projCash(p))}${matText} → выплата ₽${fmt(projPay(b,p))}</div>
           <div class="pbtns" style="display:flex;gap:6px;flex-wrap:wrap"><button data-project="${p.id}" data-bizid="${b.id}" class="primary startProjectBtn" ${canStart?'':'disabled'}>${free>0?'Взять':'Нет мест'}</button>
           <button data-pfill="${p.id}" data-bizid="${b.id}" ${fillN<2?'disabled':''}>Все ×${fillN}</button>
-          <button data-pauto="${p.id}" data-bizid="${b.id}" class="${on?'primary':''}">Авто ${on?'✓':'✗'}</button></div></div>`; }).join('')
-        + (nxt?`<div class="help">Новые проекты откроются после ${nxt.need} сданных (сейчас ${done}). «Все ×N» заполняет свободные площадки, «Авто» сам берёт проект, когда площадка освобождается, и оставляет запас денег и материалов.</div>`:'<div class="help">Все проекты открыты. «Авто» сам берёт проект, когда освобождается площадка.</div>');
+          <button data-pauto="${p.id}" data-bizid="${b.id}" class="${on?'primary':''}">Авто ${on?'✓':'✗'}</button></div>${on?`<div class="help" style="margin:0">Авто: ${(st.why&&st.why[p.id])||'работает'}</div>`:''}</div>`; }).join('')
+        + (nxt?`<div class="help">Новые проекты откроются после ${nxt.need} сданных (сейчас ${done}). «Все ×N» заполняет свободные площадки, «Авто» сам берёт проект, когда площадка освобождается; в кассе должна быть стоимость проекта плюс 25%, материалы берутся со склада, включая резерв стали.</div>`:'<div class="help">Все проекты открыты. «Авто» сам берёт проект, когда освобождается площадка (нужна стоимость проекта плюс 25% в кассе).</div>');
       return `<div class="card"><h2>${iconBox(b.id)}${b.name}</h2>${body}${cycleLine(b.id)}</div>`;
     }
     const upgradeCost = Math.round(b.cost*(0.7+st.level*0.55)*s.macro.costIndex);
@@ -2726,7 +2739,7 @@ function render(){
   const pj=btn=>{ const b=BUSINESSES.find(x=>x.id===btn.dataset.bizid); return [b,b.projectList.find(x=>x.id===(btn.dataset.project||btn.dataset.pfill||btn.dataset.pauto)),s.businesses[b.id]]; };
   bizListEl.querySelectorAll('.startProjectBtn').forEach(btn=>{ btn.onclick=()=>{ const [b,p]=pj(btn); startProj(b,p); render(); }; });
   bizListEl.querySelectorAll('[data-pfill]').forEach(btn=>{ btn.onclick=()=>{ const [b,p]=pj(btn); let n=0; while(n<40&&startProj(b,p,true)) n++; if(n) pushLog(`${b.name}: запущено проектов «${p.name}»: ${n}.`); render(); }; });
-  bizListEl.querySelectorAll('[data-pauto]').forEach(btn=>{ btn.onclick=()=>{ const [b,p,st]=pj(btn); st.auto=st.auto||{}; st.auto[p.id]=!st.auto[p.id]; render(); }; });
+  bizListEl.querySelectorAll('[data-pauto]').forEach(btn=>{ btn.onclick=()=>{ const [b,p,st]=pj(btn); st.auto=st.auto||{}; st.auto[p.id]=!st.auto[p.id]; if(st.auto[p.id]) projAuto(b); render(); }; });
 
   const banner = document.getElementById('eventsBanner');
   banner.style.display = (s.activeEvents.length||s.staff.strike) ? 'flex' : 'none';
@@ -3214,9 +3227,7 @@ function advanceDayCore(silent){
         }
         return false;
       });
-      if(st.auto){ (b.projectList||[]).forEach(p=>{ if(!st.auto[p.id]||(p.need||0)>(st.completedCount||0)) return; let n=0;
-        while(n<10&&(st.active||[]).length<projSlots(b)&&s.cash>=projCash(p)*3&&(!b.needsMaterials||(s.steel>=(p.steelNeeded||0)+(s.steelReserve||0)&&s.concrete>=(p.concreteNeeded||0)&&s.lumber>=(p.lumberNeeded||0)))&&startProj(b,p,true)) n++;
-        if(n) pushLog(`${b.name}: авто-старт «${p.name}» ×${n}.`); }); }
+      projAuto(b);
       return;
     }
     let rev = b.baseRevenue*st.level*(1 + (Math.random()*2-1)*b.volatility)*bizFactor(b.id);
