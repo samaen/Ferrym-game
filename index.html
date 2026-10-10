@@ -1546,7 +1546,8 @@ if(!s.oil) s.oil={open:false, fields:[], pipe:1, po:600, pg:250, contracts:[], n
 const OIL_TERMS=[[30,0],[60,0.01],[90,0.02],[180,0.04],[365,0.07]];
 function oilTermBonus(term){ const x=OIL_TERMS.find(y=>y[0]===term); return x?x[1]:0; }
 function oilNewPrice(kind,term){ const O=s.oil; return Math.round((kind==='oil'?O.po:O.pg)*(0.95+Math.random()*0.13)*(1+oilTermBonus(term))*(1+0.02*prestigeRank())); }
-const OIL={licence:20e6, unlock:10e6, explore:3e6, well:2e6, wellMax:10, rate:{oil:100,gas:140}, base:{oil:600,gas:250}, opex:8000, pipeUnit:300};
+const OIL={licence:20e6, unlock:10e6, explore:3e6, well:2e6, wellMax:10, rate:{oil:100,gas:140}, base:{oil:600,gas:340}, opex:8000, pipeUnit:300, pipeUse:{oil:1,gas:0.6}};
+function oilEst(kind){ return (s.oil.fields||[]).reduce((a,f)=>a+(f.type===kind&&f.left>0&&f.blow<=0?f.wells*OIL.rate[kind]*((kind==='gas'?0.5:0.3)+(kind==='gas'?0.5:0.7)*f.left/f.reserve):0),0); }
 function oilPipeCost(){ return Math.round(8e6*(1+s.oil.pipe)*s.macro.costIndex); }
 function oilStep(){
   const O=s.oil; if(!O.open) return;
@@ -1557,25 +1558,28 @@ function oilStep(){
   O.fields.forEach(f=>{
     if(f.blow>0){ f.blow-=1; return; }
     if(f.left<=0||f.wells<=0) return;
-    const q=Math.min(f.left, f.wells*OIL.rate[f.type]*(0.3+0.7*f.left/f.reserve));
-    f.left-=q; prod[f.type]+=q; cost+=f.wells*OIL.opex*ci;
-    if(Math.random()<0.0004*f.wells){
+    const g=f.type==='gas', q=Math.min(f.left, f.wells*OIL.rate[f.type]*((g?0.5:0.3)+(g?0.5:0.7)*f.left/f.reserve));
+    f.left-=q; prod[f.type]+=q; cost+=f.wells*OIL.opex*ci*(g?0.6:1);
+    if(Math.random()<0.0004*f.wells*(g?0.5:1)){
       f.blow=10; const loss=1e6*ci, comp=loss*INS[s.ins].c; s.cash-=loss-comp;
       pushLog(`Авария на «${f.name}»: скважины остановлены на 10 дн., ремонт ₽${fmt(loss)}${comp>0?`, страховка вернула ₽${fmt(comp)}`:''}.`);
     }
   });
-  let capLeft=OIL.pipeUnit*O.pipe, rev=0, lost=0;
+  const made={oil:prod.oil,gas:prod.gas}, cap=OIL.pipeUnit*O.pipe;
+  let capLeft=cap, crev=0, pen=0, short=0, spot=0, lost=0;
   O.contracts=O.contracts.filter(c=>{
-    const d=Math.min(prod[c.kind],c.vol,capLeft); prod[c.kind]-=d; capLeft-=d; rev+=d*c.price;
-    const sh=c.vol-d; if(sh>0) rev-=sh*c.price*0.2;
+    const pu=OIL.pipeUse[c.kind], d=Math.min(prod[c.kind],c.vol,capLeft/pu); prod[c.kind]-=d; capLeft-=d*pu; crev+=d*c.price; c.got=d;
+    const sh=c.vol-d; if(sh>0){ pen+=sh*c.price*0.2; short+=sh; }
     c.days-=1;
     if(c.days<=0){
       if(c.auto){ const term=c.term||30; c.price=oilNewPrice(c.kind,term); c.days=term; pushLog(`Контракт на ${c.kind==='oil'?'нефть':'газ'} продлён автоматически на ${term} дн. по ₽${fmt(c.price)}.`); return true; }
       pushLog(`Контракт на ${c.kind==='oil'?'нефть':'газ'} завершён.`); }
     return c.days>0;
   });
-  ['oil','gas'].forEach(k=>{ const d=Math.min(prod[k],capLeft); capLeft-=d; rev+=d*(k==='oil'?O.po:O.pg); lost+=prod[k]-d; });
-  s.cash+=rev-cost; O.total+=rev-cost; L('Нефтегаз',rev-cost); O.last={rev,cost,lost};
+  ['oil','gas'].forEach(k=>{ const pu=OIL.pipeUse[k], d=Math.min(prod[k],capLeft/pu); capLeft-=d*pu; spot+=d*(k==='oil'?O.po:O.pg); lost+=prod[k]-d; });
+  const rev=crev-pen+spot;
+  s.cash+=rev-cost; O.total+=rev-cost; L('Нефтегаз',rev-cost); O.last={rev,cost,lost,made,crev,pen,short,spot,used:cap-capLeft,cap};
+  O.fields=O.fields.filter(f=>{ if(f.left<=0.5&&!(f.blow>0)){ O.closed=(O.closed||0)+1; pushLog(`Месторождение «${f.name}» истощено и закрыто.`); return false; } return true; });
 }
 function renderOil(){
   const el=document.getElementById('oilBody'), O=s.oil, ci=s.macro.costIndex, eq=equityNow();
@@ -1591,12 +1595,21 @@ function renderOil(){
   let html=`<div class="card" style="grid-column:1/-1"><h2>Нефтегаз</h2>
     <div class="row"><span>Цена нефти / газа</span><b>₽${fmt(O.po)} / ₽${fmt(O.pg)}</b></div>
     <div class="row"><span>Пропускная способность трубы</span><b>${fmt(cap)} ед./день (ур. ${O.pipe})</b></div>
-    <div class="row"><span>Вчера: выручка / расходы</span><b class="${L.rev-L.cost>=0?'good':'bad'}">₽${fmt(L.rev)} / ₽${fmt(L.cost)}</b></div>
+    ${(()=>{ const m=L.made||{oil:0,gas:0}, sumC=O.contracts.reduce((x,c)=>x+c.vol,0), load=O.contracts.reduce((x,c)=>x+c.vol*OIL.pipeUse[c.kind],0), net=L.rev-L.cost;
+      return `<div class="row"><span>Добыча вчера: нефть / газ</span><b>${fmt(m.oil)} / ${fmt(m.gas)} ед.</b></div>
+      <div class="row"><span>Труба загружена</span><b>${L.cap?Math.round((L.used||0)/L.cap*100):0}%</b></div>
+      <div class="row"><span>Доставлено по контрактам</span><b>₽${fmt(L.crev||0)}</b></div>
+      ${L.pen>0?`<div class="row"><span>Штраф за недопоставку (${fmt(L.short)} ед.)</span><b class="bad">−₽${fmt(L.pen)}</b></div>`:''}
+      <div class="row"><span>Продано на рынке сверх контрактов</span><b>₽${fmt(L.spot||0)}</b></div>
+      <div class="row"><span>Расходы на скважины</span><b class="bad">−₽${fmt(L.cost)}</b></div>
+      <div class="row"><span>Итого за день</span><b class="${net>=0?'good':'bad'}">${net>=0?'':'−'}₽${fmt(Math.abs(net))}</b></div>
+      ${L.pen>0?`<div class="help bad">Контрактов на ${fmt(sumC)} ед./день, а добыча вчера ${fmt(m.oil+m.gas)} ед.: недопоставка штрафуется. Труба это только пропускная способность, а не добыча. Нужны скважины (нефть ~100, газ ~140 ед./день на скважину, до ${OIL.wellMax} на месторождение) или меньше контрактов.</div>`:''}
+      ${load>cap?`<div class="help bad">Контракты требуют ${fmt(load)} ед. трубы, а труба на ${fmt(cap)}: часть не уйдёт при любой добыче. Расширьте трубу или расторгните лишний контракт.</div>`:''}`; })()}
     ${L.lost>0?`<div class="help bad">Не хватает трубы: потеряно ${fmt(L.lost)} ед. добычи. Расширьте трубопровод.</div>`:''}
-    <div class="row"><span>Всего заработано</span><b>₽${fmt(O.total)}</b></div>
+    <div class="row"><span>Всего заработано</span><b>₽${fmt(O.total)}</b></div>${O.closed?`<div class="help" style="margin:0">Истощено и закрыто месторождений: ${O.closed}.</div>`:''}
     <div class="controls"><button id="oExpO" class="primary" ${s.cash<expl?'disabled':''}>Разведка нефти (₽${fmt(expl)})</button><button id="oExpG" class="primary" ${s.cash<expl?'disabled':''}>Разведка газа (₽${fmt(expl)})</button><button id="oPipe" ${s.cash<pc?'disabled':''}>Труба +1 ур. (₽${fmt(pc)})</button></div>
-    <div class="help">Разведка находит запасы с шансом 70%, иначе деньги потеряны. Каждая скважина даёт около 100 ед. нефти или 140 ед. газа в день, но добыча падает по мере истощения. Излишки, не влезающие в трубу, сгорают.</div></div>`;
-  O.fields.forEach(f=>{
+    <div class="help">Разведка находит запасы с шансом 70%, иначе деньги потеряны. Скважина даёт около 100 ед. нефти или 140 ед. газа в день. Нефть дороже, но истощается быстрее, дороже в обслуживании и чаще ломается. Газ дешевле за единицу, зато добыча стабильнее, обслуживание на 40% дешевле, аварии вдвое реже, а единица газа занимает 0,6 места в трубе. Излишки, не влезающие в трубу, сгорают.</div></div>`;
+  O.fields.filter(f=>f.left>0.5).forEach(f=>{
     const pct=f.left/f.reserve*100, wc=Math.round(OIL.well*ci);
     html+=`<div class="card"><h2>${f.name}<span class="h2-end">${f.type==='oil'?'нефть':'газ'}</span></h2>
       <div class="row"><span>Остаток запасов</span><b>${fmt(f.left)} из ${fmt(f.reserve)}</b></div><div class="bar"><i style="width:${pct}%"></i></div>
@@ -1605,11 +1618,11 @@ function renderOil(){
       ${f.left>0&&f.wells<OIL.wellMax?`<div class="controls"><button data-well="${f.id}" class="primary" ${s.cash<wc?'disabled':''}>Пробурить скважину (₽${fmt(wc)})</button></div>`:''}</div>`;
   });
   html+=`<div class="card" style="grid-column:1/-1"><h2>Контракты на поставку</h2><div class="help" style="margin-top:0">Фиксированная цена на выбранный срок (случайно −5…+8% к рынку, плюс надбавка за длинный срок). Продукт сначала идёт по контракту; за недопоставку штраф 20% цены. Если рынок вырастет, вы продаёте дешевле рынка. Досрочное расторжение: неустойка 10% оставшейся выручки (до 60 дней). С автопродлением контракт сам перезаключается по цене рынка. До 3 контрактов.</div>`
-    + O.contracts.map((c,i)=>`<div class="row" style="flex-wrap:wrap;gap:6px"><span>${c.kind==='oil'?'Нефть':'Газ'}: ${fmt(c.vol)} ед./день по ₽${fmt(c.price)}</span><b>${c.days} дн.</b><span style="width:100%;display:flex;gap:8px;align-items:center;flex-wrap:wrap"><label style="font-size:12px;color:var(--dim)"><input type="checkbox" data-cauto="${i}" ${c.auto?'checked':''}> автопродление (${c.term||30} дн.)</label><button data-ccancel="${i}">Расторгнуть (₽${fmt(Math.round(c.vol*c.price*Math.min(c.days,60)*0.1))})</button></span></div>`).join('')
+    + O.contracts.map((c,i)=>`<div class="row" style="flex-wrap:wrap;gap:6px"><span>${c.kind==='oil'?'Нефть':'Газ'}: ${fmt(c.vol)} ед./день по ₽${fmt(c.price)}<br><span style="color:var(--dim);font-size:12px">вчера поставлено ${fmt(c.got||0)} из ${fmt(c.vol)}</span></span><b>${c.days} дн.</b><span style="width:100%;display:flex;gap:8px;align-items:center;flex-wrap:wrap"><label style="font-size:12px;color:var(--dim)"><input type="checkbox" data-cauto="${i}" ${c.auto?'checked':''}> автопродление (${c.term||30} дн.)</label><button data-ccancel="${i}">Расторгнуть (₽${fmt(Math.round(c.vol*c.price*Math.min(c.days,60)*0.1))})</button></span></div>`).join('')
     + (O.contracts.length<3?`<div class="controls"><select id="cKind"><option value="oil">Нефть</option><option value="gas">Газ</option></select><input type="number" id="cVol" min="10" value="100" style="width:80px"><select id="cTerm">${OIL_TERMS.map(x=>`<option value="${x[0]}">${x[0]} дн.${x[1]?' (+'+Math.round(x[1]*100)+'% к цене)':''}</option>`).join('')}</select><label style="font-size:12px;color:var(--dim);align-self:center"><input type="checkbox" id="cAuto"> автопродление</label><button id="cSign" class="primary">Подписать</button></div>`:'')+'</div>';
   el.innerHTML=html;
   const explore=type=>{ if(s.cash<expl) return; s.cash-=expl;
-    if(Math.random()<0.7){ const reserve=Math.round((type==='oil'?300000:400000)*(0.5+Math.random()*2.5));
+    if(Math.random()<0.7){ const reserve=Math.round((type==='oil'?300000:520000)*(0.5+Math.random()*2.5));
       O.fields.push({id:O.next,name:`Месторождение №${O.next}`,type,reserve,left:reserve,wells:0,blow:0}); O.next++;
       pushLog(`Разведка успешна: найдено месторождение ${type==='oil'?'нефти':'газа'}, запасы ${fmt(reserve)} ед. Затраты ₽${fmt(expl)}.`);
     } else pushLog(`Расход: разведка не нашла запасов, потеряно ₽${fmt(expl)}.`);
@@ -1625,6 +1638,8 @@ function renderOil(){
   const sg=document.getElementById('cSign');
   if(sg) sg.onclick=()=>{ const kind=document.getElementById('cKind').value, vol=Math.max(10,Math.floor(parseFloat(document.getElementById('cVol').value)||10)),
       term=parseInt(document.getElementById('cTerm').value)||30, auto=document.getElementById('cAuto').checked, price=oilNewPrice(kind,term);
+    const sameVol=O.contracts.filter(c=>c.kind===kind).reduce((x,c)=>x+c.vol,0)+vol, est=oilEst(kind), load=O.contracts.reduce((x,c)=>x+c.vol*OIL.pipeUse[c.kind],0)+vol*OIL.pipeUse[kind];
+    if(sameVol>est*1.05||load>OIL.pipeUnit*O.pipe){ if(!confirm(`Внимание: контрактов на ${kind==='oil'?'нефть':'газ'} будет ${fmt(sameVol)} ед./день, а добыча сейчас около ${fmt(est)} ед./день (труба: ${fmt(OIL.pipeUnit*O.pipe)}). За недопоставку штраф 20% цены. Подписать всё равно?`)) return; }
     O.contracts.push({kind,vol,price,days:term,term,auto}); pushLog(`Подписан контракт: ${fmt(vol)} ед./день ${kind==='oil'?'нефти':'газа'} по ₽${fmt(price)} на ${term} дн.${auto?' (автопродление)':''}`); render(); };
 }
 
@@ -2333,7 +2348,7 @@ function worldMapSvg(){
 }
 
 // ===== АВТО-ПРОВЕРКА ОБНОВЛЕНИЙ (обходит кеш Safari и иконки на экране) =====
-const BUILD='b-20261008-6';
+const BUILD='b-20261008-7';
 let _updShown=false,_updLast=0;
 async function checkUpdate(){
   if(_updShown||Date.now()-_updLast<60000) return; _updLast=Date.now();
